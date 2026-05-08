@@ -1,0 +1,61 @@
+# 颜色主题配置 - LeetCode 题解 CLI
+# 支持颜色：
+# black, red, green, yellow, blue, magenta, cyan, white
+# bright_black, bright_red, bright_green, bright_yellow,
+# bright_blue, bright_magenta, bright_cyan, bright_white
+
+[markdown]
+# 主标题（题号和标题）
+title = "bright_yellow"
+
+# 小节标签（提示、扩展信息等）
+section_label = "bright_green"
+
+# 代码块背景/前景
+code_block = "bright_cyan"
+
+# 行内代码（单反引号）
+inline_code = "cyan"
+
+# 加粗文本（**text**）
+bold = "bright_white"
+
+# 链接
+link = "bright_blue"
+
+# 引用 (> text)
+blockquote = "bright_black"
+
+# 一级标题 (# text)
+h1 = "bright_yellow"
+
+# 二级标题 (## text)
+h2 = "bright_yellow"
+
+# 三级标题 (### text)
+h3 = "bright_white"
+
+# 列表项前缀
+list_marker = "green"
+
+[api]
+# API 方法名称
+api_name = "bright_magenta"
+
+# 用法 (usage:)
+usage_label = "cyan"
+
+# 说明 (note:)
+note_label = "yellow"
+
+[syntax]
+# 代码语法高亮
+default = "bright_white"
+keyword = "bright_yellow"
+type_name = "bright_blue"
+function = "bright_cyan"
+string = "bright_magenta"
+number = "bright_red"
+comment = "green"
+operator = "bright_white"
+punctuation = "bright_black"
