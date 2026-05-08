@@ -11,6 +11,7 @@
 - Use the short command name lh in examples; leetcode-helper remains supported as alternative.
 - Default data comes from embedded dataset compiled from data/problems.json; --data can load external file.
 - Output format: compact (section labels and content on same line, API notes in single line), no unnecessary blank lines.
+- `description` and `container` are the only fields whose repeated blank lines are normalized to a single line break; other fields keep their original spacing.
 - All Markdown syntax elements must be colored according to active theme from theme.toml.
 - Code syntax highlighting applies to answer blocks: keywords, type names, strings, numbers, comments, operators, punctuation.
 

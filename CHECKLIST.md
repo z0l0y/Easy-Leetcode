@@ -19,7 +19,7 @@
 - [x] Implement API notes on single line ("- API名 用法: ... 说明: ...")
 - [x] Remove unused functions (append_section)
 - [x] Remove trailing newlines from render functions (let callers control spacing)
-- [x] Fix spacing: no blank lines between section label and content (e.g., "解法:" → immediately next line is content)
+- [x] Fix spacing: only `description` and `container` collapse repeated blank lines; other fields keep original spacing
 - [x] Zero compilation warnings
 - [x] Update all documentation (README_zh.md, README.md, AGENT.md)
 

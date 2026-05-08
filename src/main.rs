@@ -168,22 +168,21 @@ fn format_problem(
         }
 
         out.push_str(&format!("{} ", label("解法:", color)));
-        let mut sol_rendered = render_value(&problem.solution, color, theme_path);
-        sol_rendered = sol_rendered.trim_start_matches('\n').to_string();
+        let sol_rendered = render_value(&problem.solution, color, theme_path);
         out.push_str(&sol_rendered);
         out.push('\n');
-        append_section_compact(&mut out, "题目描述", &problem.description, color, theme_path);
-        append_section_compact(&mut out, "题目本质", &problem.essence, color, theme_path);
-        append_section_compact(&mut out, "现实类比", &problem.analogy, color, theme_path);
-        append_section_compact(&mut out, "容器选择", &problem.container, color, theme_path);
+        append_section_compact(&mut out, "题目描述", &problem.description, color, theme_path, false);
+        append_section_compact(&mut out, "题目本质", &problem.essence, color, theme_path, false);
+        append_section_compact(&mut out, "现实类比", &problem.analogy, color, theme_path, false);
+        append_section_compact(&mut out, "容器选择", &problem.container, color, theme_path, false);
         append_steps(&mut out, "三步主线:", &problem.steps, color, theme_path);
-        append_section_compact(&mut out, "复杂度分析", &problem.complexity, color, theme_path);
+        append_section_compact(&mut out, "复杂度分析", &problem.complexity, color, theme_path, false);
     }
 
     if show_extra {
         out.push_str(&format!("{}\n", label("扩展信息:", color)));
-        append_section_compact(&mut out, "实际示例", &problem.example, color, theme_path);
-        append_section_compact(&mut out, "图示说明", &problem.diagram, color, theme_path);
+        append_section_compact(&mut out, "实际示例", &problem.example, color, theme_path, false);
+        append_section_compact(&mut out, "图示说明", &problem.diagram, color, theme_path, false);
         append_api_notes(&mut out, &problem.api_notes_view(), color, theme_path);
     }
 
@@ -258,7 +257,14 @@ impl ProblemApiNotesView for Problem {
 }
 
 
-fn append_section_compact(out: &mut String, title: &str, value: &str, color: bool, theme_path: Option<&str>) {
+fn append_section_compact(
+    out: &mut String,
+    title: &str,
+    value: &str,
+    color: bool,
+    theme_path: Option<&str>,
+    collapse_blank_lines: bool,
+) {
     if value.trim().is_empty() {
         return;
     }
@@ -269,9 +275,16 @@ fn append_section_compact(out: &mut String, title: &str, value: &str, color: boo
         format!("{}:", title)
     };
     out.push_str(&label_str);
-    out.push(' ');
-    let mut rendered = render_value(value, color, theme_path);
-    rendered = rendered.trim_start_matches('\n').to_string();
+    if collapse_blank_lines {
+        out.push(' ');
+    } else {
+        out.push('\n');
+    }
+    let rendered = if collapse_blank_lines {
+        render_value_compact(value, color, theme_path)
+    } else {
+        render_value(value, color, theme_path)
+    };
     out.push_str(&rendered);
     out.push('\n');
 }
@@ -284,8 +297,7 @@ fn append_steps(out: &mut String, title: &str, steps: &[String], color: bool, th
     }
 
     for item in steps {
-        let mut rendered = render_value(item, color, theme_path);
-        rendered = rendered.trim_start_matches('\n').to_string();
+        let rendered = render_value(item, color, theme_path);
         out.push_str("- ");
         out.push_str(&rendered);
         out.push('\n');
@@ -347,6 +359,7 @@ fn render_value(value: &str, color: bool, theme_path: Option<&str>) -> String {
         }
 
         if t.is_empty() {
+            out.push('\n');
             continue;
         }
 
@@ -368,6 +381,31 @@ fn render_value(value: &str, color: bool, theme_path: Option<&str>) -> String {
         }
 
         out.push_str(&inline_render(t, color, &theme.markdown));
+        out.push('\n');
+    }
+
+    out.trim_end().to_string()
+}
+
+fn render_value_compact(value: &str, color: bool, theme_path: Option<&str>) -> String {
+    let rendered = render_value(value, color, theme_path);
+    let mut out = String::new();
+    let mut in_code = false;
+
+    for line in rendered.lines() {
+        let trimmed = line.trim_start();
+        if trimmed.starts_with("```") {
+            in_code = !in_code;
+            out.push_str(line);
+            out.push('\n');
+            continue;
+        }
+
+        if !in_code && line.trim().is_empty() {
+            continue;
+        }
+
+        out.push_str(line);
         out.push('\n');
     }
 

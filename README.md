@@ -39,6 +39,8 @@ Notes:
 - Answer code is highlighted using Java syntax highlighting rules (keywords, comments, strings, etc.).
 - All Markdown syntax elements are colored according to the active theme.
 
+Only `description` and `container` normalize repeated blank lines to a single line break; other fields preserve their original spacing.
+
 ## Theme Configuration
 
 Default configuration: see `theme.toml`. Three configuration sections available:
