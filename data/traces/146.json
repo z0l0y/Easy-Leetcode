@@ -1,0 +1,78 @@
+{
+  "input": "__ctor__(2) → put(1, 1) → put(2, 2) → get(1) → put(3, 3) → get(2)",
+  "algorithm": "LRUCache.get",
+  "steps": [
+    {
+      "line": "20",
+      "code": "    public int get(int key) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "key",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "get"
+      ]
+    },
+    {
+      "line": "26",
+      "code": "        return node.value;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "get"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "    public int get(int key) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "key",
+          "value": "2",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "get"
+      ]
+    },
+    {
+      "line": "23",
+      "code": "            return -1;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "-1",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "get"
+      ]
+    }
+  ]
+}

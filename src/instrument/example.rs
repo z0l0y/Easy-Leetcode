@@ -177,6 +177,12 @@ pub fn parse_example_input(example: &str) -> anyhow::Result<ExampleInput> {
                 return Ok(ops);
             }
         }
+        // Chinese-format operation sequence: 输入：capacity = 2，操作：put(1,1), get(1), ...
+        if content.contains("操作：") || content.contains("操作:") {
+            if let Ok(ops) = try_parse_chinese_ops(example) {
+                return Ok(ops);
+            }
+        }
     }
     // Fall back to single-method format
     let params = parse_example(example)?;
@@ -252,6 +258,133 @@ fn try_parse_operations(example: &str) -> anyhow::Result<ExampleInput> {
 
     let class_name = operations.first().map(|(n, _)| n.clone()).unwrap_or_default();
     Ok(ExampleInput::Operations(class_name, operations))
+}
+
+/// Try to parse Chinese-format operation sequences:
+/// 输入：capacity = 2，操作：put(1,1), put(2,2), get(1)
+/// Returns ExampleInput::Operations with constructor args as the first operation.
+fn try_parse_chinese_ops(example: &str) -> anyhow::Result<ExampleInput> {
+    let content = example
+        .lines()
+        .find(|line| line.contains("输入：") || line.contains("输入:"))
+        .and_then(|line| {
+            line.split_once("输入：")
+                .or_else(|| line.split_once("输入:"))
+                .map(|(_, rest)| rest.trim())
+        })
+        .context("无法解析中文操作格式")?;
+
+    // Split by "操作：" or "操作:"
+    let (ctor_part, ops_part) = content
+        .split_once("操作：")
+        .or_else(|| content.split_once("操作:"))
+        .context("未找到'操作：'分隔符")?;
+
+    // Parse constructor arguments from the part before 操作
+    let ctor_args = parse_ctor_args(ctor_part)?;
+
+    // Parse operations — only up to the first newline (rest is 输出/分析)
+    let ops_text = ops_part.lines().next().unwrap_or(ops_part).trim();
+    let method_ops = parse_method_calls(ops_text)?;
+
+    // Build operation list: constructor first, then method calls.
+    // The class name string doesn't matter — generate_runner uses analysis.class_name.
+    let mut operations = vec![("__ctor__".to_string(), ctor_args)];
+    operations.extend(method_ops);
+
+    Ok(ExampleInput::Operations(String::new(), operations))
+}
+
+/// Parse constructor arguments like "capacity = 2" or "k = 3, v = 5".
+fn parse_ctor_args(s: &str) -> anyhow::Result<Vec<TypedValue>> {
+    // Normalize: replace Chinese comma with ASCII comma, then trim trailing commas
+    let s = s.trim().replace('，', ",").trim_end_matches(',').trim().to_string();
+    if s.is_empty() {
+        return Ok(vec![]);
+    }
+    let mut args = Vec::new();
+    for part in smart_split(&s, ',') {
+        let part = part.trim();
+        if part.is_empty() {
+            continue;
+        }
+        if let Some(eq_pos) = part.find('=') {
+            let value_str = part[eq_pos + 1..].trim();
+            args.push(parse_value(value_str)?);
+        } else if let Ok(n) = part.parse::<i64>() {
+            args.push(TypedValue::Int(n));
+        } else {
+            args.push(parse_value(part)?);
+        }
+    }
+    Ok(args)
+}
+
+/// Parse method call strings like "put(1,1), get(1), put(3,3)".
+fn parse_method_calls(s: &str) -> anyhow::Result<Vec<(String, Vec<TypedValue>)>> {
+    let s = s.trim();
+    let mut ops = Vec::new();
+    let mut remaining = s;
+
+    while !remaining.is_empty() {
+        // Find next method name (identifier before '(')
+        if let Some(paren_open) = remaining.find('(') {
+            let method_name = remaining[..paren_open].trim().to_string();
+            // Validate method name: must be a valid Java identifier
+            if method_name.is_empty()
+                || !method_name
+                    .chars()
+                    .all(|c| c.is_alphanumeric() || c == '_')
+            {
+                break;
+            }
+
+            // Find matching closing paren (respects nesting)
+            let after_open = &remaining[paren_open + 1..];
+            let mut depth: i32 = 1;
+            let mut paren_close: Option<usize> = None;
+            for (i, ch) in after_open.char_indices() {
+                match ch {
+                    '(' => depth += 1,
+                    ')' => {
+                        depth -= 1;
+                        if depth == 0 {
+                            paren_close = Some(i);
+                            break;
+                        }
+                    }
+                    _ => {}
+                }
+            }
+
+            let paren_close = paren_close.context("未找到匹配的右括号")?;
+            let args_str = &after_open[..paren_close];
+            let args = if args_str.trim().is_empty() {
+                vec![]
+            } else {
+                smart_split(args_str, ',')
+                    .iter()
+                    .map(|s| parse_value(s))
+                    .collect::<anyhow::Result<Vec<_>>>()?
+            };
+
+            ops.push((method_name, args));
+
+            // Advance past this method call: "method(args)"
+            let call_end = paren_open + 1 + paren_close + 1;
+            remaining = remaining[call_end..].trim_start();
+            // Skip comma separator (ASCII or Chinese)
+            if remaining.starts_with(',') {
+                remaining = remaining[1..].trim_start();
+            } else if remaining.starts_with('，') {
+                remaining = remaining['，'.len_utf8()..].trim_start();
+            }
+        } else {
+            break;
+        }
+    }
+
+    Ok(ops)
 }
 
 /// Split by commas at the top level, respecting nested brackets.
@@ -603,6 +736,54 @@ mod tests {
         match &params[1].1 {
             TypedValue::Int(n) => assert_eq!(*n, 5),
             _ => panic!("Expected int"),
+        }
+    }
+
+    #[test]
+    fn test_parse_chinese_ops() {
+        let example = "输入：capacity = 2，操作：put(1,1), put(2,2), get(1), put(3,3), get(2)\n输出：get(1)=1, get(2)=-1（2 被淘汰）";
+        let input = parse_example_input(example).unwrap();
+        match &input {
+            ExampleInput::Operations(_class_name, ops) => {
+                // 6 operations: __ctor__ + put + put + get + put + get
+                assert_eq!(ops.len(), 6, "expected 6 ops, got {}", ops.len());
+                // ops[0]: Constructor (capacity=2)
+                assert_eq!(ops[0].0, "__ctor__");
+                assert_eq!(ops[0].1.len(), 1);
+                assert!(matches!(&ops[0].1[0], TypedValue::Int(2)));
+                // ops[1]: put(1,1)
+                assert_eq!(ops[1].0, "put");
+                assert_eq!(ops[1].1.len(), 2);
+                // ops[2]: put(2,2)
+                assert_eq!(ops[2].0, "put");
+                // ops[3]: get(1)
+                assert_eq!(ops[3].0, "get");
+                assert_eq!(ops[3].1.len(), 1);
+                assert!(matches!(&ops[3].1[0], TypedValue::Int(1)));
+                // ops[4]: put(3,3)
+                assert_eq!(ops[4].0, "put");
+                // ops[5]: get(2)
+                assert_eq!(ops[5].0, "get");
+                assert!(matches!(&ops[5].1[0], TypedValue::Int(2)));
+            }
+            other => panic!("Expected Operations, got {:?}", other),
+        }
+    }
+
+    #[test]
+    fn test_parse_chinese_ops_no_ctor_args() {
+        // Some classes like Trie() have no constructor args
+        let example = "输入：操作：insert(\"apple\"), search(\"apple\"), startsWith(\"app\")\n输出：null, true, true";
+        let input = parse_example_input(example).unwrap();
+        match &input {
+            ExampleInput::Operations(_class_name, ops) => {
+                assert_eq!(ops[0].0, "__ctor__");
+                assert!(ops[0].1.is_empty(), "expected no ctor args");
+                assert_eq!(ops[1].0, "insert");
+                assert_eq!(ops[2].0, "search");
+                assert_eq!(ops[3].0, "startsWith");
+            }
+            other => panic!("Expected Operations, got {:?}", other),
         }
     }
 
