@@ -1,0 +1,1492 @@
+{
+  "input": "head = [1, 2, 3, 4, 5]",
+  "algorithm": "Solution.reverseList",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public ListNode reverseList(ListNode head) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "head",
+          "value": "1->2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "head",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        ListNode prev = null;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "prev",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        ListNode cur = head;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        while (cur != null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            ListNode next = cur.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            cur.next = prev;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1",
+          "old": "1->2->3->4->5"
+        },
+        {
+          "name": "next",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            prev = cur;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "1",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            cur = next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->3->4->5",
+          "old": "1"
+        },
+        {
+          "name": "next",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        while (cur != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            ListNode next = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "3->4->5",
+          "old": "2->3->4->5"
+        },
+        {
+          "name": "prev",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            cur.next = prev;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->1",
+          "old": "2->3->4->5"
+        },
+        {
+          "name": "next",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            prev = cur;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->1",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1",
+          "old": "1"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            cur = next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": "2->1"
+        },
+        {
+          "name": "next",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        while (cur != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            ListNode next = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "4->5",
+          "old": "3->4->5"
+        },
+        {
+          "name": "prev",
+          "value": "2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            cur.next = prev;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->2->1",
+          "old": "3->4->5"
+        },
+        {
+          "name": "next",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            prev = cur;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->2->1",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->2->1",
+          "old": "2->1"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            cur = next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": "3->2->1"
+        },
+        {
+          "name": "next",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        while (cur != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            ListNode next = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "5",
+          "old": "4->5"
+        },
+        {
+          "name": "prev",
+          "value": "3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            cur.next = prev;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->3->2->1",
+          "old": "4->5"
+        },
+        {
+          "name": "next",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            prev = cur;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->3->2->1",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "4->3->2->1",
+          "old": "3->2->1"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            cur = next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": "4->3->2->1"
+        },
+        {
+          "name": "next",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "4->3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        while (cur != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "4->3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            ListNode next = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": "5"
+        },
+        {
+          "name": "prev",
+          "value": "4->3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            cur.next = prev;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5->4->3->2->1",
+          "old": "5"
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "4->3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            prev = cur;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5->4->3->2->1",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "5->4->3->2->1",
+          "old": "4->3->2->1"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            cur = next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": "5->4->3->2->1"
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "5->4->3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseList"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        return prev;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "5->4->3->2->1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "5->4->3->2->1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            5,
+            4,
+            3,
+            2,
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "reverseList"
+      ]
+    }
+  ]
+}

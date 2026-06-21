@@ -42,11 +42,14 @@ fn generate_type_def(type_name: &str) -> String {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         ListNode cur = this;
-        while (cur != null) {
+        int limit = 100;
+        while (cur != null && limit > 0) {
             sb.append(cur.val);
             if (cur.next != null) sb.append("->");
             cur = cur.next;
+            limit--;
         }
+        if (cur != null) sb.append("...");
         return sb.toString();
     }
 }"#
@@ -117,7 +120,7 @@ fn generate_t_helper(analysis: &Analysis) -> String {
     out.push_str("        __current_method = __call_stack.isEmpty() ? \"\" : __call_stack.peek();\n");
     out.push_str("    }\n");
     out.push_str("\n");
-    out.push_str("    private static void __t(int line, String[] names, Object... values) {\n");
+    out.push_str("    private static void __t(int line, String[] names, Object[] values) {\n");
     out.push_str("        StringBuilder sb = new StringBuilder();\n");
     out.push_str("        sb.append(\"__TRACE__{\\\"line\\\":\").append(line);\n");
     out.push_str("        if (!__current_method.isEmpty()) {\n");
@@ -206,7 +209,7 @@ fn generate_instrumented_solution(
 
             if !param_names.is_empty() {
                 out.push_str(&format!(
-                    "        __t({}, new String[]{{{}}}, {});\n",
+                    "        __t({}, new String[]{{{}}}, new Object[]{{{}}});\n",
                     i + 1,
                     param_names.join(", "),
                     param_values.join(", ")
@@ -237,16 +240,19 @@ fn generate_instrumented_solution(
 
         // ── Statement type detection ──────────────────────────────
 
-        // return statements: capture BEFORE we leave
+        // return/break/continue statements: capture BEFORE we leave
         let is_return = trimmed.starts_with("return ") || trimmed == "return;";
+        let is_break = trimmed == "break;" || trimmed.starts_with("break ");
+        let is_continue = trimmed == "continue;" || trimmed.starts_with("continue ");
 
         // Any statement ending with ; (assignments, method calls, declarations)
-        // Exclude do-while end: while (...);
+        // Exclude control-flow statements (break/continue/return) — they'd make
+        // following __t() calls unreachable.
         let is_statement = trimmed.ends_with(';')
+            && !is_return && !is_break && !is_continue
             && !trimmed.starts_with("if ")
             && !trimmed.starts_with("for ")
             && !trimmed.starts_with("while ")
-            && !trimmed.starts_with("return ")
             && !trimmed.starts_with("} while");
 
         // if-condition headers: if (...) {  or  if (...) \n  (single-line if without braces)
@@ -305,7 +311,7 @@ fn generate_instrumented_solution(
                 }
 
                 out.push_str(&format!(
-                    "        __t({}, new String[]{{{}}}, {});\n",
+                    "        __t({}, new String[]{{{}}}, new Object[]{{{}}});\n",
                     i + 1,
                     names.join(", "),
                     values.join(", ")
@@ -329,7 +335,7 @@ fn generate_instrumented_solution(
                     .collect();
                 let values: Vec<String> = visible_vars.iter().map(|v| v.name.clone()).collect();
                 out.push_str(&format!(
-                    "        __t({}, new String[]{{{}}}, {});\n",
+                    "        __t({}, new String[]{{{}}}, new Object[]{{{}}});\n",
                     i + 1,
                     names.join(", "),
                     values.join(", ")
@@ -448,14 +454,48 @@ fn generate_runner(
     match input {
         ExampleInput::Single(params) => {
             // ── Single-method call ──────────────────────────
-            // Build input parameters
-            for (param_name, value) in params {
-                out.push_str(&format!("        {}\n", value.to_java_init(param_name)));
-            }
-
+            // Look up expected Java types from the method signature
             let method_name = &primary.name;
-            let arg_names: Vec<String> = params.iter().map(|(name, _)| name.clone()).collect();
             let return_type = &primary.return_type;
+
+            // Build input parameters with type-aware initialization.
+            // LeetCode examples often have extra metadata params (pos, skipA, etc.)
+            // whose names don't match method parameters. Also, example param names
+            // may differ from method param names (e.g. listA vs headA).
+            //
+            // Strategy:
+            // 1. First try to match each method param by name in the example params.
+            // 2. For unmatched method params, fall back to positional matching:
+            //    scan remaining example params for a value whose type is compatible.
+            let mut arg_names: Vec<String> = Vec::new();
+            let mut used_example_indices: Vec<bool> = vec![false; params.len()];
+
+            for (method_type, method_param_name) in &primary.params {
+                // 1. Try name match first
+                let found = params.iter().enumerate().find(|(idx, (pname, _))| {
+                    !used_example_indices[*idx] && pname == method_param_name
+                });
+                if let Some((idx, (pname, value))) = found {
+                    used_example_indices[idx] = true;
+                    out.push_str(&format!("        {}\n",
+                        value.to_java_init_typed(pname, method_type.as_str())));
+                    arg_names.push(pname.clone());
+                    continue;
+                }
+
+                // 2. Fallback: find compatible value by type
+                let type_fallback = params.iter().enumerate().find(|(idx, (_, value))| {
+                    if used_example_indices[*idx] { return false; }
+                    is_value_compatible_with_type(value, method_type.as_str())
+                });
+                if let Some((idx, (_, value))) = type_fallback {
+                    used_example_indices[idx] = true;
+                    out.push_str(&format!("        {}\n",
+                        value.to_java_init_typed(method_param_name, method_type.as_str())));
+                    arg_names.push(method_param_name.clone());
+                }
+                // If still no match: method param is skipped (call will fail at javac)
+            }
 
             if return_type == "void" {
                 out.push_str(&format!(
@@ -560,6 +600,35 @@ fn boxed_type(java_type: &str) -> &str {
         "char[]" => "char[]",
         "boolean" => "boolean",
         _ => java_type,
+    }
+}
+
+/// Check whether a TypedValue is compatible with an expected Java parameter type.
+/// Used for fallback matching when example param names differ from method param names.
+fn is_value_compatible_with_type(value: &super::example::TypedValue, java_type: &str) -> bool {
+    match value {
+        super::example::TypedValue::Int(_) => {
+            java_type == "int" || java_type == "Integer"
+                || java_type == "long" || java_type == "double"
+                || java_type == "boolean"
+        }
+        super::example::TypedValue::String(_) => {
+            java_type == "String" || java_type == "char"
+        }
+        super::example::TypedValue::Bool(_) => {
+            java_type == "boolean" || java_type == "Boolean"
+        }
+        super::example::TypedValue::Array(_) => {
+            java_type == "int[]" || java_type == "String[]"
+                || java_type == "ListNode" || java_type == "TreeNode"
+                || java_type == "ListNode[]"
+        }
+        super::example::TypedValue::NestedArray(_) => {
+            java_type == "int[][]" || java_type == "ListNode[]"
+        }
+        super::example::TypedValue::TreeNodeArray(_) => {
+            java_type == "TreeNode" || java_type == "Integer[]"
+        }
     }
 }
 

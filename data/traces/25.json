@@ -1,0 +1,4761 @@
+{
+  "input": "head = [1, 2, 3, 4, 5], k = 2",
+  "algorithm": "Solution.reverseKGroup",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public ListNode reverseKGroup(ListNode head, int k) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "head",
+          "value": "1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "k",
+          "value": "2",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "head",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        ListNode dummy = new ListNode(0);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        dummy.next = head;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": "0"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        ListNode groupPrev = dummy;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (true) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            ListNode kth = getKth(groupPrev, k);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            if (kth == null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            ListNode groupNext = kth.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode prev = groupNext;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            ListNode cur = groupPrev.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            while (cur != groupNext) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "                ListNode tmp = cur.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                cur.next = prev;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4->5",
+          "old": "1->2->3->4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": "0->1->2->3->4->5"
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": "0->1->2->3->4->5"
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "19",
+      "code": "                prev = cur;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "1->3->4->5",
+          "old": "3->4->5"
+        },
+        {
+          "name": "tmp",
+          "value": "2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "                cur = tmp;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->3->4->5",
+          "old": "1->3->4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "2->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            while (cur != groupNext) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "1->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "                ListNode tmp = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "3->4->5",
+          "old": "2->3->4->5"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                cur.next = prev;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->1->3->4->5",
+          "old": "2->3->4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->1->3->4->5",
+          "old": "2->3->4->5"
+        },
+        {
+          "name": "prev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "19",
+      "code": "                prev = cur;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1->3->4->5",
+          "old": "1->3->4->5"
+        },
+        {
+          "name": "tmp",
+          "value": "3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "                cur = tmp;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": "2->1->3->4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "22",
+      "code": "            ListNode newGroupTail = groupPrev.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "newGroupTail",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "newGroupTail",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "23",
+      "code": "            groupPrev.next = prev;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": "0->1->3->4->5"
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "0->2->1->3->4->5",
+          "old": "0->1->3->4->5"
+        },
+        {
+          "name": "kth",
+          "value": "2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "newGroupTail",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "newGroupTail",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "24",
+      "code": "            groupPrev = newGroupTail;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": "0->2->1->3->4->5"
+        },
+        {
+          "name": "kth",
+          "value": "2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "newGroupTail",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "2->1->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupNext",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "newGroupTail",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (true) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            ListNode kth = getKth(groupPrev, k);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": "2->1->3->4->5"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            if (kth == null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            ListNode groupNext = kth.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": "3->4->5"
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode prev = groupNext;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "5",
+          "old": "2->1->3->4->5"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            ListNode cur = groupPrev.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            while (cur != groupNext) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "                ListNode tmp = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->4->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "4->5",
+          "old": "3->4->5"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                cur.next = prev;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->5",
+          "old": "3->4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": "0->2->1->3->4->5"
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": "1->3->4->5"
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "19",
+      "code": "                prev = cur;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->5",
+          "old": "5"
+        },
+        {
+          "name": "tmp",
+          "value": "4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "                cur = tmp;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": "3->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "4->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "tmp",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            while (cur != groupNext) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "                ListNode tmp = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "3->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "5",
+          "old": "4->5"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                cur.next = prev;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->3->5",
+          "old": "4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->3->5",
+          "old": "4->5"
+        },
+        {
+          "name": "prev",
+          "value": "3->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "19",
+      "code": "                prev = cur;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->3->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->3->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "4->3->5",
+          "old": "3->5"
+        },
+        {
+          "name": "tmp",
+          "value": "5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "                cur = tmp;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": "4->3->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->3->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "4->3->5",
+          "old": null
+        },
+        {
+          "name": "tmp",
+          "value": "5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "22",
+      "code": "            ListNode newGroupTail = groupPrev.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "4->3->5",
+          "old": null
+        },
+        {
+          "name": "newGroupTail",
+          "value": "3->5",
+          "old": "1->3->4->5"
+        },
+        {
+          "name": "prev",
+          "value": "4->3->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "newGroupTail",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "23",
+      "code": "            groupPrev.next = prev;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3->5",
+          "old": "0->2->1->3->5"
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "1->4->3->5",
+          "old": "1->3->5"
+        },
+        {
+          "name": "kth",
+          "value": "4->3->5",
+          "old": null
+        },
+        {
+          "name": "newGroupTail",
+          "value": "3->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "4->3->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            1,
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "newGroupTail",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "24",
+      "code": "            groupPrev = newGroupTail;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3->5",
+          "old": null
+        },
+        {
+          "name": "groupNext",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "3->5",
+          "old": "1->4->3->5"
+        },
+        {
+          "name": "kth",
+          "value": "4->3->5",
+          "old": null
+        },
+        {
+          "name": "newGroupTail",
+          "value": "3->5",
+          "old": null
+        },
+        {
+          "name": "prev",
+          "value": "4->3->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "kth",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "newGroupTail",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "prev",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (true) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "3->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            ListNode kth = getKth(groupPrev, k);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "null",
+          "old": "4->3->5"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            if (kth == null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "3->5",
+          "old": null
+        },
+        {
+          "name": "kth",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    },
+    {
+      "line": "26",
+      "code": "        return dummy.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "2->1->4->3->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3->5",
+          "old": null
+        },
+        {
+          "name": "groupPrev",
+          "value": "3->5",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "groupPrev",
+          "ascii": null,
+          "data": [
+            3,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "reverseKGroup"
+      ]
+    }
+  ]
+}

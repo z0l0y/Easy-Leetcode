@@ -1,0 +1,166 @@
+{
+  "input": "lists = []",
+  "algorithm": "Solution.mergeKLists",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public ListNode mergeKLists(ListNode[] lists) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "lists",
+          "value": "[LListNode;@6d06d69c",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        PriorityQueue<ListNode> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a.val));",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "        ListNode dummy = new ListNode(0);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "        ListNode cur = dummy;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "21",
+      "code": "        return dummy.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    }
+  ]
+}

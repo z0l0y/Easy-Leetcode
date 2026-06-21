@@ -1,0 +1,1638 @@
+{
+  "input": "l1 = [2, 4, 3], l2 = [5, 6, 4]",
+  "algorithm": "Solution.addTwoNumbers",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "l1",
+          "value": "2->4->3",
+          "old": null
+        },
+        {
+          "name": "l2",
+          "value": "5->6->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "l1",
+          "ascii": null,
+          "data": [
+            2,
+            4,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "l2",
+          "ascii": null,
+          "data": [
+            5,
+            6,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        ListNode dummy = new ListNode(0);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        ListNode cur = dummy;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        int carry = 0;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (l1 != null || l2 != null || carry != 0) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            int sum = carry;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            if (l1 != null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                sum += l1.val;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "2",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "                l1 = l1.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            if (l2 != null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "                sum += l2.val;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "7",
+          "old": "2"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "                l2 = l2.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "7",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "            cur.next = new ListNode(sum % 10);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0->7",
+          "old": "0"
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": "0"
+        },
+        {
+          "name": "sum",
+          "value": "7",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "19",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": "0->7"
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "7",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "            carry = sum / 10;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "7",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (l1 != null || l2 != null || carry != 0) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            int sum = carry;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "0",
+          "old": "7"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            if (l1 != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                sum += l1.val;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "4",
+          "old": "0"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "                l1 = l1.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            if (l2 != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "                sum += l2.val;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "10",
+          "old": "4"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "                l2 = l2.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "10",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "            cur.next = new ListNode(sum % 10);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "7->0",
+          "old": "7"
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": "0->7"
+        },
+        {
+          "name": "sum",
+          "value": "10",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "19",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": "7->0"
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "10",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "            carry = sum / 10;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "10",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (l1 != null || l2 != null || carry != 0) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            int sum = carry;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "1",
+          "old": "10"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            if (l1 != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                sum += l1.val;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "4",
+          "old": "1"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "                l1 = l1.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            if (l2 != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "                sum += l2.val;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "8",
+          "old": "4"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "                l2 = l2.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "8",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "            cur.next = new ListNode(sum % 10);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "0->8",
+          "old": "0"
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0->8",
+          "old": "0->7->0"
+        },
+        {
+          "name": "sum",
+          "value": "8",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            8
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0,
+            8
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "19",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "8",
+          "old": "0->8"
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0->8",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "8",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0,
+            8
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "            carry = sum / 10;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "carry",
+          "value": "0",
+          "old": "1"
+        },
+        {
+          "name": "cur",
+          "value": "8",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0->8",
+          "old": null
+        },
+        {
+          "name": "sum",
+          "value": "8",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0,
+            8
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    },
+    {
+      "line": "22",
+      "code": "        return dummy.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "7->0->8",
+          "old": null
+        },
+        {
+          "name": "carry",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "8",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->7->0->8",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            7,
+            0,
+            8
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            7,
+            0,
+            8
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "addTwoNumbers"
+      ]
+    }
+  ]
+}

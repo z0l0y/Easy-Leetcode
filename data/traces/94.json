@@ -1,0 +1,1614 @@
+{
+  "input": "root = [1, null, 2, 3]",
+  "algorithm": "Solution.inorderTraversal",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public List<Integer> inorderTraversal(TreeNode root) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[1,null,2,3,null,null,null]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            1,
+            null,
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        List<Integer> res = new ArrayList<>();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "res",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        Deque<TreeNode> stack = new ArrayDeque<>();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "res",
+          "value": "[]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        TreeNode cur = root;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[1,null,2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            null,
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (cur != null || !stack.isEmpty()) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[1,null,2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            null,
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            while (cur != null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[1,null,2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            null,
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                stack.push(cur);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[1,null,2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[1]",
+          "old": "[]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            null,
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                cur = cur.left;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": "[1,null,2,3,null,null,null]"
+        },
+        {
+          "name": "res",
+          "value": "[]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[1]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            TreeNode node = stack.pop();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "[1,null,2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": "[1]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            null,
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            res.add(node.val);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "[1,null,2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": "[]"
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            null,
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur = node.right;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[2,3,null,null,null]",
+          "old": "null"
+        },
+        {
+          "name": "node",
+          "value": "[1,null,2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "tree",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            null,
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (cur != null || !stack.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            while (cur != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                stack.push(cur);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[2]",
+          "old": "[]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                cur = cur.left;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[3]",
+          "old": "[2,3,null,null,null]"
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[2]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            while (cur != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[3]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[2]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                stack.push(cur);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "[3]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[3, 2]",
+          "old": "[2]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            3,
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                cur = cur.left;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": "[3]"
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[3, 2]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            3,
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            TreeNode node = stack.pop();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "[3]",
+          "old": "[1,null,2,3,null,null,null]"
+        },
+        {
+          "name": "res",
+          "value": "[1]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[2]",
+          "old": "[3, 2]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            res.add(node.val);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "[3]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1, 3]",
+          "old": "[1]"
+        },
+        {
+          "name": "stack",
+          "value": "[2]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur = node.right;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "[3]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1, 3]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[2]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (cur != null || !stack.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1, 3]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[2]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            TreeNode node = stack.pop();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "[2,3,null,null,null]",
+          "old": "[3]"
+        },
+        {
+          "name": "res",
+          "value": "[1, 3]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": "[2]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            res.add(node.val);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "[2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1, 3, 2]",
+          "old": "[1, 3]"
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur = node.right;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "[2,3,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1, 3, 2]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "        return res;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "[1, 3, 2]",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "res",
+          "value": "[1, 3, 2]",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "res",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            2
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "inorderTraversal"
+      ]
+    }
+  ]
+}

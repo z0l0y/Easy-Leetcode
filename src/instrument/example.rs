@@ -70,22 +70,67 @@ impl TypedValue {
         }
     }
 
-    /// Get the main method return type if this is the expected output.
-    #[allow(unused_variables)]
+    /// Generate a Java variable declaration for this value (default int type).
+    #[allow(dead_code)]
     pub fn to_java_init(&self, var_name: &str) -> String {
+        self.to_java_init_typed(var_name, "int")
+    }
+
+    /// Generate a Java variable declaration, using the expected Java type to
+    /// produce wrapper code (e.g. buildList / buildTree) for custom types.
+    pub fn to_java_init_typed(&self, var_name: &str, expected_type: &str) -> String {
         match self {
             TypedValue::Int(n) => format!("int {} = {};", var_name, n),
             TypedValue::String(s) => format!("String {} = \"{}\";", var_name, s),
             TypedValue::Bool(b) => format!("boolean {} = {};", var_name, b),
             TypedValue::Array(elems) => {
                 let lit = self.to_java_literal();
-                format!("int[] {} = {};", var_name, lit)
+                if expected_type == "ListNode" {
+                    // int[] → ListNode via buildList
+                    format!("ListNode {} = buildList(new int[]{});", var_name, lit)
+                } else if expected_type == "TreeNode" {
+                    // int[] → TreeNode via buildTree (already treats nulls)
+                    let tree_items: Vec<String> = elems
+                        .iter()
+                        .map(|v| match v {
+                            TypedValue::Int(n) => n.to_string(),
+                            _ => "null".to_string(),
+                        })
+                        .collect();
+                    format!(
+                        "Integer[] __{}_vals = {{{}}};\n        TreeNode {} = buildTree(__{}_vals);",
+                        var_name,
+                        tree_items.join(", "),
+                        var_name,
+                        var_name
+                    )
+                } else if expected_type == "ListNode[]" {
+                    // Array of ListNodes
+                    let items: Vec<String> = elems
+                        .iter()
+                        .map(|v| format!("buildList(new int[]{})", v.to_java_literal()))
+                        .collect();
+                    format!("ListNode[] {} = {{{}}};", var_name, items.join(", "))
+                } else {
+                    format!("int[] {} = {};", var_name, lit)
+                }
             }
             TypedValue::NestedArray(rows) => {
-                let lit = self.to_java_literal();
-                format!("int[][] {} = {};", var_name, lit)
+                if expected_type == "ListNode[]" {
+                    let items: Vec<String> = rows
+                        .iter()
+                        .map(|row| {
+                            let lit = TypedValue::Array(row.clone()).to_java_literal();
+                            format!("buildList(new int[]{})", lit)
+                        })
+                        .collect();
+                    format!("ListNode[] {} = {{{}}};", var_name, items.join(", "))
+                } else {
+                    let lit = self.to_java_literal();
+                    format!("int[][] {} = {};", var_name, lit)
+                }
             }
-            TypedValue::TreeNodeArray(elems) => {
+            TypedValue::TreeNodeArray(_elems) => {
                 let lit = self.to_java_literal();
                 format!(
                     "Integer[] __{}_vals = {};\n        TreeNode {} = buildTree(__{}_vals);",
@@ -115,10 +160,22 @@ impl ExampleInput {
 
 /// Parse the example field, auto-detecting single-method vs operation-sequence format.
 pub fn parse_example_input(example: &str) -> anyhow::Result<ExampleInput> {
-    // Try operation sequence format first: ["Op1","Op2"] \n [[args1],[args2]]
-    if example.contains('[') && example.contains('"') && example.contains("],[") {
-        if let Ok(ops) = try_parse_operations(example) {
-            return Ok(ops);
+    // Try operation sequence format: content after "输入：" must start with [" (JSON string array)
+    // e.g. 输入：["LRUCache","put","get"]  [[2],[1,1],[2,2]]
+    // We check that the input portion begins with [" rather than just checking for " anywhere.
+    if let Some(input_start) = example.find("输入：").or_else(|| example.find("输入:")) {
+        let after_input = &example[input_start..];
+        // Strip the "输入：" or "输入:" prefix
+        let content = after_input
+            .strip_prefix("输入：")
+            .or_else(|| after_input.strip_prefix("输入:"))
+            .unwrap_or(after_input)
+            .trim();
+        // Operation format starts with ["Op1","Op2",...]
+        if content.starts_with("[\"") {
+            if let Ok(ops) = try_parse_operations(example) {
+                return Ok(ops);
+            }
         }
     }
     // Fall back to single-method format
@@ -370,6 +427,38 @@ fn parse_value(s: &str) -> anyhow::Result<TypedValue> {
         return Ok(TypedValue::Array(elems));
     }
 
+    // Linked-list notation: 1->2->3->4 or 1->2->3->null
+    // May have trailing annotations like （从 3 开始相交） — strip them.
+    if s.contains("->") && !s.starts_with('[') && !s.starts_with('{') {
+        // Strip trailing Chinese annotations: （...） 或 (...)
+        let cleaned = strip_trailing_annotation(s);
+        let elems: Vec<TypedValue> = cleaned
+            .split("->")
+            .map(|part| {
+                let part = part.trim();
+                if part == "null" {
+                    Ok(TypedValue::Int(0)) // sentinel
+                } else if let Ok(n) = part.parse::<i64>() {
+                    Ok(TypedValue::Int(n))
+                } else {
+                    // strip trailing non-digit characters (e.g., "4）" → "4")
+                    let digits: String = part.chars().take_while(|c| c.is_ascii_digit()).collect();
+                    if !digits.is_empty() {
+                        Ok(TypedValue::Int(digits.parse().unwrap_or(0)))
+                    } else {
+                        Ok(TypedValue::String(part.to_string()))
+                    }
+                }
+            })
+            .collect::<anyhow::Result<Vec<_>>>()?;
+        // Only treat as linked list if we got mostly numbers
+        let num_count = elems.iter().filter(|e| matches!(e, TypedValue::Int(_))).count();
+        if num_count as f64 / elems.len() as f64 > 0.5 {
+            return Ok(TypedValue::Array(elems));
+        }
+        // Otherwise, treat as regular string with "->" in it
+    }
+
     // Integer
     if let Ok(n) = s.parse::<i64>() {
         return Ok(TypedValue::Int(n));
@@ -379,28 +468,61 @@ fn parse_value(s: &str) -> anyhow::Result<TypedValue> {
     Ok(TypedValue::String(s.to_string()))
 }
 
-/// Parse a nested array like [[1,2],[3,4]].
+/// Parse a nested array like [[1,2],[3,4]] or [[1,4,5],[1,3,4],[2,6]].
+/// Walks the inner string character-by-character, respecting bracket depth,
+/// to correctly split sub-arrays even when they contain commas.
 fn parse_nested_array(s: &str) -> anyhow::Result<Vec<Vec<TypedValue>>> {
     let s = s.trim();
     if !s.starts_with("[[") || !s.ends_with("]]") {
         anyhow::bail!("无法解析嵌套数组: {}", s)
     }
 
-    let inner = &s[2..s.len() - 2];
-    let rows = smart_split(inner, ']')
-        .iter()
-        .map(|row| {
-            let row = row.trim().trim_start_matches(',').trim();
-            let row = row.trim_start_matches('[');
-            if row.is_empty() {
-                return Ok(vec![]);
+    let inner = &s[2..s.len() - 2]; // strip outer [[ and ]]
+    let mut rows: Vec<Vec<TypedValue>> = Vec::new();
+    let mut depth = 0;
+    let mut current = String::new();
+
+    for ch in inner.chars() {
+        match ch {
+            '[' => {
+                depth += 1;
+                current.push(ch);
             }
-            smart_split(row, ',')
-                .iter()
-                .map(|e| parse_value(e))
-                .collect::<Result<Vec<_>, _>>()
-        })
-        .collect::<Result<Vec<_>, _>>()?;
+            ']' => {
+                depth -= 1;
+                current.push(ch);
+                // When depth returns to 0, we've closed a sub-array
+                if depth == 0 {
+                    let row_str = current.trim().to_string();
+                    if !row_str.is_empty() {
+                        // Parse the row as an array
+                        let row = if row_str.starts_with('[') && row_str.ends_with(']') {
+                            let row_inner = &row_str[1..row_str.len() - 1];
+                            if row_inner.trim().is_empty() {
+                                vec![]
+                            } else {
+                                smart_split(row_inner, ',')
+                                    .iter()
+                                    .map(|e| parse_value(e))
+                                    .collect::<anyhow::Result<Vec<_>>>()?
+                            }
+                        } else {
+                            vec![parse_value(&row_str)?]
+                        };
+                        rows.push(row);
+                    }
+                    current = String::new();
+                }
+            }
+            ',' if depth == 0 => {
+                // separator between sub-arrays — skip
+            }
+            _ => {
+                current.push(ch);
+            }
+        }
+    }
+
     Ok(rows)
 }
 
@@ -420,6 +542,24 @@ fn parse_tree_node_array(inner: &str) -> anyhow::Result<Vec<Option<i64>>> {
             }
         })
         .collect()
+}
+
+/// Strip trailing annotation text like "（从 3 开始相交）" or "(from node 3)"
+/// from a value string. Used to clean linked-list notation values.
+fn strip_trailing_annotation(s: &str) -> String {
+    let s = s.trim();
+    // Chinese parentheses
+    if let Some(pos) = s.find('（') {
+        return s[..pos].trim().to_string();
+    }
+    // ASCII parentheses used as annotation (not part of method signature)
+    if let Some(pos) = s.find("(从") {
+        return s[..pos].trim().to_string();
+    }
+    if let Some(pos) = s.find("(from") {
+        return s[..pos].trim().to_string();
+    }
+    s.to_string()
 }
 
 #[cfg(test)]

@@ -1,0 +1,2323 @@
+{
+  "input": "head = [1, 2, 3, 4]",
+  "algorithm": "Solution.swapPairs",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public ListNode swapPairs(ListNode head) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "head",
+          "value": "1->2->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "head",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        ListNode dummy = new ListNode(0);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        dummy.next = head;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4",
+          "old": "0"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        ListNode cur = dummy;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (cur.next != null && cur.next.next != null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            ListNode first = cur.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "first",
+          "value": "1->2->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            ListNode second = cur.next.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "first",
+          "value": "1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "2->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            ListNode next = second.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "first",
+          "value": "1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "2->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "            cur.next = second;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->2->3->4",
+          "old": "0->1->2->3->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->3->4",
+          "old": "0->1->2->3->4"
+        },
+        {
+          "name": "first",
+          "value": "1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "2->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            second.next = first;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->...",
+          "old": "0->2->3->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->...",
+          "old": "0->2->3->4"
+        },
+        {
+          "name": "first",
+          "value": "1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->...",
+          "old": "1->2->3->4"
+        },
+        {
+          "name": "next",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->...",
+          "old": "2->3->4"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            "..."
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            "..."
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            "..."
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            "..."
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            first.next = next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->2->1->3->4",
+          "old": "0->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->..."
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4",
+          "old": "0->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->..."
+        },
+        {
+          "name": "first",
+          "value": "1->3->4",
+          "old": "1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->..."
+        },
+        {
+          "name": "next",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "2->1->3->4",
+          "old": "2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->2->1->..."
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur = first;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": "0->2->1->3->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4",
+          "old": null
+        },
+        {
+          "name": "first",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "2->1->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "next",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        while (cur.next != null && cur.next.next != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            ListNode first = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4",
+          "old": null
+        },
+        {
+          "name": "first",
+          "value": "3->4",
+          "old": "1->3->4"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            ListNode second = cur.next.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4",
+          "old": null
+        },
+        {
+          "name": "first",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "4",
+          "old": "2->1->3->4"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            ListNode next = second.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->3->4",
+          "old": null
+        },
+        {
+          "name": "first",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": "3->4"
+        },
+        {
+          "name": "second",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "            cur.next = second;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->4",
+          "old": "1->3->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->4",
+          "old": "0->2->1->3->4"
+        },
+        {
+          "name": "first",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            second.next = first;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->...",
+          "old": "1->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->...",
+          "old": "0->2->1->4"
+        },
+        {
+          "name": "first",
+          "value": "3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->...",
+          "old": "3->4"
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->...",
+          "old": "4"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            "..."
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            "..."
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "first",
+          "ascii": null,
+          "data": [
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            "..."
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            4,
+            3,
+            "..."
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            first.next = next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->4->3",
+          "old": "1->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->..."
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3",
+          "old": "0->2->1->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->..."
+        },
+        {
+          "name": "first",
+          "value": "3",
+          "old": "3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->..."
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "4->3",
+          "old": "4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->4->3->..."
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "cur",
+          "ascii": null,
+          "data": [
+            1,
+            4,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            4,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur = first;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3",
+          "old": "1->4->3"
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3",
+          "old": null
+        },
+        {
+          "name": "first",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "next",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "second",
+          "value": "4->3",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "second",
+          "ascii": null,
+          "data": [
+            4,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "swapPairs"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "        return dummy.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "2->1->4->3",
+          "old": null
+        },
+        {
+          "name": "cur",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->2->1->4->3",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            2,
+            1,
+            4,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            2,
+            1,
+            4,
+            3
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "swapPairs"
+      ]
+    }
+  ]
+}
