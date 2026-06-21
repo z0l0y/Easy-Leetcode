@@ -48,6 +48,7 @@ impl TypedValue {
     }
 
     /// Get the Java type name for this value.
+    #[allow(dead_code)]
     pub fn java_type(&self) -> &str {
         match self {
             TypedValue::Int(_) => "int",
@@ -69,6 +70,7 @@ impl TypedValue {
     }
 
     /// Get the main method return type if this is the expected output.
+    #[allow(unused_variables)]
     pub fn to_java_init(&self, var_name: &str) -> String {
         match self {
             TypedValue::Int(n) => format!("int {} = {};", var_name, n),

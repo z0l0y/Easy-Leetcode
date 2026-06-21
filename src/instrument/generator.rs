@@ -166,12 +166,21 @@ fn generate_instrumented_solution(
         let needs_before = is_return || is_if_header || is_else_header;
         if needs_before {
             let visible_vars = get_visible_vars(var_decls, i + 1);
-            if !visible_vars.is_empty() {
-                let names: Vec<String> = visible_vars
+            if !visible_vars.is_empty() || is_return {
+                let mut names: Vec<String> = visible_vars
                     .iter()
                     .map(|v| format!("\"{}\"", v.name))
                     .collect();
-                let values: Vec<String> = visible_vars.iter().map(|v| v.name.clone()).collect();
+                let mut values: Vec<String> =
+                    visible_vars.iter().map(|v| v.name.clone()).collect();
+
+                // For return statements, capture the return expression value
+                if is_return {
+                    let ret_expr = extract_return_expr(trimmed);
+                    names.insert(0, "\"__return__\"".to_string());
+                    values.insert(0, ret_expr);
+                }
+
                 out.push_str(&format!(
                     "        __t({}, new String[]{{{}}}, {});\n",
                     i + 1,
@@ -260,6 +269,13 @@ fn get_visible_vars(
         .filter(|v| v.line <= current_line && v.scope_end > current_line)
         .cloned()
         .collect()
+}
+
+/// Extract the expression from a return statement, e.g. "return x + y;" → "x + y".
+fn extract_return_expr(trimmed: &str) -> String {
+    let s = trimmed.strip_prefix("return ").unwrap_or(trimmed);
+    let s = s.strip_suffix(';').unwrap_or(s);
+    s.trim().to_string()
 }
 
 fn generate_runner(

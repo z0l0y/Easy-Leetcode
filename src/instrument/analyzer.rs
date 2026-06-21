@@ -10,6 +10,7 @@ pub struct Analysis {
     /// Set of custom types needed (ListNode, TreeNode, Node)
     pub needs_types: Vec<String>,
     /// The full answer code (for reference)
+    #[allow(dead_code)]
     pub answer: String,
     /// Line-number → code-text mapping for the answer
     pub code_lines: Vec<String>,
@@ -27,6 +28,7 @@ pub struct MethodInfo {
 #[derive(Debug, Clone)]
 pub struct VarDecl {
     pub name: String,
+    #[allow(dead_code)]
     pub var_type: String,
     pub line: usize,       // 1-indexed declaration line
     pub scope_end: usize,  // 1-indexed line where variable goes out of scope
@@ -233,6 +235,7 @@ fn detect_custom_types(code: &str) -> Vec<String> {
 }
 
 /// Extract variable declarations with scope tracking within a method body.
+#[allow(unused_assignments, unused_variables)]
 fn extract_vars(code_lines: &[String], method: &MethodInfo) -> Result<Vec<VarDecl>, String> {
     let mut vars = Vec::new();
     let start = method.body_start_line.saturating_sub(1); // 0-indexed

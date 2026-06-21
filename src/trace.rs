@@ -95,9 +95,20 @@ pub fn format_trace(
                 } else {
                     String::new()
                 };
+                let is_return = var.name == "__return__";
+                let name_display = if is_return {
+                    "返回值".to_string()
+                } else {
+                    var.name.clone()
+                };
+                let name_color = if is_return {
+                    trace_theme.result
+                } else {
+                    trace_theme.var_name
+                };
                 out.push_str(&format!(
                     "      {} = {}{}\n",
-                    format_value(&var.name, trace_theme.var_name, color),
+                    format_value(&name_display, name_color, color),
                     format_value(&var.value, trace_theme.var_value, color),
                     old_part,
                 ));

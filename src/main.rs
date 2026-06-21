@@ -44,6 +44,13 @@ struct Cli {
     #[arg(long, help = "强制重新运行自动追踪（忽略缓存）")]
     re_trace: bool,
 
+    #[arg(
+        long,
+        value_name = "INPUT",
+        help = "自定义输入参数，格式: \"name1=val1, name2=val2\"。例如: --input \"nums=[1,2,3], target=5\""
+    )]
+    input: Option<String>,
+
     #[arg(short = 'l', long, help = "列出全部题目")]
     list: bool,
 
@@ -118,7 +125,7 @@ fn main() {
             Some(problem) => {
                 // TUI mode: launch interactive trace viewer
                 if show_trace && !cli.trace_text {
-                    handle_tui_trace(problem, cli.re_trace);
+                    handle_tui_trace(problem, cli.re_trace, cli.input.as_deref());
                     return;
                 }
                 let output = format_problem(
@@ -128,6 +135,7 @@ fn main() {
                     show_answer,
                     show_trace,
                     cli.re_trace,
+                    cli.input.as_deref(),
                     color_enabled,
                     cli.theme.as_deref(),
                 );
@@ -160,10 +168,14 @@ fn print_list(db: &Database) {
 
 /// Handle the TUI trace flow: generate trace → analyze code → launch TUI.
 /// For TUI mode, we prefer auto-instrumentation (denser steps) over static traces.
-fn handle_tui_trace(problem: &Problem, re_trace: bool) {
+fn handle_tui_trace(problem: &Problem, re_trace: bool, custom_input: Option<&str>) {
     // Always try auto-instrumentation or cache for TUI (more steps than static traces)
-    eprintln!("正在生成执行追踪...");
-    let trace = match instrument::run_auto_trace(problem, re_trace) {
+    if custom_input.is_none() {
+        eprintln!("正在生成执行追踪...");
+    } else {
+        eprintln!("正在使用自定义输入生成追踪...");
+    }
+    let trace = match instrument::run_auto_trace(problem, re_trace, custom_input) {
         Ok(t) => t,
         Err(err) => {
             // Fall back to static trace if auto-instrumentation fails
@@ -205,6 +217,7 @@ fn format_problem(
     show_answer: bool,
     show_trace: bool,
     re_trace: bool,
+    custom_input: Option<&str>,
     color: bool,
     theme_path: Option<&str>,
 ) -> String {
@@ -251,8 +264,8 @@ fn format_problem(
 
     if show_trace {
         let theme = load_theme(theme_path);
-        // Use static trace only if not forcing re-trace
-        let use_static = !re_trace && problem.trace.is_some();
+        // Use static trace only if not forcing re-trace AND no custom input
+        let use_static = !re_trace && custom_input.is_none() && problem.trace.is_some();
         match use_static {
             true => {
                 let trace_data = problem.trace.as_ref().unwrap();
@@ -267,7 +280,7 @@ fn format_problem(
             false => {
                 // Try auto-instrumentation (or cache)
                 out.push_str(&format!("{} (自动生成中...)\n", label("执行追踪:", color)));
-                match instrument::run_auto_trace(problem, re_trace) {
+                match instrument::run_auto_trace(problem, re_trace, custom_input) {
                     Ok(trace_data) => {
                         out.push_str(&trace::format_trace(
                             &trace_data,

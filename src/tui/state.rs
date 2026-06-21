@@ -71,6 +71,7 @@ impl<'a> AppState<'a> {
     }
 
     /// Auto-scroll the code panel to keep the current line visible.
+    #[allow(dead_code)]
     pub fn autoscroll(&mut self, visible_lines: usize) {
         let line_idx = self
             .current_line()

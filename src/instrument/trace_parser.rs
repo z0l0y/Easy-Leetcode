@@ -6,7 +6,7 @@ use std::collections::HashMap;
 /// Parse Java stdout output into a Trace structure.
 pub fn parse(
     output_lines: &[String],
-    answer: &str,
+    _answer: &str,
     analysis: &Analysis,
     params: &[(String, TypedValue)],
 ) -> Result<Trace, String> {

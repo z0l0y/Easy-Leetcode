@@ -1,7 +1,7 @@
 use super::state::AppState;
 use ratatui::{
     layout::{Constraint, Direction, Layout},
-    style::{Color, Modifier, Style, Stylize},
+    style::{Color, Modifier, Style},
     text::{Line, Span, Text},
     widgets::{Block, Borders, Cell, Paragraph, Row, Table, Wrap},
     Frame,
@@ -14,7 +14,6 @@ const COLOR_CUR_LINE: Color = Color::Rgb(40, 44, 52); // dark bg highlight
 const COLOR_CUR_MARKER: Color = Color::Rgb(97, 175, 239); // blue arrow
 const COLOR_VAR_NAME: Color = Color::Rgb(97, 175, 239);
 const COLOR_VAR_VALUE: Color = Color::Rgb(229, 192, 123);
-const COLOR_VAR_OLD: Color = Color::Rgb(92, 99, 112);
 const COLOR_CHANGED: Color = Color::Rgb(229, 192, 123);
 const COLOR_TITLE: Color = Color::Rgb(152, 195, 121);
 const COLOR_BORDER: Color = Color::Rgb(92, 99, 112);
@@ -45,7 +44,7 @@ pub fn render(frame: &mut Frame, state: &AppState) {
     let watch_area = hchunks[1];
 
     // Auto-scroll before rendering
-    let visible_lines = code_area.height.saturating_sub(2) as usize; // minus borders
+    let _visible_lines = code_area.height.saturating_sub(2) as usize; // minus borders
     // (can't mutate state in immutable render, so we won't autoscroll here)
 
     render_code_panel(frame, code_area, state);
@@ -144,11 +143,26 @@ fn render_vars_table(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
         .vars
         .iter()
         .map(|v| {
+            let is_return = v.name == "__return__";
             let changed = v.old.is_some();
-            let val_style = if changed {
+
+            let name_style = if is_return {
+                Style::default().fg(COLOR_RESULT).add_modifier(Modifier::BOLD)
+            } else {
+                Style::default().fg(COLOR_VAR_NAME)
+            };
+            let val_style = if is_return {
+                Style::default().fg(COLOR_RESULT).add_modifier(Modifier::BOLD)
+            } else if changed {
                 Style::default().fg(COLOR_CHANGED).add_modifier(Modifier::BOLD)
             } else {
                 Style::default().fg(COLOR_VAR_VALUE)
+            };
+
+            let display_name = if is_return {
+                "Return Value".to_string()
+            } else {
+                v.name.clone()
             };
 
             let mut val_text = v.value.clone();
@@ -157,7 +171,7 @@ fn render_vars_table(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
             }
 
             Row::new(vec![
-                Cell::from(Span::styled(&v.name, Style::default().fg(COLOR_VAR_NAME))),
+                Cell::from(Span::styled(display_name, name_style)),
                 Cell::from(Span::styled(val_text, val_style)),
             ])
         })

@@ -1,13 +1,15 @@
 use std::fs;
 use std::io::Write;
-use std::path::PathBuf;
 use std::process::Command;
 use std::time::Instant;
 
 pub struct JavaResult {
     pub output: Vec<String>,
+    #[allow(dead_code)]
     pub errors: Vec<String>,
+    #[allow(dead_code)]
     pub exit_code: i32,
+    #[allow(dead_code)]
     pub elapsed_ms: u64,
 }
 

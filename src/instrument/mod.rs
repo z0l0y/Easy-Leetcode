@@ -9,22 +9,33 @@ use std::path::PathBuf;
 
 /// Run the full auto-instrumentation pipeline for a problem.
 /// If `force` is true, skips the cache and regenerates.
+/// If `custom_input` is provided, uses it instead of `problem.example`.
 /// Returns a Trace if successful, or an error message string.
-pub fn run_auto_trace(problem: &Problem, force: bool) -> Result<Trace, String> {
-    // Check cache (unless --re-trace)
-    if !force {
+pub fn run_auto_trace(
+    problem: &Problem,
+    force: bool,
+    custom_input: Option<&str>,
+) -> Result<Trace, String> {
+    // Custom input bypasses cache (different inputs → different traces)
+    if !force && custom_input.is_none() {
         if let Some(cached) = load_cached_trace(&problem.id) {
             return Ok(cached);
         }
     }
 
     let answer = problem.answer.as_ref().ok_or("此题目没有答案代码")?;
-    if problem.example.trim().is_empty() {
-        return Err("此题目没有示例数据".into());
+
+    // Use custom input if provided, otherwise fall back to example
+    let example_text = custom_input
+        .map(|s| format!("输入：{}", s))
+        .unwrap_or_else(|| problem.example.clone());
+
+    if example_text.trim().is_empty() {
+        return Err("此题目没有示例数据（可用 --input 指定）".into());
     }
 
     // Phase 1: Parse example input
-    let params = example::parse_example(&problem.example)?;
+    let params = example::parse_example(&example_text)?;
 
     // Phase 2: Analyze Java code
     let analysis = analyzer::analyze(answer)?;
@@ -46,8 +57,10 @@ pub fn run_auto_trace(problem: &Problem, force: bool) -> Result<Trace, String> {
     // Phase 5: Parse output into Trace
     let trace = trace_parser::parse(&result.output, answer, &analysis, &params)?;
 
-    // Save to cache
-    let _ = save_trace_cache(&problem.id, &trace);
+    // Save to cache (only for default example, not custom input)
+    if custom_input.is_none() {
+        let _ = save_trace_cache(&problem.id, &trace);
+    }
 
     Ok(trace)
 }
