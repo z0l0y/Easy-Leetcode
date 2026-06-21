@@ -23,8 +23,22 @@
 - [x] Zero compilation warnings
 - [x] Update all documentation (README_zh.md, README.md, AGENT.md)
 
+## Phase 4: Algorithm Execution Trace
+- [x] Add Trace data model (Trace, TraceStep, TraceVar, TraceDs) to lib.rs
+- [x] Add TraceTheme with 13 color keys to theme.toml and main.rs
+- [x] Create src/trace.rs rendering engine (350+ lines)
+- [x] Implement ASCII visualizations: array, hashmap, stack, queue, linkedlist, window
+- [x] Add -t/--trace CLI flag and integration in main.rs
+- [x] Add trace data for problem 1 (Two Sum, 9 steps)
+- [x] Add trace data for problem 35 (Binary Search, 11 steps)
+- [x] Add trace data for problem 3 (Sliding Window, 23 steps)
+- [x] Update all documentation (README_zh.md, AGENT.md, CHECKLIST.md)
+
 ## Known Limitations
 - Answer code is assumed to be Java; syntax highlighting rules apply to Java only (no language auto-detect)
 - Theme colors are limited to ANSI 16-color palette
 - Windows console requires VT100 mode enabled (via winapi calls)
 - No multi-line API descriptions (single-line format only)
+- Trace data only available for 3 problems (1, 3, 35); others show "暂无数据" message
+- ASCII pointer alignment uses plain-text position calculation to work around ANSI codes
+- Trace data must be hand-crafted per problem (no automatic code instrumentation)

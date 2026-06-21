@@ -6,7 +6,8 @@
 - Use key-value mapping from problem id in data/problems.json.
 - Documentation and metadata must be in English.
 - Every problem entry must include non-empty answer code (Java).
-- For id lookup, users must pass -i/--hint, -a/--answer, or -e/--extra; at least one required.
+- For id lookup, users must pass -i/--hint, -a/--answer, -e/--extra, or -t/--trace; at least one required.
+- -t/--trace displays algorithm execution trace (step-by-step variable and data structure changes). Requires trace data in the problem entry.
 - -o/--output and Markdown modes (-m/--md, -r/--render) are deprecated in favor of direct colorized CLI output.
 - Use the short command name lh in examples; leetcode-helper remains supported as alternative.
 - Default data comes from embedded dataset compiled from data/problems.json; --data can load external file.
@@ -34,12 +35,14 @@
 - README.md: English features, usage, and data format.
 - README_zh.md: Chinese features, usage, theme configuration, output examples.
 - CHECKLIST.md: tasks and milestones.
-- theme.toml: color theme configuration (three sections: markdown, api, syntax).
+- theme.toml: color theme configuration (four sections: markdown, api, syntax, trace).
 - Cargo.toml: crate configuration and dependency versions; package name leetcode-helper; binaries lh (short) and leetcode-helper (full).
 - data/: local dataset directory.
   - problems.json: dataset source; root key "problems" is an id-to-problem mapping.
     - Fields: id, title, category, solution, description, essence, analogy, container, steps (array), complexity, answer (required).
-    - Optional: example, diagram, apiNotes (array of {api, usage, note}).
+    - Optional: example, diagram, apiNotes (array of {api, usage, note}), trace (object with input, algorithm, steps).
+    - trace.steps: array of {line, code, note?, loop_back?, vars?, ds?, is_result?}. Each step records execution state.
+    - trace.steps[].ds: array of data structure visualizations with kind (array/hashmap/window/stack/queue/linkedlist/twopointer/ascii), label, data, highlight, ptr_left, ptr_right.
 - src/: core source code.
   - main.rs: CLI entry; parses args (with --theme for custom theme), loads data, formats output with theme colors and compact layout.
   - lib.rs: data model (Problem, Database, ApiNote) and core logic (JSON parsing, id lookup, keyword search, sorting).

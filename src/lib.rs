@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use serde_json::Value as JsonValue;
 use std::{
     cmp::Ordering,
     collections::HashMap,
@@ -16,7 +17,81 @@ pub struct ApiNote {
     pub note: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+/// Full execution trace for one sample input of a problem.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct Trace {
+    /// Human-readable input description, e.g. "nums = [2,7,11,15], target = 9"
+    pub input: String,
+    /// Optional short algorithm label displayed in trace header
+    #[serde(default)]
+    pub algorithm: Option<String>,
+    /// Ordered execution steps
+    pub steps: Vec<TraceStep>,
+}
+
+/// One atomic step in an algorithm execution trace.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct TraceStep {
+    /// Line number(s) in the answer code block, e.g. "5" or "8-9"
+    pub line: String,
+    /// The line(s) of code being executed at this step (plain text)
+    pub code: String,
+    /// Human annotation explaining what happened
+    #[serde(default)]
+    pub note: Option<String>,
+    /// True if this step revisits a loop header
+    #[serde(default)]
+    pub loop_back: bool,
+    /// Variables and their values visible after this step executes
+    #[serde(default)]
+    pub vars: Vec<TraceVar>,
+    /// Data structure visualizations
+    #[serde(default)]
+    pub ds: Vec<TraceDs>,
+    /// True on the final step that produces the answer
+    #[serde(default)]
+    pub is_result: bool,
+}
+
+/// A variable's name and current value at a point in the trace.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct TraceVar {
+    /// Variable name, e.g. "i", "map", "complement"
+    pub name: String,
+    /// Current value as a display string, e.g. "0", "{2: 0}", "true"
+    pub value: String,
+    /// Previous value; when present the renderer shows "name: new (旧: old)"
+    #[serde(default)]
+    pub old: Option<String>,
+}
+
+/// Descriptor for rendering one data structure at a trace step.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct TraceDs {
+    /// Kind of visualization: "array", "hashmap", "stack", "queue",
+    /// "linkedlist", "twopointer", "window", "tree", "ascii"
+    #[serde(default)]
+    pub kind: Option<String>,
+    /// Human-readable label shown above the visualization
+    pub label: String,
+    /// Pre-rendered ASCII art string (used directly when provided)
+    #[serde(default)]
+    pub ascii: Option<String>,
+    /// Structured data that the renderer converts to ASCII
+    #[serde(default)]
+    pub data: Option<JsonValue>,
+    /// 0-based indices to highlight in the visualization
+    #[serde(default)]
+    pub highlight: Option<Vec<usize>>,
+    /// For "twopointer" and "window": left pointer/edge index
+    #[serde(default)]
+    pub ptr_left: Option<usize>,
+    /// For "twopointer" and "window": right pointer/edge index
+    #[serde(default)]
+    pub ptr_right: Option<usize>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Problem {
     pub id: String,
     pub title: String,
@@ -35,6 +110,8 @@ pub struct Problem {
     pub diagram: String,
     #[serde(default, rename = "apiNotes")]
     pub api_notes: Vec<ApiNote>,
+    #[serde(default)]
+    pub trace: Option<Trace>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]

@@ -9,6 +9,10 @@ use std::{
     process,
 };
 
+mod instrument;
+mod trace;
+mod tui;
+
 const EMBEDDED_DATA: &str = include_str!("../data/problems.json");
 
 #[derive(Parser, Debug)]
@@ -30,6 +34,15 @@ struct Cli {
 
     #[arg(short = 'e', long, help = "显示扩展信息（示例、图示、API 说明）")]
     extra: bool,
+
+    #[arg(short = 't', long, help = "显示算法执行追踪（TUI 交互模式）")]
+    trace: bool,
+
+    #[arg(long, help = "以纯文本模式输出追踪（非 TUI，需配合 -t）")]
+    trace_text: bool,
+
+    #[arg(long, help = "强制重新运行自动追踪（忽略缓存）")]
+    re_trace: bool,
 
     #[arg(short = 'l', long, help = "列出全部题目")]
     list: bool,
@@ -95,18 +108,26 @@ fn main() {
         let show_hint = cli.hint;
         let show_answer = cli.answer;
         let show_extra = cli.extra;
+        let show_trace = cli.trace;
 
-        if !show_hint && !show_answer && !show_extra {
-            eprintln!("请显式指定 -i/--hint、-a/--answer 或 -e/--extra。");
+        if !show_hint && !show_answer && !show_extra && !show_trace {
+            eprintln!("请显式指定 -i/--hint、-a/--answer、-e/--extra 或 -t/--trace。");
             process::exit(2);
         }
         match db.get_by_id(&query) {
             Some(problem) => {
+                // TUI mode: launch interactive trace viewer
+                if show_trace && !cli.trace_text {
+                    handle_tui_trace(problem, cli.re_trace);
+                    return;
+                }
                 let output = format_problem(
                     problem,
                     show_hint,
                     show_extra,
                     show_answer,
+                    show_trace,
+                    cli.re_trace,
                     color_enabled,
                     cli.theme.as_deref(),
                 );
@@ -137,11 +158,53 @@ fn print_list(db: &Database) {
     }
 }
 
+/// Handle the TUI trace flow: generate trace → analyze code → launch TUI.
+/// For TUI mode, we prefer auto-instrumentation (denser steps) over static traces.
+fn handle_tui_trace(problem: &Problem, re_trace: bool) {
+    // Always try auto-instrumentation or cache for TUI (more steps than static traces)
+    eprintln!("正在生成执行追踪...");
+    let trace = match instrument::run_auto_trace(problem, re_trace) {
+        Ok(t) => t,
+        Err(err) => {
+            // Fall back to static trace if auto-instrumentation fails
+            if let Some(ref static_trace) = problem.trace {
+                eprintln!("自动追踪失败，使用预置静态数据: {}", err);
+                static_trace.clone()
+            } else {
+                eprintln!("自动追踪失败: {}", err);
+                return;
+            }
+        }
+    };
+
+    // Analyze the answer code for TUI code display
+    let analysis = match problem.answer.as_ref() {
+        Some(answer) => match instrument::analyzer::analyze(answer) {
+            Ok(a) => a,
+            Err(err) => {
+                eprintln!("分析代码失败: {}", err);
+                return;
+            }
+        },
+        None => {
+            eprintln!("此题目没有答案代码");
+            return;
+        }
+    };
+
+    // Launch TUI (blocks until user quits)
+    if let Err(err) = tui::run_tui(&trace, &analysis) {
+        eprintln!("TUI 错误: {}", err);
+    }
+}
+
 fn format_problem(
     problem: &Problem,
     show_hint: bool,
     show_extra: bool,
     show_answer: bool,
+    show_trace: bool,
+    re_trace: bool,
     color: bool,
     theme_path: Option<&str>,
 ) -> String {
@@ -184,6 +247,42 @@ fn format_problem(
         append_section_compact(&mut out, "实际示例", &problem.example, color, theme_path, false);
         append_section_compact(&mut out, "图示说明", &problem.diagram, color, theme_path, false);
         append_api_notes(&mut out, &problem.api_notes_view(), color, theme_path);
+    }
+
+    if show_trace {
+        let theme = load_theme(theme_path);
+        // Use static trace only if not forcing re-trace
+        let use_static = !re_trace && problem.trace.is_some();
+        match use_static {
+            true => {
+                let trace_data = problem.trace.as_ref().unwrap();
+                out.push_str(&trace::format_trace(
+                    trace_data,
+                    &theme.syntax,
+                    &theme.trace,
+                    color,
+                ));
+                out.push('\n');
+            }
+            false => {
+                // Try auto-instrumentation (or cache)
+                out.push_str(&format!("{} (自动生成中...)\n", label("执行追踪:", color)));
+                match instrument::run_auto_trace(problem, re_trace) {
+                    Ok(trace_data) => {
+                        out.push_str(&trace::format_trace(
+                            &trace_data,
+                            &theme.syntax,
+                            &theme.trace,
+                            color,
+                        ));
+                        out.push('\n');
+                    }
+                    Err(err) => {
+                        out.push_str(&format!("自动追踪失败: {}\n", err));
+                    }
+                }
+            }
+        }
     }
 
     if show_answer {
@@ -493,6 +592,7 @@ struct ThemeToml {
     syntax: Option<SyntaxThemeToml>,
     markdown: Option<MarkdownThemeToml>,
     api: Option<ApiThemeToml>,
+    trace: Option<TraceThemeToml>,
 }
 
 #[derive(Clone, Deserialize)]
@@ -528,6 +628,24 @@ struct ApiThemeToml {
     api_name: Option<String>,
     usage_label: Option<String>,
     note_label: Option<String>,
+}
+
+#[derive(Clone, Deserialize)]
+struct TraceThemeToml {
+    header: Option<String>,
+    step_number: Option<String>,
+    separator: Option<String>,
+    arrow: Option<String>,
+    code_line: Option<String>,
+    var_name: Option<String>,
+    var_value: Option<String>,
+    var_old: Option<String>,
+    note: Option<String>,
+    ds_label: Option<String>,
+    ds_highlight: Option<String>,
+    ds_pointer: Option<String>,
+    result: Option<String>,
+    loop_back: Option<String>,
 }
 
 #[derive(Clone)]
@@ -566,10 +684,29 @@ struct ApiTheme {
 }
 
 #[derive(Clone)]
+struct TraceTheme {
+    header: Color,
+    step_number: Color,
+    separator: Color,
+    arrow: Color,
+    code_line: Color,
+    var_name: Color,
+    var_value: Color,
+    var_old: Color,
+    note: Color,
+    ds_label: Color,
+    ds_highlight: Color,
+    ds_pointer: Color,
+    result: Color,
+    loop_back: Color,
+}
+
+#[derive(Clone)]
 struct Theme {
     syntax: SyntaxTheme,
     markdown: MarkdownTheme,
     api: ApiTheme,
+    trace: TraceTheme,
 }
 
 impl Default for SyntaxTheme {
@@ -616,12 +753,34 @@ impl Default for ApiTheme {
     }
 }
 
+impl Default for TraceTheme {
+    fn default() -> Self {
+        Self {
+            header: Color::BrightGreen,
+            step_number: Color::BrightCyan,
+            separator: Color::BrightBlack,
+            arrow: Color::BrightGreen,
+            code_line: Color::BrightWhite,
+            var_name: Color::BrightBlue,
+            var_value: Color::BrightWhite,
+            var_old: Color::BrightBlack,
+            note: Color::BrightBlack,
+            ds_label: Color::BrightMagenta,
+            ds_highlight: Color::BrightYellow,
+            ds_pointer: Color::BrightGreen,
+            result: Color::BrightGreen,
+            loop_back: Color::BrightBlack,
+        }
+    }
+}
+
 impl Default for Theme {
     fn default() -> Self {
         Self {
             syntax: SyntaxTheme::default(),
             markdown: MarkdownTheme::default(),
             api: ApiTheme::default(),
+            trace: TraceTheme::default(),
         }
     }
 }
@@ -717,6 +876,51 @@ fn load_theme(theme_path: Option<&str>) -> Theme {
         }
         if let Some(value) = api.note_label.and_then(|s| parse_color_name(&s)) {
             theme.api.note_label = value;
+        }
+    }
+
+    if let Some(trace) = config.trace {
+        if let Some(value) = trace.header.and_then(|s| parse_color_name(&s)) {
+            theme.trace.header = value;
+        }
+        if let Some(value) = trace.step_number.and_then(|s| parse_color_name(&s)) {
+            theme.trace.step_number = value;
+        }
+        if let Some(value) = trace.separator.and_then(|s| parse_color_name(&s)) {
+            theme.trace.separator = value;
+        }
+        if let Some(value) = trace.arrow.and_then(|s| parse_color_name(&s)) {
+            theme.trace.arrow = value;
+        }
+        if let Some(value) = trace.code_line.and_then(|s| parse_color_name(&s)) {
+            theme.trace.code_line = value;
+        }
+        if let Some(value) = trace.var_name.and_then(|s| parse_color_name(&s)) {
+            theme.trace.var_name = value;
+        }
+        if let Some(value) = trace.var_value.and_then(|s| parse_color_name(&s)) {
+            theme.trace.var_value = value;
+        }
+        if let Some(value) = trace.var_old.and_then(|s| parse_color_name(&s)) {
+            theme.trace.var_old = value;
+        }
+        if let Some(value) = trace.note.and_then(|s| parse_color_name(&s)) {
+            theme.trace.note = value;
+        }
+        if let Some(value) = trace.ds_label.and_then(|s| parse_color_name(&s)) {
+            theme.trace.ds_label = value;
+        }
+        if let Some(value) = trace.ds_highlight.and_then(|s| parse_color_name(&s)) {
+            theme.trace.ds_highlight = value;
+        }
+        if let Some(value) = trace.ds_pointer.and_then(|s| parse_color_name(&s)) {
+            theme.trace.ds_pointer = value;
+        }
+        if let Some(value) = trace.result.and_then(|s| parse_color_name(&s)) {
+            theme.trace.result = value;
+        }
+        if let Some(value) = trace.loop_back.and_then(|s| parse_color_name(&s)) {
+            theme.trace.loop_back = value;
         }
     }
 

@@ -21,6 +21,7 @@ lh 76 -i                      # 显示提示
 lh 76 -a                      # 显示答案代码
 lh 76 -e                      # 显示扩展信息（示例、图示、API 注释）
 lh 76 -i -a -e                # 同时显示提示、答案、扩展
+lh 1 -t                        # 显示算法执行追踪
 lh -l                         # 列出全部题目
 lh -s window                  # 关键词搜索
 lh 76 -e --theme my-theme.toml  # 使用自定义主题
@@ -29,15 +30,17 @@ lh 76 -e --theme my-theme.toml  # 使用自定义主题
 可用参数：
 - `-i, --hint` 显示提示内容
 - `-a, --answer` 显示答案代码
+- `-t, --trace` 显示算法执行追踪（逐步变量和数据变化）
 - `-e, --extra` 显示扩展信息（示例、图示、API 注释）
 - `-l, --list` 列出全部题目
 - `-s, --search` 将输入视为关键词搜索
 - `--theme <FILE>` 指定主题文件路径（默认读取项目根目录 `theme.toml`）
 
 说明：
-- 题号查询必须显式指定 `-i` / `-a` / `-e` 至少一个。
+- 题号查询必须显式指定 `-i` / `-a` / `-e` / `-t` 至少一个。
 - 默认启用彩色输出，所有 Markdown 语法元素会根据主题配置着色。
 - API 注释行按 `- API名 用法: ... 说明: ...` 紧凑格式显示。
+- 执行追踪 (`-t`) 需要题目数据中包含 `trace` 字段，暂未覆盖全部题目。
 
 ## 主题配置
 
@@ -79,6 +82,25 @@ number = "bright_red"        # 数字
 comment = "green"            # // 和 /* */ 注释
 operator = "bright_white"    # +/-/* / 等运算符
 punctuation = "bright_black" # 括号、分号等
+```
+
+### 4. 执行追踪颜色
+```toml
+[trace]
+header = "bright_green"      # "执行追踪:" 标签
+step_number = "bright_cyan"  # "Step 1/9"
+separator = "bright_black"   # 分隔线
+arrow = "bright_green"       # "→" 前缀
+code_line = "bright_white"   # 代码行默认色
+var_name = "bright_blue"     # 变量名
+var_value = "bright_white"   # 变量值
+var_old = "bright_black"     # 旧值 "(旧: ...)"
+note = "bright_black"        # 注释/备注
+ds_label = "bright_magenta"  # 数据结构标签
+ds_highlight = "bright_yellow" # 高亮元素
+ds_pointer = "bright_green"  # 指针标记 (^L, ^R)
+result = "bright_green"      # 结果高亮
+loop_back = "bright_black"   # "[循环]" 标记
 ```
 
 支持的颜色: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, `white`, `bright_black`, `bright_red`, `bright_green`, `bright_yellow`, `bright_blue`, `bright_magenta`, `bright_cyan`, `bright_white`。
@@ -146,6 +168,52 @@ API 注释:
             return new int[]{};
         }
     }
+```
+
+### -t (执行追踪)
+```
+题目: 1. 两数之和
+执行追踪:
+输入: nums = [2,7,11,15], target = 9
+算法: 单次遍历 + HashMap 补数查询
+══════════════════════════════════
+
+  Step 1/9  [Line 5]
+  ──────────────────────
+    → Map<Integer, Integer> map = new HashMap<>();
+    变量:
+      map = {}
+    nums: [ 2, 7, 11, 15 ]
+            0
+
+  Step 2/9  [Line 6]
+  ──────────────────────
+    → for (int i = 0; i < nums.length; i++) {
+    变量:
+      i = 0
+
+  Step 5/9  [Line 11]
+  ──────────────────────
+    → map.put(nums[i], i);
+    说明: 将 (2, 0) 放入 map
+    变量:
+      map = {2: 0} (旧: {})
+    map: { 2: 0 }
+    nums: [ 2, 7, 11, 15 ]
+                      1
+
+  ... (共 9 步)
+
+  Step 9/9  [Line 9]
+  ──────────────────────
+    → return new int[]{map.get(complement), i};
+    说明: 返回 [0, 1]
+    变量:
+      map.get(2) = 0
+      i = 1
+    >>> 返回结果 <<<
+
+══════════════════════════════════
 ```
 
 ## 安装与运行

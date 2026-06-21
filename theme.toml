@@ -59,3 +59,46 @@ number = "bright_red"
 comment = "green"
 operator = "bright_white"
 punctuation = "bright_black"
+
+[trace]
+# 追踪标题（"执行追踪:" 标签）
+header = "bright_green"
+
+# 步数编号（"Step 1/9"）
+step_number = "bright_cyan"
+
+# 分隔线（"────"）
+separator = "bright_black"
+
+# 箭头前缀（"→"）
+arrow = "bright_green"
+
+# 代码行（追踪中的代码行默认色）
+code_line = "bright_white"
+
+# 变量名
+var_name = "bright_blue"
+
+# 变量值
+var_value = "bright_white"
+
+# 旧值（"旧: ..."）
+var_old = "bright_black"
+
+# 注释/备注文本
+note = "bright_black"
+
+# 数据结构标签
+ds_label = "bright_magenta"
+
+# 高亮元素（被 highlight 的数组元素/哈希表项）
+ds_highlight = "bright_yellow"
+
+# 指针标记（^L, ^R 等）
+ds_pointer = "bright_green"
+
+# 结果高亮（">>> 结果 <<<"）
+result = "bright_green"
+
+# 循环回跳标记（"[循环]"）
+loop_back = "bright_black"
