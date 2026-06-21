@@ -1,3 +1,4 @@
+use anyhow::Context;
 use std::fs;
 use std::io::Write;
 use std::process::Command;
@@ -15,19 +16,17 @@ pub struct JavaResult {
 
 /// Compile and run a generated Java source string.
 /// `class_name` is the name of the runner class with main().
-pub fn compile_and_run(java_code: &str, class_name: &str) -> Result<JavaResult, String> {
+pub fn compile_and_run(java_code: &str, class_name: &str) -> anyhow::Result<JavaResult> {
     // Create temp directory
     let temp_dir = std::env::temp_dir().join(format!("lc_trace_{}", rand_suffix()));
-    fs::create_dir_all(&temp_dir).map_err(|e| format!("创建临时目录失败: {}", e))?;
+    fs::create_dir_all(&temp_dir).context("创建临时目录失败")?;
 
     let java_file = temp_dir.join(format!("{}.java", class_name));
 
     // Write Java file
-    let mut f =
-        fs::File::create(&java_file).map_err(|e| format!("写入 Java 文件失败: {}", e))?;
-    f.write_all(java_code.as_bytes())
-        .map_err(|e| format!("写入 Java 文件失败: {}", e))?;
-    f.flush().map_err(|e| format!("刷新文件失败: {}", e))?;
+    let mut f = fs::File::create(&java_file).context("写入 Java 文件失败")?;
+    f.write_all(java_code.as_bytes()).context("写入 Java 文件失败")?;
+    f.flush().context("刷新文件失败")?;
 
     // Compile with javac
     let javac_start = Instant::now();
@@ -37,20 +36,18 @@ pub fn compile_and_run(java_code: &str, class_name: &str) -> Result<JavaResult, 
         .arg(java_file.to_str().unwrap())
         .current_dir(&temp_dir)
         .output()
-        .map_err(|e| format!("未找到 javac，请确保 JDK 8+ 已安装: {}", e))?;
+        .context("未找到 javac，请确保 JDK 8+ 已安装")?;
 
     if !javac_output.status.success() {
         let stderr = String::from_utf8_lossy(&javac_output.stderr).to_string();
-        // Keep temp dir for debugging
         let java_content = fs::read_to_string(&java_file).unwrap_or_default();
-        let stderr_with_code = format!(
+        let _ = fs::remove_dir_all(&temp_dir);
+        anyhow::bail!(
             "编译失败 (文件: {}):\n--- Java 源码前 20 行 ---\n{}\n--- javac 错误 ---\n{}",
             java_file.display(),
             java_content.lines().take(20).collect::<Vec<_>>().join("\n"),
             stderr
         );
-        let _ = fs::remove_dir_all(&temp_dir);
-        return Err(stderr_with_code);
     }
 
     // Run with java
@@ -61,10 +58,7 @@ pub fn compile_and_run(java_code: &str, class_name: &str) -> Result<JavaResult, 
         .arg(class_name)
         .current_dir(&temp_dir)
         .output()
-        .map_err(|e| {
-            let _ = fs::remove_dir_all(&temp_dir);
-            format!("运行 Java 失败: {}", e)
-        })?;
+        .context("运行 Java 失败")?;
 
     let elapsed = java_start.duration_since(javac_start).as_millis() as u64;
 
@@ -80,11 +74,11 @@ pub fn compile_and_run(java_code: &str, class_name: &str) -> Result<JavaResult, 
     let _ = fs::remove_dir_all(&temp_dir);
 
     if exit_code != 0 {
-        return Err(format!(
+        anyhow::bail!(
             "运行出错 (exit={}):\n{}",
             exit_code,
             error_lines.join("\n")
-        ));
+        );
     }
 
     Ok(JavaResult {

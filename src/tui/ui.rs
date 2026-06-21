@@ -1,4 +1,5 @@
 use super::state::AppState;
+use crate::highlight;
 use ratatui::{
     layout::{Constraint, Direction, Layout},
     style::{Color, Modifier, Style},
@@ -7,22 +8,9 @@ use ratatui::{
     Frame,
 };
 
-// ─── Color constants ──────────────────────────────────────────────────
-
-const COLOR_LINE_NO: Color = Color::Gray;
-const COLOR_CUR_LINE: Color = Color::Rgb(40, 44, 52); // dark bg highlight
-const COLOR_CUR_MARKER: Color = Color::Rgb(97, 175, 239); // blue arrow
-const COLOR_VAR_NAME: Color = Color::Rgb(97, 175, 239);
-const COLOR_VAR_VALUE: Color = Color::Rgb(229, 192, 123);
-const COLOR_CHANGED: Color = Color::Rgb(229, 192, 123);
-const COLOR_TITLE: Color = Color::Rgb(152, 195, 121);
-const COLOR_BORDER: Color = Color::Rgb(92, 99, 112);
-const COLOR_STATUS: Color = Color::Rgb(171, 178, 191);
-const COLOR_RESULT: Color = Color::Rgb(152, 195, 121);
-
 // ─── Main render entry ─────────────────────────────────────────────────
 
-pub fn render(frame: &mut Frame, state: &AppState) {
+pub fn render(frame: &mut Frame, state: &mut AppState) {
     let area = frame.area();
 
     // Source bar (1) | code+watch (flex) | status bar (1)
@@ -61,44 +49,71 @@ fn render_source_bar(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
     let p = Paragraph::new(Span::styled(
         text,
         Style::default()
-            .fg(COLOR_TITLE)
+            .fg(state.tui_theme.title)
             .add_modifier(Modifier::BOLD),
     ))
-    .style(Style::default().bg(Color::Rgb(33, 37, 43)));
+    .style(Style::default().bg(state.tui_theme.source_bar_bg));
     frame.render_widget(p, area);
 }
 
 // ─── Code panel ────────────────────────────────────────────────────────
 
-fn render_code_panel(frame: &mut Frame, area: ratatui::layout::Rect, state: &AppState) {
+fn render_code_panel(frame: &mut Frame, area: ratatui::layout::Rect, state: &mut AppState) {
+    // Write back visible lines for autoscroll (P0-6)
+    let visible = area.height.saturating_sub(2) as usize;
+    state.visible_lines = visible.max(1);
+
     let cur_line = state.current_line();
     let method_lines = state.visible_code_slice();
-    let start_line = state.method_start; // 1-indexed first line of method
+    let start_line = state.method_start;
 
     let mut lines: Vec<Line> = Vec::new();
 
     for (i, code) in method_lines.iter().enumerate() {
         let line_no = start_line + i;
         let is_current = line_no == cur_line;
+        let has_bp = state.breakpoints.contains(&line_no);
 
-        let ln_str = format!("{:>3} ", line_no);
-        let ln_span = if is_current {
-            Span::styled(ln_str, Style::default().fg(COLOR_CUR_MARKER).add_modifier(Modifier::BOLD))
+        let ln_str = if has_bp {
+            format!("●{:>2} ", line_no)
         } else {
-            Span::styled(ln_str, Style::default().fg(COLOR_LINE_NO))
+            format!(" {:>3} ", line_no)
         };
+        let ln_style = if is_current {
+            Style::default()
+                .fg(state.tui_theme.cur_marker)
+                .add_modifier(Modifier::BOLD)
+        } else if has_bp {
+            Style::default()
+                .fg(Color::Rgb(224, 108, 117))
+                .add_modifier(Modifier::BOLD)
+        } else {
+            Style::default().fg(state.tui_theme.line_no)
+        };
+        let ln_span = Span::styled(ln_str, ln_style);
 
-        let code_span = highlight_java(code, is_current);
+        let code_style = if is_current {
+            Style::default().fg(Color::Rgb(220, 220, 220))
+        } else {
+            Style::default().fg(Color::Rgb(171, 178, 191))
+        };
+        let code_span = Span::styled(code.trim_end().to_string(), code_style);
 
         let mut line = Line::default();
         line.push_span(ln_span);
         line.push_span(code_span);
 
         if is_current {
-            // Highlight the entire line background
-            line = line.style(Style::default().bg(COLOR_CUR_LINE));
-            // Insert marker arrow
-            line.spans.insert(0, Span::styled("▶ ", Style::default().fg(COLOR_CUR_MARKER).add_modifier(Modifier::BOLD)));
+            line = line.style(Style::default().bg(state.tui_theme.cur_line_bg));
+            line.spans.insert(
+                0,
+                Span::styled(
+                    "▶ ",
+                    Style::default()
+                        .fg(state.tui_theme.cur_marker)
+                        .add_modifier(Modifier::BOLD),
+                ),
+            );
         } else {
             line = line.style(Style::default());
         }
@@ -108,7 +123,6 @@ fn render_code_panel(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
 
     // Scroll
     let scroll = state.scroll_offset;
-    let visible = area.height.saturating_sub(2) as usize; // minus borders
     let start = scroll.min(lines.len().saturating_sub(visible));
     let end = (start + visible).min(lines.len());
     let sliced: Vec<Line> = lines[start..end].to_vec();
@@ -117,8 +131,13 @@ fn render_code_panel(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
         .block(
             Block::default()
                 .borders(Borders::ALL)
-                .border_style(Style::default().fg(COLOR_BORDER))
-                .title(Span::styled(" Code ", Style::default().fg(COLOR_TITLE).add_modifier(Modifier::BOLD))),
+                .border_style(Style::default().fg(state.tui_theme.border))
+                .title(Span::styled(
+                    " Code ",
+                    Style::default()
+                        .fg(state.tui_theme.title)
+                        .add_modifier(Modifier::BOLD),
+                )),
         )
         .wrap(Wrap { trim: false });
 
@@ -141,17 +160,25 @@ fn render_vars_table(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
     let step = match state.current() {
         Some(s) => s,
         None => {
-            let p = Paragraph::new("(无数据)")
-                .block(Block::default().borders(Borders::ALL)
-                    .title(" Variables "));
+            let p = Paragraph::new("(无数据)").block(
+                Block::default()
+                    .borders(Borders::ALL)
+                    .title(" Variables "),
+            );
             frame.render_widget(p, area);
             return;
         }
     };
 
     let header = Row::new(vec![
-        Cell::from(Span::styled("Name", Style::default().add_modifier(Modifier::BOLD))),
-        Cell::from(Span::styled("Value", Style::default().add_modifier(Modifier::BOLD))),
+        Cell::from(Span::styled(
+            "Name",
+            Style::default().add_modifier(Modifier::BOLD),
+        )),
+        Cell::from(Span::styled(
+            "Value",
+            Style::default().add_modifier(Modifier::BOLD),
+        )),
     ])
     .style(Style::default());
 
@@ -162,17 +189,38 @@ fn render_vars_table(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
             let is_return = v.name == "__return__";
             let changed = v.old.is_some();
 
+            // Check search match
+            let name_matches = state.search_active
+                && !state.search_query.is_empty()
+                && v.name
+                    .to_ascii_lowercase()
+                    .contains(&state.search_query.to_ascii_lowercase());
+
             let name_style = if is_return {
-                Style::default().fg(COLOR_RESULT).add_modifier(Modifier::BOLD)
+                Style::default()
+                    .fg(state.tui_theme.result)
+                    .add_modifier(Modifier::BOLD)
+            } else if name_matches {
+                Style::default()
+                    .fg(Color::Rgb(229, 192, 123))
+                    .bg(Color::Rgb(80, 60, 0))
+                    .add_modifier(Modifier::BOLD)
             } else {
-                Style::default().fg(COLOR_VAR_NAME)
+                Style::default().fg(state.tui_theme.var_name)
             };
+
+            // P0-5: changed values get background highlight + bold
             let val_style = if is_return {
-                Style::default().fg(COLOR_RESULT).add_modifier(Modifier::BOLD)
+                Style::default()
+                    .fg(state.tui_theme.result)
+                    .add_modifier(Modifier::BOLD)
             } else if changed {
-                Style::default().fg(COLOR_CHANGED).add_modifier(Modifier::BOLD)
+                Style::default()
+                    .fg(state.tui_theme.changed)
+                    .bg(state.tui_theme.changed_bg)
+                    .add_modifier(Modifier::BOLD)
             } else {
-                Style::default().fg(COLOR_VAR_VALUE)
+                Style::default().fg(state.tui_theme.var_value)
             };
 
             let display_name = if is_return {
@@ -181,9 +229,10 @@ fn render_vars_table(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
                 v.name.clone()
             };
 
-            let mut val_text = v.value.clone();
+            // P0-4: truncate long values
+            let mut val_text = highlight::truncate_value(&v.value, 60);
             if let Some(ref old) = v.old {
-                val_text.push_str(&format!("  (was {})", old));
+                val_text.push_str(&format!("  → {}", highlight::truncate_value(old, 30)));
             }
 
             Row::new(vec![
@@ -193,14 +242,23 @@ fn render_vars_table(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
         })
         .collect();
 
-    let title = format!(" Variables (step {}/{}) ", state.current_step + 1, state.total_steps());
+    let title = format!(
+        " Variables (step {}/{}) ",
+        state.current_step + 1,
+        state.total_steps()
+    );
     let table = Table::new(rows, [Constraint::Percentage(40), Constraint::Percentage(60)])
         .header(header)
         .block(
             Block::default()
                 .borders(Borders::ALL)
-                .border_style(Style::default().fg(COLOR_BORDER))
-                .title(Span::styled(title, Style::default().fg(COLOR_TITLE).add_modifier(Modifier::BOLD))),
+                .border_style(Style::default().fg(state.tui_theme.border))
+                .title(Span::styled(
+                    title,
+                    Style::default()
+                        .fg(state.tui_theme.title)
+                        .add_modifier(Modifier::BOLD),
+                )),
         )
         .column_spacing(1);
 
@@ -220,22 +278,37 @@ fn render_ds_view(frame: &mut Frame, area: ratatui::layout::Rect, state: &AppSta
 
     let mut lines: Vec<Line> = Vec::new();
 
+    // Show call stack if not empty
+    if !step.call_stack.is_empty() {
+        lines.push(Line::from(Span::styled(
+            format!("📞 调用栈: {}", step.call_stack.join(" → ")),
+            Style::default()
+                .fg(state.tui_theme.title)
+                .add_modifier(Modifier::ITALIC),
+        )));
+        lines.push(Line::from(""));
+    }
+
     if step.ds.is_empty() {
         lines.push(Line::from(Span::styled(
             "(no data structures)",
-            Style::default().fg(COLOR_LINE_NO),
+            Style::default().fg(state.tui_theme.line_no),
         )));
     } else {
         for ds in &step.ds {
-            // Simple visualization of data structures
             let label = Span::styled(
                 format!("{}: ", ds.label),
-                Style::default().fg(COLOR_TITLE).add_modifier(Modifier::BOLD),
+                Style::default()
+                    .fg(state.tui_theme.title)
+                    .add_modifier(Modifier::BOLD),
             );
             let body = format_ds_value(ds);
             let mut line = Line::default();
             line.push_span(label);
-            line.push_span(Span::styled(body, Style::default().fg(COLOR_VAR_VALUE)));
+            line.push_span(Span::styled(
+                body,
+                Style::default().fg(state.tui_theme.var_value),
+            ));
             lines.push(line);
         }
     }
@@ -245,7 +318,9 @@ fn render_ds_view(frame: &mut Frame, area: ratatui::layout::Rect, state: &AppSta
         lines.push(Line::from(""));
         lines.push(Line::from(Span::styled(
             ">>> RESULT <<<",
-            Style::default().fg(COLOR_RESULT).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(state.tui_theme.result)
+                .add_modifier(Modifier::BOLD),
         )));
     }
 
@@ -253,8 +328,13 @@ fn render_ds_view(frame: &mut Frame, area: ratatui::layout::Rect, state: &AppSta
         .block(
             Block::default()
                 .borders(Borders::ALL)
-                .border_style(Style::default().fg(COLOR_BORDER))
-                .title(Span::styled(" Data ", Style::default().fg(COLOR_TITLE).add_modifier(Modifier::BOLD))),
+                .border_style(Style::default().fg(state.tui_theme.border))
+                .title(Span::styled(
+                    " Data ",
+                    Style::default()
+                        .fg(state.tui_theme.title)
+                        .add_modifier(Modifier::BOLD),
+                )),
         )
         .wrap(Wrap { trim: false });
 
@@ -275,41 +355,55 @@ fn render_status_bar(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
     } else {
         ""
     };
+    let running_tag = if state.running { " [Running...]" } else { "" };
+    let bp_tag = if !state.breakpoints.is_empty() {
+        format!(" bp:{}", state.breakpoints.len())
+    } else {
+        String::new()
+    };
+
+    let search_text = if state.search_mode {
+        format!(" /{}", state.search_query)
+    } else if state.search_active {
+        format!(" [search: /{}]", state.search_query)
+    } else {
+        String::new()
+    };
 
     let text = format!(
-        " Step {}/{} (Line {}){}{} │ Enter/→:next  ←:prev  g:first  G:last  q:quit │ ↑↓ PgUp/PgDn:scroll ",
+        " Step {}/{} (Line {}){}{}{}{}{} │ Enter/→:next  ←:prev  b:bp  c:continue  /:search  g/G:jump  q:quit │ ↑↓ PgUp/PgDn:scroll ",
         state.current_step + 1,
         state.total_steps(),
         state.current_line(),
         loop_tag,
         result_tag,
+        running_tag,
+        bp_tag,
+        search_text,
     );
 
-    let p = Paragraph::new(Span::styled(text, Style::default().fg(COLOR_STATUS)))
-        .style(Style::default().bg(Color::Rgb(33, 37, 43)));
+    let p = Paragraph::new(Span::styled(
+        text,
+        Style::default().fg(state.tui_theme.status),
+    ))
+    .style(Style::default().bg(state.tui_theme.status_bar_bg));
     frame.render_widget(p, area);
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────────
 
-/// Simple Java syntax highlighting returning a Span.
-fn highlight_java(code: &str, is_current: bool) -> Span<'_> {
-    let base_style = if is_current {
-        Style::default().fg(Color::Rgb(220, 220, 220))
-    } else {
-        Style::default().fg(Color::Rgb(171, 178, 191))
-    };
-
-    // Very basic highlighting — just color keywords differently.
-    // The trimmed code gets colored, keeping original indentation.
-    let trimmed = code.trim_end();
-    Span::styled(trimmed.to_string(), base_style)
-}
-
 /// Format a TraceDs value for display in the data panel.
 fn format_ds_value(ds: &leetcode_helper::TraceDs) -> String {
     match &ds.data {
         Some(serde_json::Value::Array(arr)) => {
+            // For tree kind, show level-order with null markers
+            if ds.kind.as_deref() == Some("tree") {
+                let items: Vec<String> = arr.iter().map(|v| match v {
+                    serde_json::Value::Null => "·".to_string(),
+                    other => format_json_val(other),
+                }).collect();
+                return format!("🌲 [{}]", items.join(", "));
+            }
             let items: Vec<String> = arr.iter().map(format_json_val).collect();
             format!("[{}]", items.join(", "))
         }

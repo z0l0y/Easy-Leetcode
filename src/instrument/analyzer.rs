@@ -1,3 +1,5 @@
+use anyhow::Context;
+
 /// Analysis result for a Java answer code string.
 #[derive(Debug, Clone)]
 pub struct Analysis {
@@ -35,7 +37,7 @@ pub struct VarDecl {
 }
 
 /// Analyze a Java answer string and extract metadata.
-pub fn analyze(answer: &str) -> Result<Analysis, String> {
+pub fn analyze(answer: &str) -> anyhow::Result<Analysis> {
     let code_lines: Vec<String> = answer.lines().map(|s| s.to_string()).collect();
 
     // Extract class name
@@ -64,7 +66,7 @@ pub fn analyze(answer: &str) -> Result<Analysis, String> {
     })
 }
 
-fn extract_class_name(code: &str) -> Result<String, String> {
+fn extract_class_name(code: &str) -> anyhow::Result<String> {
     for line in code.lines() {
         let trimmed = line.trim();
         if trimmed.starts_with("class ") || trimmed.starts_with("public class ") {
@@ -77,10 +79,10 @@ fn extract_class_name(code: &str) -> Result<String, String> {
             return Ok(name.to_string());
         }
     }
-    Err("无法找到类定义".into())
+    anyhow::bail!("无法找到类定义")
 }
 
-fn extract_methods(code: &str) -> Result<Vec<MethodInfo>, String> {
+fn extract_methods(code: &str) -> anyhow::Result<Vec<MethodInfo>> {
     let mut methods = Vec::new();
     let lines: Vec<&str> = code.lines().collect();
 
@@ -123,7 +125,7 @@ fn extract_methods(code: &str) -> Result<Vec<MethodInfo>, String> {
     }
 
     if methods.is_empty() {
-        return Err("无法找到 public 方法".into());
+        anyhow::bail!("无法找到 public 方法")
     }
 
     Ok(methods)
@@ -132,7 +134,7 @@ fn extract_methods(code: &str) -> Result<Vec<MethodInfo>, String> {
 fn parse_method_sig(
     lines: &[&str],
     start: usize,
-) -> Result<(String, String, Vec<(String, String)>, usize), String> {
+) -> anyhow::Result<(String, String, Vec<(String, String)>, usize)> {
     // Build the full signature (may span multiple lines)
     let mut sig = String::new();
     let mut i = start;
@@ -148,14 +150,14 @@ fn parse_method_sig(
     }
 
     // Find the opening paren
-    let paren_open = sig.find('(').ok_or("方法签名缺少 '('")?;
-    let paren_close = sig.rfind(')').ok_or("方法签名缺少 ')'")?;
+    let paren_open = sig.find('(').context("方法签名缺少 '('")?;
+    let paren_close = sig.rfind(')').context("方法签名缺少 ')'")?;
 
     // Everything before the paren is "return_type method_name"
     let before_paren = sig[..paren_open].trim();
     let parts: Vec<&str> = before_paren.split_whitespace().collect();
     if parts.len() < 2 {
-        return Err("无法解析方法签名".into());
+        anyhow::bail!("无法解析方法签名")
     }
 
     // Last word before paren is method name
@@ -236,7 +238,7 @@ fn detect_custom_types(code: &str) -> Vec<String> {
 
 /// Extract variable declarations with scope tracking within a method body.
 #[allow(unused_assignments, unused_variables)]
-fn extract_vars(code_lines: &[String], method: &MethodInfo) -> Result<Vec<VarDecl>, String> {
+fn extract_vars(code_lines: &[String], method: &MethodInfo) -> anyhow::Result<Vec<VarDecl>> {
     let mut vars = Vec::new();
     let start = method.body_start_line.saturating_sub(1); // 0-indexed
     let end = method.body_end_line.saturating_sub(1);
@@ -291,12 +293,28 @@ fn extract_vars(code_lines: &[String], method: &MethodInfo) -> Result<Vec<VarDec
 fn try_parse_declaration(line: &str, _line_num: usize) -> Option<(String, String)> {
     let trimmed = line.trim();
 
+    // Handle catch (ExceptionType varName) { — extract exception variable
+    if (trimmed.starts_with("catch (") || trimmed.starts_with("catch(")) && trimmed.ends_with('{') {
+        if let Some(paren_open) = trimmed.find('(') {
+            if let Some(paren_close) = trimmed.rfind(')') {
+                let between = trimmed[paren_open + 1..paren_close].trim();
+                let parts: Vec<&str> = between.split_whitespace().collect();
+                if parts.len() >= 2 {
+                    let type_str = parts[..parts.len() - 1].join(" ");
+                    let var_name = parts.last().unwrap().to_string();
+                    return Some((var_name, type_str));
+                }
+            }
+        }
+        return None;
+    }
+
     // Skip pure control flow lines (but NOT for/while that may contain declarations)
     if trimmed.starts_with("if ")
         || trimmed.starts_with("return ")
         || trimmed.starts_with("} else")
         || trimmed.starts_with("try ")
-        || trimmed.starts_with("catch")
+        || trimmed.starts_with("switch")
     {
         return None;
     }

@@ -1,8 +1,9 @@
 use super::analyzer::Analysis;
-use super::example::TypedValue;
+use super::example::ExampleInput;
+use anyhow::Context;
 
 /// Generate a complete, compilable TraceRunner.java file.
-pub fn generate(analysis: &Analysis, params: &[(String, TypedValue)]) -> Result<String, String> {
+pub fn generate(analysis: &Analysis, input: &ExampleInput) -> anyhow::Result<String> {
     let mut out = String::new();
 
     // 0. Import statement (must be first)
@@ -22,12 +23,12 @@ pub fn generate(analysis: &Analysis, params: &[(String, TypedValue)]) -> Result<
             &analysis.var_decls,
         )?);
     } else {
-        return Err("没有找到 public 方法".into());
+        anyhow::bail!("没有找到 public 方法")
     }
 
     // 3. The TraceRunner class with main()
     out.push('\n');
-    out.push_str(&generate_runner(analysis, params)?);
+    out.push_str(&generate_runner(analysis, input)?);
 
     Ok(out)
 }
@@ -57,6 +58,29 @@ fn generate_type_def(type_name: &str) -> String {
     TreeNode right;
     TreeNode(int x) { val = x; }
     public String toString() { return String.valueOf(val); }
+    public String toLevelOrder() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        java.util.Queue<TreeNode> q = new java.util.LinkedList<>();
+        q.offer(this);
+        int nonNullCount = 0;
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            if (node == null) {
+                if (nonNullCount > 0) sb.append("null,");
+                continue;
+            }
+            sb.append(node.val).append(",");
+            nonNullCount--;
+            q.offer(node.left);
+            q.offer(node.right);
+            if (node.left != null) nonNullCount = q.size();
+            if (node.right != null) nonNullCount = q.size();
+        }
+        if (sb.length() > 1) sb.setLength(sb.length() - 1); // remove trailing comma
+        sb.append("]");
+        return sb.toString();
+    }
 }"#
         .to_string(),
 
@@ -77,7 +101,7 @@ fn generate_instrumented_solution(
     analysis: &Analysis,
     method: &super::analyzer::MethodInfo,
     var_decls: &[super::analyzer::VarDecl],
-) -> Result<String, String> {
+) -> anyhow::Result<String> {
     let mut out = String::new();
 
     // --- Generate instrumented method ---
@@ -97,8 +121,14 @@ fn generate_instrumented_solution(
         out.push_str(line);
         out.push('\n');
 
-        // If this is the opening brace of the method, insert initial capture
+        // If this is the opening brace of the method, insert method entry + initial capture
         if i == body_start {
+            // Method entry tracking
+            out.push_str(&format!(
+                "        __t_enter(\"{}\");\n",
+                method.name
+            ));
+
             // Get parameter names
             let param_names: Vec<String> = method
                 .params
@@ -141,11 +171,13 @@ fn generate_instrumented_solution(
         let is_return = trimmed.starts_with("return ") || trimmed == "return;";
 
         // Any statement ending with ; (assignments, method calls, declarations)
+        // Exclude do-while end: while (...);
         let is_statement = trimmed.ends_with(';')
             && !trimmed.starts_with("if ")
             && !trimmed.starts_with("for ")
             && !trimmed.starts_with("while ")
-            && !trimmed.starts_with("return ");
+            && !trimmed.starts_with("return ")
+            && !trimmed.starts_with("} while");
 
         // if-condition headers: if (...) {  or  if (...) \n  (single-line if without braces)
         let is_if_header = (trimmed.starts_with("if (") || trimmed.starts_with("if("))
@@ -155,15 +187,36 @@ fn generate_instrumented_solution(
         let is_else_header = (trimmed.starts_with("} else") || trimmed.starts_with("}else"))
             && (trimmed.ends_with('{') || trimmed.contains("if ("));
 
-        // Loop headers: for (...) {  or  while (...) {
+        // Loop headers: for (...) {  or  while (...) {  or  do {
         let is_loop_header = (trimmed.starts_with("for (") || trimmed.starts_with("for(")
             || trimmed.starts_with("while (") || trimmed.starts_with("while("))
+            && trimmed.ends_with('{')
+            || trimmed == "do {" || trimmed.starts_with("do {");
+
+        // do-while end: } while (...);
+        let is_do_while_end = trimmed.starts_with("} while (") || trimmed.starts_with("}while(");
+
+        // switch header: switch (...) {
+        let is_switch_header = (trimmed.starts_with("switch (") || trimmed.starts_with("switch("))
             && trimmed.ends_with('{');
+
+        // case / default labels
+        let is_case_label = trimmed.starts_with("case ") || trimmed.starts_with("default:")
+            || trimmed.starts_with("default :");
+
+        // try/catch/finally headers
+        let is_try_header = trimmed == "try {" || trimmed.starts_with("try {");
+        let is_catch_header = (trimmed.starts_with("catch (") || trimmed.starts_with("catch("))
+            && (trimmed.ends_with('{') || trimmed.contains(')'));
+        let is_finally_header = trimmed == "finally {" || trimmed.starts_with("finally {");
 
         // ── Emit __t() BEFORE control-flow headers ────────────────
         // Note: loop headers are handled AFTER (loop var not in scope before)
+        // Note: case labels are handled BEFORE (capture state entering new case)
 
-        let needs_before = is_return || is_if_header || is_else_header;
+        let needs_before = is_return || is_if_header || is_else_header
+            || is_switch_header || is_case_label
+            || is_try_header || is_catch_header || is_finally_header;
         if needs_before {
             let visible_vars = get_visible_vars(var_decls, i + 1);
             if !visible_vars.is_empty() || is_return {
@@ -195,9 +248,9 @@ fn generate_instrumented_solution(
         out.push_str(line);
         out.push('\n');
 
-        // ── Emit __t() AFTER statements and loop headers ───
+        // ── Emit __t() AFTER statements, loop headers, and do-while ends ───
 
-        if is_statement || is_loop_header {
+        if is_statement || is_loop_header || is_do_while_end {
             let visible_vars = get_visible_vars(var_decls, i + 1);
             if !visible_vars.is_empty() {
                 let names: Vec<String> = visible_vars
@@ -215,6 +268,10 @@ fn generate_instrumented_solution(
         }
     }
 
+    // Method exit tracking — insert before method closing brace
+    // Since the last body line is the closing `}`, we insert __t_exit() before remaining lines
+    out.push_str("        __t_exit();\n");
+
     // Write remaining lines after method
     for i in (body_end + 1)..code_lines.len() {
         out.push_str(&code_lines[i]);
@@ -231,19 +288,50 @@ fn generate_instrumented_solution(
 
     // Add the __t helper method
     out.push_str(r#"
+    private static String __current_method = "";
+    private static java.util.Stack<String> __call_stack = new java.util.Stack<>();
+
+    private static void __t_enter(String method) {
+        __current_method = method;
+        __call_stack.push(method);
+    }
+
+    private static void __t_exit() {
+        if (!__call_stack.isEmpty()) __call_stack.pop();
+        __current_method = __call_stack.isEmpty() ? "" : __call_stack.peek();
+    }
+
     private static void __t(int line, String[] names, Object... values) {
         StringBuilder sb = new StringBuilder();
-        sb.append("__TRACE__{\"line\":").append(line).append(",\"vars\":{");
+        sb.append("__TRACE__{\"line\":").append(line);
+        if (!__current_method.isEmpty()) {
+            sb.append(",\"method\":\"").append(__current_method).append("\"");
+        }
+        // Include call stack for multi-method traces
+        if (__call_stack.size() > 1) {
+            sb.append(",\"stack\":[");
+            for (int __si = 0; __si < __call_stack.size(); __si++) {
+                if (__si > 0) sb.append(",");
+                sb.append("\"").append(__call_stack.get(__si)).append("\"");
+            }
+            sb.append("]");
+        }
+        sb.append(",\"vars\":{");
         for (int __i = 0; __i < names.length; __i++) {
             if (__i > 0) sb.append(",");
             sb.append("\"").append(names[__i]).append("\":\"");
             Object __v = values[__i];
             if (__v == null) sb.append("null");
             else if (__v instanceof int[]) sb.append(java.util.Arrays.toString((int[])__v));
+            else if (__v instanceof long[]) sb.append(java.util.Arrays.toString((long[])__v));
+            else if (__v instanceof double[]) sb.append(java.util.Arrays.toString((double[])__v));
             else if (__v instanceof char[]) sb.append(java.util.Arrays.toString((char[])__v));
             else if (__v instanceof boolean[]) sb.append(java.util.Arrays.toString((boolean[])__v));
             else if (__v instanceof String[]) sb.append(java.util.Arrays.toString((String[])__v));
             else if (__v instanceof int[][]) sb.append(java.util.Arrays.deepToString((int[][])__v));
+            else if (__v instanceof java.util.Collection) sb.append(__v.toString());
+            else if (__v instanceof java.util.Map) sb.append(__v.toString());
+            else if (__v instanceof TreeNode) sb.append(((TreeNode)__v).toLevelOrder());
             else {
                 String __s = __v.toString();
                 __s = __s.replace("\\", "\\\\").replace("\"", "\\\"");
@@ -280,12 +368,12 @@ fn extract_return_expr(trimmed: &str) -> String {
 
 fn generate_runner(
     analysis: &Analysis,
-    params: &[(String, TypedValue)],
-) -> Result<String, String> {
+    input: &ExampleInput,
+) -> anyhow::Result<String> {
     let primary = analysis
         .public_methods
         .first()
-        .ok_or("没有找到 public 方法")?;
+        .context("没有找到 public 方法")?;
 
     let mut out = String::new();
     out.push_str("class TraceRunner {\n");
@@ -333,49 +421,107 @@ fn generate_runner(
 "#);
     }
 
-    // main method
+    // main method — branches on input type
     out.push_str("\n    public static void main(String[] args) {\n");
 
-    // Build input parameters
-    for (param_name, value) in params {
-        out.push_str(&format!("        {}\n", value.to_java_init(param_name)));
-    }
+    match input {
+        ExampleInput::Single(params) => {
+            // ── Single-method call ──────────────────────────
+            // Build input parameters
+            for (param_name, value) in params {
+                out.push_str(&format!("        {}\n", value.to_java_init(param_name)));
+            }
 
-    // Call the solution
-    let method_name = &primary.name;
-    let arg_names: Vec<String> = params.iter().map(|(name, _)| name.clone()).collect();
-    let return_type = &primary.return_type;
+            let method_name = &primary.name;
+            let arg_names: Vec<String> = params.iter().map(|(name, _)| name.clone()).collect();
+            let return_type = &primary.return_type;
 
-    if return_type == "void" {
-        out.push_str(&format!(
-            "        new {}().{}({});\n",
-            analysis.class_name,
-            method_name,
-            arg_names.join(", ")
-        ));
-        out.push_str("        System.out.println(\"__RESULT__void\");\n");
-    } else {
-        out.push_str(&format!(
-            "        {} __result = new {}().{}({});\n",
-            boxed_type(return_type),
-            analysis.class_name,
-            method_name,
-            arg_names.join(", ")
-        ));
-        // Print result with appropriate formatting
-        if return_type.contains("[]") {
-            out.push_str(
-                "        System.out.println(\"__RESULT__\" + java.util.Arrays.toString(__result));\n",
-            );
-        } else if return_type.contains("List") {
-            out.push_str("        System.out.println(\"__RESULT__\" + __result);\n");
-        } else if return_type == "boolean" {
-            out.push_str("        System.out.println(\"__RESULT__\" + __result);\n");
-        } else if return_type == "int" || return_type == "double" {
-            out.push_str("        System.out.println(\"__RESULT__\" + __result);\n");
-        } else {
-            // Object types (ListNode, TreeNode, String)
-            out.push_str("        System.out.println(\"__RESULT__\" + __result);\n");
+            if return_type == "void" {
+                out.push_str(&format!(
+                    "        new {}().{}({});\n",
+                    analysis.class_name,
+                    method_name,
+                    arg_names.join(", ")
+                ));
+                out.push_str("        System.out.println(\"__RESULT__void\");\n");
+            } else {
+                out.push_str(&format!(
+                    "        {} __result = new {}().{}({});\n",
+                    boxed_type(return_type),
+                    analysis.class_name,
+                    method_name,
+                    arg_names.join(", ")
+                ));
+                if return_type.contains("[]") {
+                    out.push_str(
+                        "        System.out.println(\"__RESULT__\" + java.util.Arrays.toString(__result));\n",
+                    );
+                } else if return_type.contains("List") || return_type.contains("List") {
+                    out.push_str("        System.out.println(\"__RESULT__\" + __result);\n");
+                } else if return_type == "boolean" {
+                    out.push_str("        System.out.println(\"__RESULT__\" + __result);\n");
+                } else if return_type == "int" || return_type == "double" {
+                    out.push_str("        System.out.println(\"__RESULT__\" + __result);\n");
+                } else {
+                    out.push_str("        System.out.println(\"__RESULT__\" + __result);\n");
+                }
+            }
+        }
+        ExampleInput::Operations(_class_name, operations) => {
+            // ── Multi-method operation sequence ──────────────
+            // Create the instance once
+            let first_op = &operations[0];
+            let ctor_args: Vec<String> = first_op.1.iter()
+                .map(|v| v.to_java_literal())
+                .collect();
+            out.push_str(&format!(
+                "        {} obj = new {}({});\n",
+                analysis.class_name,
+                analysis.class_name,
+                ctor_args.join(", ")
+            ));
+
+            // Execute each subsequent operation
+            for (i, (method_name, args)) in operations.iter().enumerate() {
+                if i == 0 {
+                    // Constructor call already done
+                    continue;
+                }
+                let arg_strs: Vec<String> = args.iter()
+                    .map(|v| v.to_java_literal())
+                    .collect();
+                // Find the method's return type
+                let method = analysis.public_methods.iter()
+                    .find(|m| m.name == *method_name);
+
+                let return_type = method.map(|m| m.return_type.as_str()).unwrap_or("void");
+                if return_type == "void" {
+                    out.push_str(&format!(
+                        "        obj.{}({});\n",
+                        method_name,
+                        arg_strs.join(", ")
+                    ));
+                } else {
+                    out.push_str(&format!(
+                        "        {} __r{} = obj.{}({});\n",
+                        boxed_type(return_type),
+                        i,
+                        method_name,
+                        arg_strs.join(", ")
+                    ));
+                    if return_type.contains("[]") {
+                        out.push_str(&format!(
+                            "        System.out.println(\"__RESULT__\" + java.util.Arrays.toString(__r{}));\n",
+                            i
+                        ));
+                    } else {
+                        out.push_str(&format!(
+                            "        System.out.println(\"__RESULT__\" + __r{});\n",
+                            i
+                        ));
+                    }
+                }
+            }
         }
     }
 
@@ -393,5 +539,50 @@ fn boxed_type(java_type: &str) -> &str {
         "char[]" => "char[]",
         "boolean" => "boolean",
         _ => java_type,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::super::analyzer;
+    use super::super::example::TypedValue;
+    use super::*;
+
+    const TWO_SUM: &str = "import java.util.*;\n\nclass Solution {\n    public int[] twoSum(int[] nums, int target) {\n        Map<Integer, Integer> map = new HashMap<>();\n        for (int i = 0; i < nums.length; i++) {\n            int complement = target - nums[i];\n            if (map.containsKey(complement)) {\n                return new int[]{map.get(complement), i};\n            }\n            map.put(nums[i], i);\n        }\n        return new int[]{};\n    }\n}";
+
+    #[test]
+    fn test_generate_two_sum() {
+        let analysis = analyzer::analyze(TWO_SUM).unwrap();
+        let input = ExampleInput::Single(vec![
+            ("nums".to_string(), TypedValue::Array(vec![TypedValue::Int(2), TypedValue::Int(7)])),
+            ("target".to_string(), TypedValue::Int(9)),
+        ]);
+        let code = generate(&analysis, &input).unwrap();
+
+        // Should contain __t() instrumentation calls
+        assert!(code.contains("__t("), "missing __t() calls");
+        // Should contain __TRACE__ output
+        assert!(code.contains("__TRACE__"), "missing __TRACE__");
+        // Should contain __return__ variable capture
+        assert!(code.contains("\"__return__\""), "missing __return__ capture");
+        // Should contain the __t helper method
+        assert!(code.contains("private static void __t("), "missing __t helper");
+        // Should contain TraceRunner with main
+        assert!(code.contains("class TraceRunner"), "missing TraceRunner");
+        assert!(code.contains("public static void main"), "missing main method");
+        // Should build and call Solution
+        assert!(code.contains("new Solution().twoSum"), "missing Solution invocation");
+    }
+
+    #[test]
+    fn test_generate_with_return_capture() {
+        let analysis = analyzer::analyze(TWO_SUM).unwrap();
+        let input = ExampleInput::Single(vec![
+            ("nums".to_string(), TypedValue::Array(vec![TypedValue::Int(1)])),
+            ("target".to_string(), TypedValue::Int(1)),
+        ]);
+        let code = generate(&analysis, &input).unwrap();
+        // Should capture the return expression before each return statement
+        assert!(code.contains("map.get(complement), i"), "missing return expression");
     }
 }

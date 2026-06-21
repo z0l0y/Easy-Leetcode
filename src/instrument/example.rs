@@ -1,3 +1,4 @@
+use anyhow::Context;
 use serde::Serialize;
 
 /// Typed value parsed from an example input string.
@@ -95,20 +96,154 @@ impl TypedValue {
     }
 }
 
-/// Parse the example field into a list of (param_name, value) pairs.
-pub fn parse_example(example: &str) -> Result<Vec<(String, TypedValue)>, String> {
+/// Represents parsed example input — either a single method call or operation sequence.
+#[derive(Debug, Clone)]
+pub enum ExampleInput {
+    /// Single method: vec of (param_name, value) pairs
+    Single(Vec<(String, TypedValue)>),
+    /// Operation sequence: vec of (method_name, arguments) for multi-method classes
+    Operations(String, Vec<(String, Vec<TypedValue>)>),
+}
+
+impl ExampleInput {
+    /// Returns true if this is a single-method call.
+    #[allow(dead_code)]
+    pub fn is_single(&self) -> bool {
+        matches!(self, ExampleInput::Single(_))
+    }
+}
+
+/// Parse the example field, auto-detecting single-method vs operation-sequence format.
+pub fn parse_example_input(example: &str) -> anyhow::Result<ExampleInput> {
+    // Try operation sequence format first: ["Op1","Op2"] \n [[args1],[args2]]
+    if example.contains('[') && example.contains('"') && example.contains("],[") {
+        if let Ok(ops) = try_parse_operations(example) {
+            return Ok(ops);
+        }
+    }
+    // Fall back to single-method format
+    let params = parse_example(example)?;
+    Ok(ExampleInput::Single(params))
+}
+
+/// Try to parse the LeetCode operation sequence format:
+/// 输入：["LRUCache","put","put","get"]  [[2],[1,1],[2,2],[1]]
+fn try_parse_operations(example: &str) -> anyhow::Result<ExampleInput> {
+    let content = example
+        .lines()
+        .find(|line| line.contains("输入：") || line.contains("输入:"))
+        .and_then(|line| {
+            line.split_once("输入：")
+                .or_else(|| line.split_once("输入:"))
+                .map(|(_, rest)| rest.trim())
+        })
+        .context("无法解析操作序列格式")?;
+
+    // Split into two parts: the operation names array and the arguments array
+    let mut parts = Vec::new();
+    let mut depth = 0;
+    let mut start = 0;
+    for (i, ch) in content.chars().enumerate() {
+        match ch {
+            '[' => depth += 1,
+            ']' => {
+                depth -= 1;
+                if depth == 0 {
+                    parts.push(&content[start..=i]);
+                    start = content[i + 1..].find('[').map(|p| i + 1 + p).unwrap_or(content.len());
+                }
+            }
+            _ => {}
+        }
+    }
+
+    // First part: operation names ["Op1","Op2",...]
+    let ops_str = parts.first().context("无法解析操作名数组")?;
+    // Remove outer brackets and split by comma, respecting quotes
+    let ops_inner = &ops_str[1..ops_str.len() - 1];
+    let op_names: Vec<String> = ops_inner
+        .split(',')
+        .map(|s| s.trim().trim_matches('"').to_string())
+        .collect();
+
+    // Second part: arguments [[arg1],[arg2],...]
+    let args_str = parts.get(1).unwrap_or(&"[]");
+    let args_inner = &args_str[1..args_str.len() - 1];
+    let arg_groups: Vec<String> = smart_split_groups(args_inner);
+
+    let mut operations: Vec<(String, Vec<TypedValue>)> = Vec::new();
+    for (i, op_name) in op_names.iter().enumerate() {
+        let args = if i < arg_groups.len() {
+            let group = &arg_groups[i];
+            let group = group.trim();
+            if group == "[]" || group.is_empty() {
+                vec![]
+            } else if group.starts_with('[') && group.ends_with(']') {
+                let inner = &group[1..group.len() - 1];
+                smart_split(inner, ',')
+                    .iter()
+                    .map(|s| parse_value(s))
+                    .collect::<anyhow::Result<Vec<_>>>()?
+            } else {
+                vec![]
+            }
+        } else {
+            vec![]
+        };
+        operations.push((op_name.clone(), args));
+    }
+
+    let class_name = operations.first().map(|(n, _)| n.clone()).unwrap_or_default();
+    Ok(ExampleInput::Operations(class_name, operations))
+}
+
+/// Split by commas at the top level, respecting nested brackets.
+fn smart_split_groups(s: &str) -> Vec<String> {
+    let mut result = Vec::new();
+    let mut current = String::new();
+    let mut depth = 0;
+    for ch in s.chars() {
+        match ch {
+            '[' => {
+                depth += 1;
+                current.push(ch);
+            }
+            ']' => {
+                depth -= 1;
+                current.push(ch);
+                if depth == 0 {
+                    result.push(current.trim().to_string());
+                    current = String::new();
+                }
+            }
+            ',' if depth == 0 => {
+                // separator between groups, skip
+            }
+            _ => {
+                current.push(ch);
+            }
+        }
+    }
+    if !current.trim().is_empty() {
+        result.push(current.trim().to_string());
+    }
+    result
+}
+
+/// Parse the example field into a list of (param_name, value) pairs (single-method format).
+pub fn parse_example(example: &str) -> anyhow::Result<Vec<(String, TypedValue)>> {
     // Find the first "输入：" line
     let input_line = example
         .lines()
         .find(|line| line.contains("输入：") || line.contains("输入:"))
-        .ok_or("无法解析示例格式：未找到'输入：'")?;
+        .context("无法解析示例格式：未找到'输入：'")?;
 
     // Extract content after "输入：" or "输入:"
     let content = input_line
         .split_once("输入：")
         .or_else(|| input_line.split_once("输入:"))
         .map(|(_, rest)| rest.trim())
-        .ok_or("无法解析示例格式")?;
+        .context("无法解析示例格式")?;
 
     // Remove trailing "输出：" part if on same line
     let content = if let Some(pos) = content.find("输出：") {
@@ -143,7 +278,7 @@ pub fn parse_example(example: &str) -> Result<Vec<(String, TypedValue)>, String>
     }
 
     if params.is_empty() {
-        return Err("无法从示例中解析出参数".into());
+        anyhow::bail!("无法从示例中解析出参数")
     }
 
     Ok(params)
@@ -186,7 +321,7 @@ fn smart_split(s: &str, delimiter: char) -> Vec<String> {
 }
 
 /// Parse a single value string into a TypedValue.
-fn parse_value(s: &str) -> Result<TypedValue, String> {
+fn parse_value(s: &str) -> anyhow::Result<TypedValue> {
     let s = s.trim();
 
     // String literal
@@ -245,10 +380,10 @@ fn parse_value(s: &str) -> Result<TypedValue, String> {
 }
 
 /// Parse a nested array like [[1,2],[3,4]].
-fn parse_nested_array(s: &str) -> Result<Vec<Vec<TypedValue>>, String> {
+fn parse_nested_array(s: &str) -> anyhow::Result<Vec<Vec<TypedValue>>> {
     let s = s.trim();
     if !s.starts_with("[[") || !s.ends_with("]]") {
-        return Err(format!("无法解析嵌套数组: {}", s));
+        anyhow::bail!("无法解析嵌套数组: {}", s)
     }
 
     let inner = &s[2..s.len() - 2];
@@ -270,7 +405,7 @@ fn parse_nested_array(s: &str) -> Result<Vec<Vec<TypedValue>>, String> {
 }
 
 /// Parse a TreeNode array with possible null values.
-fn parse_tree_node_array(inner: &str) -> Result<Vec<Option<i64>>, String> {
+fn parse_tree_node_array(inner: &str) -> anyhow::Result<Vec<Option<i64>>> {
     smart_split(inner, ',')
         .iter()
         .map(|s| {
@@ -281,7 +416,7 @@ fn parse_tree_node_array(inner: &str) -> Result<Vec<Option<i64>>, String> {
                 Ok(Some(n))
             } else {
                 // Could be a string; try to parse anyway
-                Err(format!("无法解析树节点值: {}", s))
+                anyhow::bail!("无法解析树节点值: {}", s)
             }
         })
         .collect()

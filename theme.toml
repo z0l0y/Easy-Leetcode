@@ -3,6 +3,7 @@
 # black, red, green, yellow, blue, magenta, cyan, white
 # bright_black, bright_red, bright_green, bright_yellow,
 # bright_blue, bright_magenta, bright_cyan, bright_white
+# #RRGGBB (hex RGB, e.g. "#61afef")
 
 [markdown]
 # 主标题（题号和标题）
@@ -102,3 +103,32 @@ result = "bright_green"
 
 # 循环回跳标记（"[循环]"）
 loop_back = "bright_black"
+
+[tui]
+# TUI 交互模式配色
+# 代码行号
+line_no = "#abb2bf"
+# 当前行背景色
+cur_line_bg = "#282c34"
+# 当前行箭头标记（▶）
+cur_marker = "#61afef"
+# 变量名
+var_name = "#61afef"
+# 变量值
+var_value = "#e5c07b"
+# 变化后的变量值
+changed = "#ffc850"
+# 变化行背景色
+changed_bg = "#3c3200"
+# 面板标题
+title = "#98c379"
+# 面板边框
+border = "#5c6370"
+# 状态栏文本色
+status = "#abb2bf"
+# 状态栏背景色
+status_bar_bg = "#21252b"
+# Source 栏背景色
+source_bar_bg = "#21252b"
+# 返回值/结果高亮
+result = "#98c379"

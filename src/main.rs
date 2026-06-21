@@ -1,79 +1,55 @@
-use clap::Parser;
+use clap::{CommandFactory, Parser};
+use clap_complete::generate;
 use colored::{Color, Colorize};
 use leetcode_helper::{Database, Problem};
-use serde::Deserialize;
-use std::{
-    collections::HashSet,
-    fs,
-    path::PathBuf,
-    process,
-};
+use std::{io::IsTerminal, process};
 
+mod cli;
+mod config;
+mod highlight;
 mod instrument;
+mod theme;
 mod trace;
 mod tui;
 
+use cli::{Cli, Commands};
+pub(crate) use theme::{
+    load_theme, MarkdownTheme, SyntaxTheme, TraceTheme, TuiTheme,
+};
+
 const EMBEDDED_DATA: &str = include_str!("../data/problems.json");
-
-#[derive(Parser, Debug)]
-#[command(
-    name = "lh",
-    version,
-    about = "LeetCode Hot100 题解速查工具",
-    arg_required_else_help = true
-)]
-struct Cli {
-    #[arg(help = "题号或关键词")]
-    query: Option<String>,
-
-    #[arg(short = 'i', long, help = "显示提示内容")]
-    hint: bool,
-
-    #[arg(short = 'a', long, help = "显示答案代码")]
-    answer: bool,
-
-    #[arg(short = 'e', long, help = "显示扩展信息（示例、图示、API 说明）")]
-    extra: bool,
-
-    #[arg(short = 't', long, help = "显示算法执行追踪（TUI 交互模式）")]
-    trace: bool,
-
-    #[arg(long, help = "以纯文本模式输出追踪（非 TUI，需配合 -t）")]
-    trace_text: bool,
-
-    #[arg(long, help = "强制重新运行自动追踪（忽略缓存）")]
-    re_trace: bool,
-
-    #[arg(
-        long,
-        value_name = "INPUT",
-        help = "自定义输入参数，格式: \"name1=val1, name2=val2\"。例如: --input \"nums=[1,2,3], target=5\""
-    )]
-    input: Option<String>,
-
-    #[arg(short = 'l', long, help = "列出全部题目")]
-    list: bool,
-
-    #[arg(short = 's', long, help = "将输入视为关键词搜索")]
-    search: bool,
-
-    #[arg(
-        long,
-        value_name = "FILE",
-        help = "语法高亮主题文件路径（TOML），默认尝试加载 ./theme.toml"
-    )]
-    theme: Option<String>,
-}
 
 fn main() {
     let cli = Cli::parse();
-    let color_enabled = true;
 
-    colored::control::set_override(true);
+    // Handle subcommands first
+    if let Some(Commands::Completions { shell }) = &cli.command {
+        let mut cmd = Cli::command();
+        let name = cmd.get_name().to_string();
+        match shell {
+            cli::Shell::Bash => generate(clap_complete::shells::Bash, &mut cmd, &name, &mut std::io::stdout()),
+            cli::Shell::Zsh => generate(clap_complete::shells::Zsh, &mut cmd, &name, &mut std::io::stdout()),
+            cli::Shell::Fish => generate(clap_complete::shells::Fish, &mut cmd, &name, &mut std::io::stdout()),
+            cli::Shell::Powershell => generate(clap_complete::shells::PowerShell, &mut cmd, &name, &mut std::io::stdout()),
+        }
+        return;
+    }
 
-    #[cfg(windows)]
+    let color_enabled = std::io::stdout().is_terminal();
+    colored::control::set_override(color_enabled);
+
+    // Load global config (CLI args take precedence)
+    let config = config::load_config();
+
+    // Use config default theme if not specified via CLI
+    let effective_theme = cli.theme.as_deref().or(config.default_theme.as_deref());
+
+    // Apply config cache_dir to LH_CACHE_DIR if not already set
+    if let Some(ref dir) = config.cache_dir
+        && std::env::var("LH_CACHE_DIR").is_err()
     {
-        enable_vt_mode();
+        // safe: we checked LH_CACHE_DIR is not set, so we're not overwriting
+        unsafe { std::env::set_var("LH_CACHE_DIR", dir); }
     }
 
     if cli.list && cli.query.is_some() {
@@ -125,7 +101,8 @@ fn main() {
             Some(problem) => {
                 // TUI mode: launch interactive trace viewer
                 if show_trace && !cli.trace_text {
-                    handle_tui_trace(problem, cli.re_trace, cli.input.as_deref());
+                    let theme = load_theme(effective_theme);
+                    handle_tui_trace(problem, cli.re_trace, cli.input.as_deref(), &theme.tui);
                     return;
                 }
                 let output = format_problem(
@@ -137,7 +114,7 @@ fn main() {
                     cli.re_trace,
                     cli.input.as_deref(),
                     color_enabled,
-                    cli.theme.as_deref(),
+                    effective_theme,
                 );
                 println!("{}", output.trim_end());
             }
@@ -168,7 +145,7 @@ fn print_list(db: &Database) {
 
 /// Handle the TUI trace flow: generate trace → analyze code → launch TUI.
 /// For TUI mode, we prefer auto-instrumentation (denser steps) over static traces.
-fn handle_tui_trace(problem: &Problem, re_trace: bool, custom_input: Option<&str>) {
+fn handle_tui_trace(problem: &Problem, re_trace: bool, custom_input: Option<&str>, tui_theme: &TuiTheme) {
     // Always try auto-instrumentation or cache for TUI (more steps than static traces)
     if custom_input.is_none() {
         eprintln!("正在生成执行追踪...");
@@ -205,7 +182,7 @@ fn handle_tui_trace(problem: &Problem, re_trace: bool, custom_input: Option<&str
     };
 
     // Launch TUI (blocks until user quits)
-    if let Err(err) = tui::run_tui(&trace, &analysis) {
+    if let Err(err) = tui::run_tui(&trace, &analysis, tui_theme) {
         eprintln!("TUI 错误: {}", err);
     }
 }
@@ -461,7 +438,7 @@ fn render_value(value: &str, color: bool, theme_path: Option<&str>) -> String {
         if in_code {
             if color {
                 out.push_str("    ");
-                out.push_str(&highlight_code_line(line, &current_lang, &theme.syntax, &mut in_block_comment));
+                out.push_str(&highlight::highlight_code_line(line, &theme.syntax, &mut in_block_comment));
                 out.push('\n');
             } else {
                 out.push_str(line);
@@ -573,7 +550,7 @@ fn inline_render(s: &str, color: bool, theme: &MarkdownTheme) -> String {
     out
 }
 
-fn render_code_block(value: &str, lang: &str, color: bool, theme_path: Option<&str>) -> String {
+fn render_code_block(value: &str, _lang: &str, color: bool, theme_path: Option<&str>) -> String {
     if value.trim().is_empty() {
         return "暂无".to_string();
     }
@@ -587,9 +564,8 @@ fn render_code_block(value: &str, lang: &str, color: bool, theme_path: Option<&s
         }
         if color {
             out.push_str("    ");
-            out.push_str(&highlight_code_line(
+            out.push_str(&highlight::highlight_code_line(
                 line,
-                &lang.to_ascii_lowercase(),
                 &theme.syntax,
                 &mut in_block_comment,
             ));
@@ -598,561 +574,4 @@ fn render_code_block(value: &str, lang: &str, color: bool, theme_path: Option<&s
         }
     }
     out
-}
-
-#[derive(Clone, Deserialize)]
-struct ThemeToml {
-    syntax: Option<SyntaxThemeToml>,
-    markdown: Option<MarkdownThemeToml>,
-    api: Option<ApiThemeToml>,
-    trace: Option<TraceThemeToml>,
-}
-
-#[derive(Clone, Deserialize)]
-struct SyntaxThemeToml {
-    default: Option<String>,
-    keyword: Option<String>,
-    type_name: Option<String>,
-    function: Option<String>,
-    string: Option<String>,
-    number: Option<String>,
-    comment: Option<String>,
-    operator: Option<String>,
-    punctuation: Option<String>,
-}
-
-#[derive(Clone, Deserialize)]
-struct MarkdownThemeToml {
-    title: Option<String>,
-    section_label: Option<String>,
-    code_block: Option<String>,
-    inline_code: Option<String>,
-    bold: Option<String>,
-    link: Option<String>,
-    blockquote: Option<String>,
-    h1: Option<String>,
-    h2: Option<String>,
-    h3: Option<String>,
-    list_marker: Option<String>,
-}
-
-#[derive(Clone, Deserialize)]
-struct ApiThemeToml {
-    api_name: Option<String>,
-    usage_label: Option<String>,
-    note_label: Option<String>,
-}
-
-#[derive(Clone, Deserialize)]
-struct TraceThemeToml {
-    header: Option<String>,
-    step_number: Option<String>,
-    separator: Option<String>,
-    arrow: Option<String>,
-    code_line: Option<String>,
-    var_name: Option<String>,
-    var_value: Option<String>,
-    var_old: Option<String>,
-    note: Option<String>,
-    ds_label: Option<String>,
-    ds_highlight: Option<String>,
-    ds_pointer: Option<String>,
-    result: Option<String>,
-    loop_back: Option<String>,
-}
-
-#[derive(Clone)]
-struct SyntaxTheme {
-    default: Color,
-    keyword: Color,
-    type_name: Color,
-    function: Color,
-    string: Color,
-    number: Color,
-    comment: Color,
-    operator: Color,
-    punctuation: Color,
-}
-
-#[derive(Clone)]
-struct MarkdownTheme {
-    title: Color,
-    section_label: Color,
-    code_block: Color,
-    inline_code: Color,
-    bold: Color,
-    link: Color,
-    blockquote: Color,
-    h1: Color,
-    h2: Color,
-    h3: Color,
-    list_marker: Color,
-}
-
-#[derive(Clone)]
-struct ApiTheme {
-    api_name: Color,
-    usage_label: Color,
-    note_label: Color,
-}
-
-#[derive(Clone)]
-struct TraceTheme {
-    header: Color,
-    step_number: Color,
-    separator: Color,
-    arrow: Color,
-    code_line: Color,
-    var_name: Color,
-    var_value: Color,
-    var_old: Color,
-    note: Color,
-    ds_label: Color,
-    ds_highlight: Color,
-    ds_pointer: Color,
-    result: Color,
-    loop_back: Color,
-}
-
-#[derive(Clone)]
-struct Theme {
-    syntax: SyntaxTheme,
-    markdown: MarkdownTheme,
-    api: ApiTheme,
-    trace: TraceTheme,
-}
-
-impl Default for SyntaxTheme {
-    fn default() -> Self {
-        Self {
-            default: Color::BrightWhite,
-            keyword: Color::BrightYellow,
-            type_name: Color::BrightBlue,
-            function: Color::BrightCyan,
-            string: Color::BrightMagenta,
-            number: Color::BrightRed,
-            comment: Color::Green,
-            operator: Color::BrightWhite,
-            punctuation: Color::BrightBlack,
-        }
-    }
-}
-
-impl Default for MarkdownTheme {
-    fn default() -> Self {
-        Self {
-            title: Color::BrightYellow,
-            section_label: Color::BrightGreen,
-            code_block: Color::BrightCyan,
-            inline_code: Color::Cyan,
-            bold: Color::BrightWhite,
-            link: Color::BrightBlue,
-            blockquote: Color::BrightBlack,
-            h1: Color::BrightYellow,
-            h2: Color::BrightYellow,
-            h3: Color::BrightWhite,
-            list_marker: Color::Green,
-        }
-    }
-}
-
-impl Default for ApiTheme {
-    fn default() -> Self {
-        Self {
-            api_name: Color::BrightMagenta,
-            usage_label: Color::Cyan,
-            note_label: Color::Yellow,
-        }
-    }
-}
-
-impl Default for TraceTheme {
-    fn default() -> Self {
-        Self {
-            header: Color::BrightGreen,
-            step_number: Color::BrightCyan,
-            separator: Color::BrightBlack,
-            arrow: Color::BrightGreen,
-            code_line: Color::BrightWhite,
-            var_name: Color::BrightBlue,
-            var_value: Color::BrightWhite,
-            var_old: Color::BrightBlack,
-            note: Color::BrightBlack,
-            ds_label: Color::BrightMagenta,
-            ds_highlight: Color::BrightYellow,
-            ds_pointer: Color::BrightGreen,
-            result: Color::BrightGreen,
-            loop_back: Color::BrightBlack,
-        }
-    }
-}
-
-impl Default for Theme {
-    fn default() -> Self {
-        Self {
-            syntax: SyntaxTheme::default(),
-            markdown: MarkdownTheme::default(),
-            api: ApiTheme::default(),
-            trace: TraceTheme::default(),
-        }
-    }
-}
-
-fn load_theme(theme_path: Option<&str>) -> Theme {
-    let path = match theme_path {
-        Some(path) => PathBuf::from(path),
-        None => PathBuf::from("theme.toml"),
-    };
-
-    let Ok(content) = fs::read_to_string(path) else {
-        return Theme::default();
-    };
-
-    let Ok(config) = toml::from_str::<ThemeToml>(&content) else {
-        return Theme::default();
-    };
-
-    let mut theme = Theme::default();
-
-    if let Some(syntax) = config.syntax {
-        if let Some(value) = syntax.default.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.default = value;
-        }
-        if let Some(value) = syntax.keyword.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.keyword = value;
-        }
-        if let Some(value) = syntax.type_name.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.type_name = value;
-        }
-        if let Some(value) = syntax.function.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.function = value;
-        }
-        if let Some(value) = syntax.string.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.string = value;
-        }
-        if let Some(value) = syntax.number.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.number = value;
-        }
-        if let Some(value) = syntax.comment.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.comment = value;
-        }
-        if let Some(value) = syntax.operator.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.operator = value;
-        }
-        if let Some(value) = syntax.punctuation.and_then(|s| parse_color_name(&s)) {
-            theme.syntax.punctuation = value;
-        }
-    }
-
-    if let Some(markdown) = config.markdown {
-        if let Some(value) = markdown.title.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.title = value;
-        }
-        if let Some(value) = markdown.section_label.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.section_label = value;
-        }
-        if let Some(value) = markdown.code_block.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.code_block = value;
-        }
-        if let Some(value) = markdown.inline_code.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.inline_code = value;
-        }
-        if let Some(value) = markdown.bold.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.bold = value;
-        }
-        if let Some(value) = markdown.link.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.link = value;
-        }
-        if let Some(value) = markdown.blockquote.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.blockquote = value;
-        }
-        if let Some(value) = markdown.h1.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.h1 = value;
-        }
-        if let Some(value) = markdown.h2.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.h2 = value;
-        }
-        if let Some(value) = markdown.h3.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.h3 = value;
-        }
-        if let Some(value) = markdown.list_marker.and_then(|s| parse_color_name(&s)) {
-            theme.markdown.list_marker = value;
-        }
-    }
-
-    if let Some(api) = config.api {
-        if let Some(value) = api.api_name.and_then(|s| parse_color_name(&s)) {
-            theme.api.api_name = value;
-        }
-        if let Some(value) = api.usage_label.and_then(|s| parse_color_name(&s)) {
-            theme.api.usage_label = value;
-        }
-        if let Some(value) = api.note_label.and_then(|s| parse_color_name(&s)) {
-            theme.api.note_label = value;
-        }
-    }
-
-    if let Some(trace) = config.trace {
-        if let Some(value) = trace.header.and_then(|s| parse_color_name(&s)) {
-            theme.trace.header = value;
-        }
-        if let Some(value) = trace.step_number.and_then(|s| parse_color_name(&s)) {
-            theme.trace.step_number = value;
-        }
-        if let Some(value) = trace.separator.and_then(|s| parse_color_name(&s)) {
-            theme.trace.separator = value;
-        }
-        if let Some(value) = trace.arrow.and_then(|s| parse_color_name(&s)) {
-            theme.trace.arrow = value;
-        }
-        if let Some(value) = trace.code_line.and_then(|s| parse_color_name(&s)) {
-            theme.trace.code_line = value;
-        }
-        if let Some(value) = trace.var_name.and_then(|s| parse_color_name(&s)) {
-            theme.trace.var_name = value;
-        }
-        if let Some(value) = trace.var_value.and_then(|s| parse_color_name(&s)) {
-            theme.trace.var_value = value;
-        }
-        if let Some(value) = trace.var_old.and_then(|s| parse_color_name(&s)) {
-            theme.trace.var_old = value;
-        }
-        if let Some(value) = trace.note.and_then(|s| parse_color_name(&s)) {
-            theme.trace.note = value;
-        }
-        if let Some(value) = trace.ds_label.and_then(|s| parse_color_name(&s)) {
-            theme.trace.ds_label = value;
-        }
-        if let Some(value) = trace.ds_highlight.and_then(|s| parse_color_name(&s)) {
-            theme.trace.ds_highlight = value;
-        }
-        if let Some(value) = trace.ds_pointer.and_then(|s| parse_color_name(&s)) {
-            theme.trace.ds_pointer = value;
-        }
-        if let Some(value) = trace.result.and_then(|s| parse_color_name(&s)) {
-            theme.trace.result = value;
-        }
-        if let Some(value) = trace.loop_back.and_then(|s| parse_color_name(&s)) {
-            theme.trace.loop_back = value;
-        }
-    }
-
-    theme
-}
-
-fn parse_color_name(name: &str) -> Option<Color> {
-    match name.to_ascii_lowercase().as_str() {
-        "black" => Some(Color::Black),
-        "red" => Some(Color::Red),
-        "green" => Some(Color::Green),
-        "yellow" => Some(Color::Yellow),
-        "blue" => Some(Color::Blue),
-        "magenta" => Some(Color::Magenta),
-        "cyan" => Some(Color::Cyan),
-        "white" => Some(Color::White),
-        "bright_black" | "brightblack" | "gray" | "grey" => Some(Color::BrightBlack),
-        "bright_red" | "brightred" => Some(Color::BrightRed),
-        "bright_green" | "brightgreen" => Some(Color::BrightGreen),
-        "bright_yellow" | "brightyellow" => Some(Color::BrightYellow),
-        "bright_blue" | "brightblue" => Some(Color::BrightBlue),
-        "bright_magenta" | "brightmagenta" => Some(Color::BrightMagenta),
-        "bright_cyan" | "brightcyan" => Some(Color::BrightCyan),
-        "bright_white" | "brightwhite" => Some(Color::BrightWhite),
-        _ => None,
-    }
-}
-
-#[derive(Copy, Clone)]
-enum TokenKind {
-    Default,
-    Keyword,
-    TypeName,
-    Function,
-    String,
-    Number,
-    Comment,
-    Operator,
-    Punctuation,
-}
-
-fn highlight_code_line(
-    line: &str,
-    _lang: &str,
-    theme: &SyntaxTheme,
-    in_block_comment: &mut bool,
-) -> String {
-    let tokens = lex_code_line(line, in_block_comment);
-    let mut out = String::new();
-    for (kind, text) in tokens {
-        let color = match kind {
-            TokenKind::Default => theme.default,
-            TokenKind::Keyword => theme.keyword,
-            TokenKind::TypeName => theme.type_name,
-            TokenKind::Function => theme.function,
-            TokenKind::String => theme.string,
-            TokenKind::Number => theme.number,
-            TokenKind::Comment => theme.comment,
-            TokenKind::Operator => theme.operator,
-            TokenKind::Punctuation => theme.punctuation,
-        };
-        out.push_str(&text.color(color).to_string());
-    }
-    out
-}
-
-fn lex_code_line(line: &str, in_block_comment: &mut bool) -> Vec<(TokenKind, String)> {
-    let keywords: HashSet<&'static str> = [
-        "if", "else", "for", "while", "do", "switch", "case", "break", "continue", "return",
-        "try", "catch", "finally", "throw", "throws", "new", "class", "interface", "enum",
-        "public", "private", "protected", "static", "final", "abstract", "extends",
-        "implements", "import", "package", "void", "this", "super", "true", "false", "null",
-    ]
-    .into_iter()
-    .collect();
-    let type_words: HashSet<&'static str> = [
-        "int", "long", "double", "float", "short", "byte", "char", "boolean", "string", "list",
-        "arraylist", "map", "hashmap", "set", "hashset", "deque", "queue", "stack", "object",
-    ]
-    .into_iter()
-    .collect();
-    let operators: &[char] = &[
-        '+', '-', '*', '/', '%', '=', '>', '<', '!', '&', '|', '^', '~', '?', ':',
-    ];
-    let punctuations: &[char] = &['(', ')', '[', ']', '{', '}', '.', ',', ';'];
-
-    let mut tokens = Vec::new();
-    let chars: Vec<char> = line.chars().collect();
-    let mut i = 0usize;
-    while i < chars.len() {
-        if *in_block_comment {
-            let start = i;
-            while i + 1 < chars.len() {
-                if chars[i] == '*' && chars[i + 1] == '/' {
-                    i += 2;
-                    *in_block_comment = false;
-                    break;
-                }
-                i += 1;
-            }
-            if *in_block_comment {
-                i = chars.len();
-            }
-            tokens.push((TokenKind::Comment, chars[start..i].iter().collect()));
-            continue;
-        }
-
-        if i + 1 < chars.len() && chars[i] == '/' && chars[i + 1] == '/' {
-            tokens.push((TokenKind::Comment, chars[i..].iter().collect()));
-            break;
-        }
-        if i + 1 < chars.len() && chars[i] == '/' && chars[i + 1] == '*' {
-            let start = i;
-            i += 2;
-            *in_block_comment = true;
-            while i + 1 < chars.len() {
-                if chars[i] == '*' && chars[i + 1] == '/' {
-                    i += 2;
-                    *in_block_comment = false;
-                    break;
-                }
-                i += 1;
-            }
-            tokens.push((TokenKind::Comment, chars[start..i].iter().collect()));
-            continue;
-        }
-
-        if chars[i] == '"' || chars[i] == '\'' {
-            let quote = chars[i];
-            let start = i;
-            i += 1;
-            while i < chars.len() {
-                if chars[i] == '\\' {
-                    i += 2;
-                    continue;
-                }
-                if chars[i] == quote {
-                    i += 1;
-                    break;
-                }
-                i += 1;
-            }
-            if i > chars.len() {
-                i = chars.len();
-            }
-            tokens.push((TokenKind::String, chars[start..i].iter().collect()));
-            continue;
-        }
-
-        if chars[i].is_ascii_digit() {
-            let start = i;
-            i += 1;
-            while i < chars.len() && (chars[i].is_ascii_digit() || chars[i] == '.') {
-                i += 1;
-            }
-            tokens.push((TokenKind::Number, chars[start..i].iter().collect()));
-            continue;
-        }
-
-        if chars[i].is_ascii_alphabetic() || chars[i] == '_' {
-            let start = i;
-            i += 1;
-            while i < chars.len() && (chars[i].is_ascii_alphanumeric() || chars[i] == '_') {
-                i += 1;
-            }
-            let word: String = chars[start..i].iter().collect();
-            let lower = word.to_ascii_lowercase();
-
-            let mut j = i;
-            while j < chars.len() && chars[j].is_whitespace() {
-                j += 1;
-            }
-            let is_function = j < chars.len() && chars[j] == '(';
-            let kind = if keywords.contains(lower.as_str()) {
-                TokenKind::Keyword
-            } else if type_words.contains(lower.as_str())
-                || word.chars().next().is_some_and(|ch| ch.is_ascii_uppercase())
-            {
-                TokenKind::TypeName
-            } else if is_function {
-                TokenKind::Function
-            } else {
-                TokenKind::Default
-            };
-
-            tokens.push((kind, word));
-            continue;
-        }
-
-        if operators.contains(&chars[i]) {
-            tokens.push((TokenKind::Operator, chars[i].to_string()));
-            i += 1;
-            continue;
-        }
-        if punctuations.contains(&chars[i]) {
-            tokens.push((TokenKind::Punctuation, chars[i].to_string()));
-            i += 1;
-            continue;
-        }
-
-        tokens.push((TokenKind::Default, chars[i].to_string()));
-        i += 1;
-    }
-    tokens
-}
-
-#[cfg(windows)]
-fn enable_vt_mode() {
-    use winapi::shared::minwindef::DWORD;
-    use winapi::um::consoleapi::{GetConsoleMode, SetConsoleMode};
-    use winapi::um::processenv::GetStdHandle;
-    use winapi::um::winbase::STD_OUTPUT_HANDLE;
-    use winapi::um::wincon::ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-
-    unsafe {
-        let h = GetStdHandle(STD_OUTPUT_HANDLE);
-        let mut mode: DWORD = 0;
-        if GetConsoleMode(h, &mut mode) != 0 {
-            let _ = SetConsoleMode(h, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-        }
-    }
 }

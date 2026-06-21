@@ -1,3 +1,4 @@
+use anyhow::Context;
 use serde::{Deserialize, Serialize};
 use serde_json::Value as JsonValue;
 use std::{
@@ -51,6 +52,9 @@ pub struct TraceStep {
     /// True on the final step that produces the answer
     #[serde(default)]
     pub is_result: bool,
+    /// Current call stack (method names) at this step
+    #[serde(default)]
+    pub call_stack: Vec<String>,
 }
 
 /// A variable's name and current value at a point in the trace.
@@ -120,9 +124,9 @@ pub struct Database {
 }
 
 impl Database {
-    pub fn from_json_str(input: &str) -> Result<Self, String> {
+    pub fn from_json_str(input: &str) -> anyhow::Result<Self> {
         let mut db: Database = serde_json::from_str(input)
-            .map_err(|err| format!("解析数据失败: {}", err))?;
+            .context("解析数据失败")?;
 
         for (key, problem) in db.problems.iter_mut() {
             if problem.id.trim().is_empty() {
@@ -133,9 +137,9 @@ impl Database {
         Ok(db)
     }
 
-    pub fn load_from_file(path: &Path) -> Result<Self, String> {
+    pub fn load_from_file(path: &Path) -> anyhow::Result<Self> {
         let contents = fs::read_to_string(path)
-            .map_err(|err| format!("读取数据文件失败 {}: {}", path.display(), err))?;
+            .with_context(|| format!("读取数据文件失败 {}", path.display()))?;
         Self::from_json_str(&contents)
     }
 

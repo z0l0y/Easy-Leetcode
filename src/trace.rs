@@ -57,9 +57,19 @@ pub fn format_trace(
         ));
         out.push_str(&format_sub_separator(trace_theme.separator, color));
 
+        // Call stack
+        if !step.call_stack.is_empty() {
+            let stack_display = step.call_stack.join(" → ");
+            out.push_str(&format!(
+                "    {} {}\n",
+                format_label("调用栈:", trace_theme.note, color),
+                format_value(&stack_display, trace_theme.var_name, color)
+            ));
+        }
+
         // Code line(s)
         for code_line in step.code.lines() {
-            let highlighted = highlight_code_line_local(code_line.trim_end(), syntax_theme);
+            let highlighted = crate::highlight::highlight_code_line(code_line.trim_end(), syntax_theme, &mut false);
             out.push_str(&format!(
                 "    {} {}\n",
                 format_value("→", trace_theme.arrow, color),
@@ -178,182 +188,6 @@ fn format_sub_separator(c: colored::Color, color: bool) -> String {
     }
 }
 
-// ─── Code highlighting (local copy from main.rs) ─────────────────────
-
-#[derive(Copy, Clone)]
-enum TokenKind {
-    Default,
-    Keyword,
-    TypeName,
-    Function,
-    String,
-    Number,
-    Comment,
-    Operator,
-    Punctuation,
-}
-
-fn highlight_code_line_local(line: &str, theme: &SyntaxTheme) -> String {
-    let tokens = lex_code_line_local(line);
-    let mut out = String::new();
-    for (kind, text) in tokens {
-        let c = match kind {
-            TokenKind::Default => theme.default,
-            TokenKind::Keyword => theme.keyword,
-            TokenKind::TypeName => theme.type_name,
-            TokenKind::Function => theme.function,
-            TokenKind::String => theme.string,
-            TokenKind::Number => theme.number,
-            TokenKind::Comment => theme.comment,
-            TokenKind::Operator => theme.operator,
-            TokenKind::Punctuation => theme.punctuation,
-        };
-        out.push_str(&text.color(c).to_string());
-    }
-    out
-}
-
-fn lex_code_line_local(line: &str) -> Vec<(TokenKind, String)> {
-    let keywords: HashSet<&'static str> = [
-        "if", "else", "for", "while", "do", "switch", "case", "break", "continue", "return",
-        "try", "catch", "finally", "throw", "throws", "new", "class", "interface", "enum",
-        "public", "private", "protected", "static", "final", "abstract", "extends",
-        "implements", "import", "package", "void", "this", "super", "true", "false", "null",
-    ]
-    .into_iter()
-    .collect();
-    let type_words: HashSet<&'static str> = [
-        "int", "long", "double", "float", "short", "byte", "char", "boolean", "string", "list",
-        "arraylist", "map", "hashmap", "set", "hashset", "deque", "queue", "stack", "object",
-    ]
-    .into_iter()
-    .collect();
-    let operators: &[char] = &[
-        '+', '-', '*', '/', '%', '=', '>', '<', '!', '&', '|', '^', '~', '?', ':',
-    ];
-    let punctuations: &[char] = &['(', ')', '[', ']', '{', '}', '.', ',', ';'];
-
-    let mut tokens = Vec::new();
-    let chars: Vec<char> = line.chars().collect();
-    let mut i = 0usize;
-    let mut in_block_comment = false;
-    while i < chars.len() {
-        if in_block_comment {
-            let start = i;
-            while i + 1 < chars.len() {
-                if chars[i] == '*' && chars[i + 1] == '/' {
-                    i += 2;
-                    in_block_comment = false;
-                    break;
-                }
-                i += 1;
-            }
-            if in_block_comment {
-                i = chars.len();
-            }
-            tokens.push((TokenKind::Comment, chars[start..i].iter().collect()));
-            continue;
-        }
-
-        if i + 1 < chars.len() && chars[i] == '/' && chars[i + 1] == '/' {
-            tokens.push((TokenKind::Comment, chars[i..].iter().collect()));
-            break;
-        }
-        if i + 1 < chars.len() && chars[i] == '/' && chars[i + 1] == '*' {
-            let start = i;
-            i += 2;
-            in_block_comment = true;
-            while i + 1 < chars.len() {
-                if chars[i] == '*' && chars[i + 1] == '/' {
-                    i += 2;
-                    in_block_comment = false;
-                    break;
-                }
-                i += 1;
-            }
-            tokens.push((TokenKind::Comment, chars[start..i].iter().collect()));
-            continue;
-        }
-
-        if chars[i] == '"' || chars[i] == '\'' {
-            let quote = chars[i];
-            let start = i;
-            i += 1;
-            while i < chars.len() {
-                if chars[i] == '\\' {
-                    i += 2;
-                    continue;
-                }
-                if chars[i] == quote {
-                    i += 1;
-                    break;
-                }
-                i += 1;
-            }
-            if i > chars.len() {
-                i = chars.len();
-            }
-            tokens.push((TokenKind::String, chars[start..i].iter().collect()));
-            continue;
-        }
-
-        if chars[i].is_ascii_digit() {
-            let start = i;
-            i += 1;
-            while i < chars.len() && (chars[i].is_ascii_digit() || chars[i] == '.') {
-                i += 1;
-            }
-            tokens.push((TokenKind::Number, chars[start..i].iter().collect()));
-            continue;
-        }
-
-        if chars[i].is_ascii_alphabetic() || chars[i] == '_' {
-            let start = i;
-            i += 1;
-            while i < chars.len() && (chars[i].is_ascii_alphanumeric() || chars[i] == '_') {
-                i += 1;
-            }
-            let word: String = chars[start..i].iter().collect();
-            let lower = word.to_ascii_lowercase();
-
-            let mut j = i;
-            while j < chars.len() && chars[j].is_whitespace() {
-                j += 1;
-            }
-            let is_function = j < chars.len() && chars[j] == '(';
-            let kind = if keywords.contains(lower.as_str()) {
-                TokenKind::Keyword
-            } else if type_words.contains(lower.as_str())
-                || word.chars().next().is_some_and(|ch| ch.is_ascii_uppercase())
-            {
-                TokenKind::TypeName
-            } else if is_function {
-                TokenKind::Function
-            } else {
-                TokenKind::Default
-            };
-
-            tokens.push((kind, word));
-            continue;
-        }
-
-        if operators.contains(&chars[i]) {
-            tokens.push((TokenKind::Operator, chars[i].to_string()));
-            i += 1;
-            continue;
-        }
-        if punctuations.contains(&chars[i]) {
-            tokens.push((TokenKind::Punctuation, chars[i].to_string()));
-            i += 1;
-            continue;
-        }
-
-        tokens.push((TokenKind::Default, chars[i].to_string()));
-        i += 1;
-    }
-    tokens
-}
-
 // ─── Data structure visualization dispatcher ─────────────────────────
 
 fn render_ds_viz(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
@@ -381,6 +215,8 @@ fn render_ds_viz(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
         Some("queue") => render_queue_ds(ds, theme, color),
         Some("linkedlist") => render_linkedlist_ds(ds, theme, color),
         Some("window") => render_window_ds(ds, theme, color),
+        Some("tree") => render_tree_ds(ds, theme, color),
+        Some("heatmap") => render_heatmap_ds(ds, theme, color),
         Some("twopointer") | None => render_array_ds(ds, theme, color),
         _ => render_array_ds(ds, theme, color),
     }
@@ -658,6 +494,340 @@ fn render_linkedlist_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String
     }
 
     out
+}
+
+// ─── Tree visualization ──────────────────────────────────────────────
+
+/// A node in the render tree.
+struct TreeNode {
+    val: String,
+    left: Option<Box<TreeNode>>,
+    right: Option<Box<TreeNode>>,
+}
+
+/// Build a binary tree from a level-order array (Some = node, None = null).
+fn build_tree_from_level_order(vals: &[Option<String>]) -> Option<Box<TreeNode>> {
+    if vals.is_empty() || vals[0].is_none() {
+        return None;
+    }
+    let mut nodes: Vec<Option<Box<TreeNode>>> = vals
+        .iter()
+        .map(|v| v.as_ref().map(|s| Box::new(TreeNode {
+            val: s.clone(),
+            left: None,
+            right: None,
+        })))
+        .collect();
+
+    for i in 0..vals.len() {
+        if nodes[i].is_some() {
+            let left_idx = 2 * i + 1;
+            let right_idx = 2 * i + 2;
+            if left_idx < vals.len() {
+                nodes[i].as_mut().unwrap().left = nodes[left_idx].take();
+            }
+            if right_idx < vals.len() {
+                nodes[i].as_mut().unwrap().right = nodes[right_idx].take();
+            }
+        }
+    }
+    nodes.into_iter().next().flatten()
+}
+
+/// Recursive ascii tree rendering. Returns (lines, root_position, width).
+fn render_tree_node(node: &TreeNode) -> (Vec<String>, usize, usize) {
+    let val = &node.val;
+    let val_w = val.len();
+
+    match (&node.left, &node.right) {
+        (None, None) => {
+            // Leaf node
+            (vec![val.clone()], 0, val_w)
+        }
+        (Some(l), None) => {
+            let (left_lines, l_root, l_w) = render_tree_node(l);
+            let total_w = l_w.max(val_w);
+
+            let mut lines = Vec::new();
+            // Root line
+            let l_pad = total_w.saturating_sub(val_w) / 2;
+            let mut root_line = " ".repeat(l_pad);
+            root_line.push_str(val);
+            root_line.push_str(&" ".repeat(total_w.saturating_sub(root_line.len())));
+            lines.push(root_line);
+
+            // Connector
+            let l_pos = l_root;
+            let root_center = l_pad + val_w / 2;
+            let mut conn = String::new();
+            for i in 0..total_w {
+                if i == l_pos {
+                    conn.push('┌');
+                } else if i == root_center {
+                    conn.push('┘');
+                } else if i > l_pos.min(root_center) && i < l_pos.max(root_center) {
+                    conn.push('─');
+                } else {
+                    conn.push(' ');
+                }
+            }
+            lines.push(conn);
+
+            // Left subtree lines
+            for ll in &left_lines {
+                let mut line = ll.clone();
+                while line.len() < total_w {
+                    line.push(' ');
+                }
+                lines.push(line);
+            }
+
+            (lines, l_pad + val_w / 2, total_w)
+        }
+        (None, Some(r)) => {
+            let (right_lines, r_root, r_w) = render_tree_node(r);
+            let total_w = r_w.max(val_w);
+
+            let mut lines = Vec::new();
+            // Root line
+            let l_pad = total_w.saturating_sub(val_w) / 2;
+            let mut root_line = " ".repeat(l_pad);
+            root_line.push_str(val);
+            root_line.push_str(&" ".repeat(total_w.saturating_sub(root_line.len())));
+            lines.push(root_line);
+
+            // Connector
+            let r_pos = r_root;
+            let root_center = l_pad + val_w / 2;
+            let mut conn = String::new();
+            for i in 0..total_w {
+                if i == root_center {
+                    conn.push('└');
+                } else if i == r_pos {
+                    conn.push('┐');
+                } else if i > root_center.min(r_pos) && i < root_center.max(r_pos) {
+                    conn.push('─');
+                } else {
+                    conn.push(' ');
+                }
+            }
+            lines.push(conn);
+
+            // Right subtree lines
+            for rl in &right_lines {
+                let mut line = rl.clone();
+                while line.len() < total_w {
+                    line.push(' ');
+                }
+                lines.push(line);
+            }
+
+            (lines, l_pad + val_w / 2, total_w)
+        }
+        (Some(l), Some(r)) => {
+            let (left_lines, l_root, l_w) = render_tree_node(l);
+            let (right_lines, r_root, r_w) = render_tree_node(r);
+            // Add spacing between subtrees
+            let gap = 3usize;
+            let total_w = l_w + gap + r_w;
+
+            let mut lines = Vec::new();
+
+            // Root line: center the root value over the two subtrees
+            let root_center = l_w + gap / 2;
+            let root_start = root_center.saturating_sub(val_w / 2);
+            let mut root_line = " ".repeat(root_start);
+            root_line.push_str(val);
+            root_line.push_str(&" ".repeat(total_w.saturating_sub(root_line.len())));
+            lines.push(root_line);
+
+            // Connector line: ┌──┴──┐
+            let mut conn = String::new();
+            for i in 0..total_w {
+                if i == l_root {
+                    conn.push('┌');
+                } else if i == root_center {
+                    conn.push('┴');
+                } else if i == l_w + gap + r_root {
+                    conn.push('┐');
+                } else if (i > l_root && i < root_center) || (i > root_center && i < l_w + gap + r_root) {
+                    conn.push('─');
+                } else {
+                    conn.push(' ');
+                }
+            }
+            lines.push(conn);
+
+            // Combine subtree lines side by side
+            let max_h = left_lines.len().max(right_lines.len());
+            for i in 0..max_h {
+                let left_part = if i < left_lines.len() { &left_lines[i] } else { "" };
+                let right_part = if i < right_lines.len() { &right_lines[i] } else { "" };
+
+                let l_padded = format!("{:width$}", left_part, width = l_w);
+                let r_padded = format!("{:width$}", right_part, width = r_w);
+                let combined = format!("{}{}{}", l_padded, " ".repeat(gap), r_padded);
+                lines.push(combined);
+            }
+
+            (lines, root_center, total_w)
+        }
+    }
+}
+
+fn render_tree_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
+    let values = extract_array_values(&ds.data);
+    if values.is_empty() {
+        return String::new();
+    }
+
+    // Parse values into Option<String>
+    let nodes: Vec<Option<String>> = values.iter().map(|v| {
+        if v == "null" { None } else { Some(v.clone()) }
+    }).collect();
+
+    // Build tree from level-order array
+    let root = match build_tree_from_level_order(&nodes) {
+        Some(r) => r,
+        None => return String::new(),
+    };
+
+    // Render recursively
+    let (tree_lines, _, _) = render_tree_node(&root);
+
+    let mut out = String::new();
+    out.push_str(&format!(
+        "{} ",
+        format_label(&format!("{}:", ds.label), theme.ds_label, color)
+    ));
+    out.push('\n');
+
+    for line in &tree_lines {
+        let trimmed = line.trim_end();
+        if !trimmed.is_empty() {
+            out.push_str(&format!("      {}\n", format_value(trimmed, theme.var_value, color)));
+        }
+    }
+
+    // Trim trailing newline
+    if out.ends_with('\n') {
+        out.pop();
+    }
+
+    out
+}
+
+// ─── DP Heatmap visualization ────────────────────────────────────────
+
+fn render_heatmap_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
+    let mut out = String::new();
+    out.push_str(&format!(
+        "{} ",
+        format_label(&format!("{}:", ds.label), theme.ds_label, color)
+    ));
+    out.push('\n');
+
+    // Each element in data should be a row array
+    let rows: Vec<Vec<String>> = match &ds.data {
+        Some(serde_json::Value::Array(arr)) => arr
+            .iter()
+            .filter_map(|v| v.as_array().map(|row| row.iter().map(format_key_value).collect()))
+            .collect(),
+        _ => return out,
+    };
+
+    if rows.is_empty() {
+        return out;
+    }
+
+    // Find min/max for color scaling
+    let all_vals: Vec<f64> = rows
+        .iter()
+        .flatten()
+        .filter_map(|s| s.parse::<f64>().ok())
+        .collect();
+
+    let (min_v, max_v) = if all_vals.is_empty() {
+        (0.0, 1.0)
+    } else {
+        let min = all_vals.iter().cloned().fold(f64::INFINITY, f64::min);
+        let max = all_vals.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
+        (min, max)
+    };
+
+    let range = if (max_v - min_v).abs() < 1e-9 { 1.0 } else { max_v - min_v };
+
+    // Cell width: max value width + padding
+    let cell_w = rows.iter().flatten().map(|s| s.len()).max().unwrap_or(1) + 1;
+
+    for row in &rows {
+        let mut line = String::new();
+        line.push_str("      ");
+        for val in row {
+            let num: f64 = val.parse().unwrap_or(0.0);
+            let t = ((num - min_v) / range).clamp(0.0, 1.0);
+
+            // Blue (cold) → Red (hot) gradient using ANSI 256-color
+            let ansi_code = value_to_heat_color(t);
+            let padded = format!("{:^width$}", val, width = cell_w);
+
+            if color {
+                line.push_str(&format!("\x1b[48;5;{}m{}\x1b[0m", ansi_code, padded));
+            } else {
+                line.push_str(&padded);
+            }
+        }
+        out.push_str(&line);
+        out.push('\n');
+    }
+
+    // Color scale bar
+    if color {
+        out.push_str("      ");
+        let scale_chars = "▁▂▃▄▅▆▇█";
+        for (i, ch) in scale_chars.chars().enumerate() {
+            let t = i as f64 / (scale_chars.len() - 1) as f64;
+            let ansi = value_to_heat_color(t);
+            out.push_str(&format!("\x1b[48;5;{}m{}\x1b[0m", ansi, ch));
+        }
+        out.push_str(&format!(
+            " {} {}",
+            format_value(&format!("{:.0}", min_v), theme.var_value, color),
+            format_value(&format!("{:.0}", max_v), theme.var_value, color)
+        ));
+        out.push('\n');
+    }
+
+    // Trim trailing newline
+    if out.ends_with('\n') {
+        out.pop();
+    }
+
+    out
+}
+
+/// Map a value in [0, 1] to an ANSI 256-color heatmap code.
+/// 0 → deep blue (17), 0.5 → green (46), 1 → bright red (196)
+fn value_to_heat_color(t: f64) -> u8 {
+    let t = t.clamp(0.0, 1.0);
+    // ANSI 256 color: 16 + (r * 36) + (g * 6) + b
+    if t < 0.25 {
+        // blue → cyan
+        let g = (t / 0.25 * 5.0) as u8;
+        16 + (g * 6) + 5
+    } else if t < 0.5 {
+        // cyan → green
+        let b = 5u8.saturating_sub(((t - 0.25) / 0.25 * 5.0) as u8);
+        16 + (5 * 6) + b
+    } else if t < 0.75 {
+        // green → yellow
+        let r = ((t - 0.5) / 0.25 * 5.0) as u8;
+        16 + (r * 36) + (5 * 6)
+    } else {
+        // yellow → red
+        let g = 5u8.saturating_sub(((t - 0.75) / 0.25 * 5.0) as u8);
+        16 + (5 * 36) + (g * 6)
+    }
 }
 
 // ─── Sliding Window visualization ─────────────────────────────────────
