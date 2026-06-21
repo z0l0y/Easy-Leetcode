@@ -3,6 +3,308 @@
   "algorithm": "LRUCache.get",
   "steps": [
     {
+      "line": "28",
+      "code": "    public void put(int key, int value) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "key",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "value",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "29",
+      "code": "        Node node = map.get(key);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "30",
+      "code": "        if (node != null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "35",
+      "code": "        Node newNode = new Node(key, value);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@6d06d69c",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "36",
+      "code": "        map.put(key, newNode);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@6d06d69c",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "37",
+      "code": "        addToHead(newNode);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@6d06d69c",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "38",
+      "code": "        if (map.size() > capacity) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@6d06d69c",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "28",
+      "code": "    public void put(int key, int value) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "key",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "value",
+          "value": "2",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "29",
+      "code": "        Node node = map.get(key);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "30",
+      "code": "        if (node != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "35",
+      "code": "        Node newNode = new Node(key, value);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@7852e922",
+          "old": "LRUCache$Node@6d06d69c"
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "36",
+      "code": "        map.put(key, newNode);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@7852e922",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "37",
+      "code": "        addToHead(newNode);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@7852e922",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "38",
+      "code": "        if (map.size() > capacity) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@7852e922",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
       "line": "20",
       "code": "    public int get(int key) {",
       "note": null,
@@ -11,6 +313,60 @@
         {
           "name": "key",
           "value": "1",
+          "old": "2"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "get"
+      ]
+    },
+    {
+      "line": "21",
+      "code": "        Node node = map.get(key);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "LRUCache$Node@6d06d69c",
+          "old": "null"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "get"
+      ]
+    },
+    {
+      "line": "22",
+      "code": "        if (node == null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "LRUCache$Node@6d06d69c",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "get"
+      ]
+    },
+    {
+      "line": "25",
+      "code": "        moveToHead(node);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "LRUCache$Node@6d06d69c",
           "old": null
         }
       ],
@@ -30,12 +386,224 @@
           "name": "__return__",
           "value": "1",
           "old": null
+        },
+        {
+          "name": "node",
+          "value": "LRUCache$Node@6d06d69c",
+          "old": null
         }
       ],
       "ds": [],
       "is_result": true,
       "call_stack": [
         "get"
+      ]
+    },
+    {
+      "line": "28",
+      "code": "    public void put(int key, int value) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "key",
+          "value": "3",
+          "old": "1"
+        },
+        {
+          "name": "value",
+          "value": "3",
+          "old": "2"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "29",
+      "code": "        Node node = map.get(key);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "null",
+          "old": "LRUCache$Node@6d06d69c"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "30",
+      "code": "        if (node != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "35",
+      "code": "        Node newNode = new Node(key, value);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@4e25154f",
+          "old": "LRUCache$Node@7852e922"
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "36",
+      "code": "        map.put(key, newNode);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "37",
+      "code": "        addToHead(newNode);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "38",
+      "code": "        if (map.size() > capacity) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "39",
+      "code": "            Node removed = removeTail();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "removed",
+          "value": "LRUCache$Node@7852e922",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
+      ]
+    },
+    {
+      "line": "40",
+      "code": "            map.remove(removed.key);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "newNode",
+          "value": "LRUCache$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        },
+        {
+          "name": "removed",
+          "value": "LRUCache$Node@7852e922",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "put"
       ]
     },
     {
@@ -47,7 +615,43 @@
         {
           "name": "key",
           "value": "2",
-          "old": "1"
+          "old": "3"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "get"
+      ]
+    },
+    {
+      "line": "21",
+      "code": "        Node node = map.get(key);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "get"
+      ]
+    },
+    {
+      "line": "22",
+      "code": "        if (node == null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
         }
       ],
       "ds": [],
@@ -66,6 +670,11 @@
           "name": "__return__",
           "value": "-1",
           "old": "1"
+        },
+        {
+          "name": "node",
+          "value": "null",
+          "old": null
         }
       ],
       "ds": [],

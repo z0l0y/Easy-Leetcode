@@ -49,12 +49,12 @@ pub fn analyze(answer: &str) -> anyhow::Result<Analysis> {
     // Detect custom type dependencies
     let needs_types = detect_custom_types(answer);
 
-    // For the primary (first public) method, extract variable declarations
-    let var_decls = if let Some(primary) = public_methods.first() {
-        extract_vars(&code_lines, primary)?
-    } else {
-        vec![]
-    };
+    // For every public method, extract variable declarations
+    let mut var_decls = Vec::new();
+    for method in &public_methods {
+        let method_vars = extract_vars(&code_lines, method)?;
+        var_decls.extend(method_vars);
+    }
 
     Ok(Analysis {
         class_name,
@@ -230,10 +230,43 @@ fn detect_custom_types(code: &str) -> Vec<String> {
     if code.contains("TreeNode") {
         types.push("TreeNode".to_string());
     }
-    if code.contains("class Node") || code.contains("Node ") {
+    // Only inject a standalone "Node" type if the code *uses* Node but doesn't
+    // *define* its own Node class (e.g. LRUCache defines a private inner Node class).
+    if (code.contains("class Node") || code.contains("Node ")) && !code_has_class_def(code, "Node") {
         types.push("Node".to_string());
     }
     types
+}
+
+/// Check whether the code itself defines a class with the given name.
+fn code_has_class_def(code: &str, name: &str) -> bool {
+    for line in code.lines() {
+        let trimmed = line.trim();
+        // Match "class Name" or "class Name<T>" followed by whitespace or {
+        if trimmed.starts_with("class ")
+            || trimmed.starts_with("private class ")
+            || trimmed.starts_with("public class ")
+            || trimmed.starts_with("protected class ")
+            || trimmed.starts_with("static class ")
+            || trimmed.starts_with("private static class ")
+            || trimmed.starts_with("public static class ")
+        {
+            // Extract the class name (second-to-last word before `{` or whitespace)
+            let words: Vec<&str> = trimmed.split_whitespace().collect();
+            // Find the word after "class"
+            if let Some(pos) = words.iter().position(|w| *w == "class") {
+                if let Some(class_name) = words.get(pos + 1) {
+                    let cn = class_name.trim_end_matches('{').trim_end_matches('<');
+                    // Strip any generic params after <
+                    let cn = cn.split('<').next().unwrap_or(cn);
+                    if cn == name {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    false
 }
 
 /// Extract variable declarations with scope tracking within a method body.
@@ -349,7 +382,11 @@ fn try_parse_declaration(line: &str, _line_num: usize) -> Option<(String, String
                         || type_str.contains("double")
                         || type_str.contains("long")
                         || type_str.contains("ListNode")
-                        || type_str.contains("TreeNode");
+                        || type_str.contains("TreeNode")
+                        || type_str.contains("Node")
+                        || type_str.contains("Map")
+                        || type_str.contains("List")
+                        || type_str.contains("Set");
                     if has_type {
                         return Some((var_name, type_str));
                     }
@@ -388,6 +425,7 @@ fn try_parse_declaration(line: &str, _line_num: usize) -> Option<(String, String
         || type_str.contains("Deque")
         || type_str.contains("TreeNode")
         || type_str.contains("ListNode")
+        || type_str.contains("Node")
         || type_str.contains("double")
         || type_str.contains("long");
 

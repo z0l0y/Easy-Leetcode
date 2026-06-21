@@ -35,7 +35,10 @@
           "ptr_right": null
         }
       ],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "5",
@@ -50,7 +53,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "6",
@@ -70,7 +76,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "7",
@@ -95,7 +104,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "8",
@@ -120,7 +132,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "11",
@@ -157,7 +172,10 @@
           "ptr_right": null
         }
       ],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "6",
@@ -189,7 +207,10 @@
           "ptr_right": null
         }
       ],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "7",
@@ -226,7 +247,10 @@
           "ptr_right": null
         }
       ],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "8",
@@ -263,7 +287,10 @@
           "ptr_right": null
         }
       ],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
     },
     {
       "line": "9",
@@ -271,6 +298,11 @@
       "note": null,
       "loop_back": false,
       "vars": [
+        {
+          "name": "__return__",
+          "value": "[0, 1]",
+          "old": null
+        },
         {
           "name": "complement",
           "value": "2",
@@ -289,6 +321,20 @@
       ],
       "ds": [
         {
+          "kind": "array",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            0,
+            1
+          ],
+          "highlight": [
+            1
+          ],
+          "ptr_left": 1,
+          "ptr_right": null
+        },
+        {
           "kind": "hashmap",
           "label": "map",
           "ascii": null,
@@ -300,7 +346,10 @@
           "ptr_right": null
         }
       ],
-      "is_result": true
+      "is_result": true,
+      "call_stack": [
+        "twoSum"
+      ]
     }
   ]
 }

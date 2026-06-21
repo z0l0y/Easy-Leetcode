@@ -15,16 +15,8 @@ pub fn generate(analysis: &Analysis, input: &ExampleInput) -> anyhow::Result<Str
         out.push('\n');
     }
 
-    // 2. The Solution class with instrumentation
-    if let Some(primary) = analysis.public_methods.first() {
-        out.push_str(&generate_instrumented_solution(
-            analysis,
-            primary,
-            &analysis.var_decls,
-        )?);
-    } else {
-        anyhow::bail!("没有找到 public 方法")
-    }
+    // 2. The Solution class with instrumentation for ALL public methods
+    out.push_str(&generate_instrumented_class(analysis)?);
 
     // 3. The TraceRunner class with main()
     out.push('\n');
@@ -166,39 +158,52 @@ fn generate_t_helper(analysis: &Analysis) -> String {
     out
 }
 
-fn generate_instrumented_solution(
-    analysis: &Analysis,
-    method: &super::analyzer::MethodInfo,
-    var_decls: &[super::analyzer::VarDecl],
-) -> anyhow::Result<String> {
+/// Instrument all public methods in the class. Each method gets __t_enter/__t_exit
+/// tracking and body instrumentation. Non-public methods and constructors pass through unchanged.
+fn generate_instrumented_class(analysis: &Analysis) -> anyhow::Result<String> {
+    let code_lines = &analysis.code_lines;
+    let methods = &analysis.public_methods;
+    let var_decls = &analysis.var_decls;
+
+    if methods.is_empty() {
+        anyhow::bail!("没有找到 public 方法")
+    }
+
+    // Build method body range maps (0-indexed line numbers)
+    let mut body_start_of: std::collections::HashMap<usize, &super::analyzer::MethodInfo> =
+        std::collections::HashMap::new();
+    let mut body_end_of: std::collections::HashMap<usize, &super::analyzer::MethodInfo> =
+        std::collections::HashMap::new();
+    let mut in_body: std::collections::HashSet<usize> = std::collections::HashSet::new();
+
+    for method in methods {
+        let start = method.body_start_line.saturating_sub(1);
+        let end = method.body_end_line.saturating_sub(1);
+        body_start_of.insert(start, method);
+        body_end_of.insert(end, method);
+        for li in (start + 1)..end {
+            in_body.insert(li);
+        }
+    }
+
     let mut out = String::new();
 
-    // --- Generate instrumented method ---
-    // Write lines from the original code (0 to body_start), skipping imports
-    let code_lines = &analysis.code_lines;
-    let body_start = method.body_start_line.saturating_sub(1); // 0-indexed
-    let body_end = method.body_end_line.saturating_sub(1);
-
-    // Write lines before method body (class header, method signature, opening brace)
-    // Skip import and package lines from original code (already added at top)
-    for i in 0..=body_start {
+    for i in 0..code_lines.len() {
         let line = &code_lines[i];
         let trimmed = line.trim();
+
+        // Skip import/package lines (we add our own at the top)
         if trimmed.starts_with("import ") || trimmed.starts_with("package ") {
             continue;
         }
-        out.push_str(line);
-        out.push('\n');
 
-        // If this is the opening brace of the method, insert method entry + initial capture
-        if i == body_start {
-            // Method entry tracking
-            out.push_str(&format!(
-                "        __t_enter(\"{}\");\n",
-                method.name
-            ));
+        // ── Method body start: inject __t_enter + initial param capture ──
+        if let Some(method) = body_start_of.get(&i).copied() {
+            out.push_str(line);
+            out.push('\n');
 
-            // Get parameter names
+            out.push_str(&format!("        __t_enter(\"{}\");\n", method.name));
+
             let param_names: Vec<String> = method
                 .params
                 .iter()
@@ -216,163 +221,155 @@ fn generate_instrumented_solution(
                 ));
             }
 
-            // Wrap method body in try-finally so __t_exit() runs on every exit path
             out.push_str("        try {\n");
+            continue;
         }
-    }
 
-    // Write instrumented body lines — up to (but NOT including) the method's closing `}`
-    // __t_exit() must go BEFORE the closing brace so it's inside the method body.
-    for i in (body_start + 1)..body_end.min(code_lines.len()) {
-        let line = &code_lines[i];
-        let trimmed = line.trim();
-
-        // Skip blank/comment-only lines (don't instrument)
-        if trimmed.is_empty()
-            || trimmed.starts_with("//")
-            || trimmed.starts_with("/*")
-            || trimmed.starts_with('*')
-        {
+        // ── Method body end: inject __t_exit via finally ──
+        if body_end_of.contains_key(&i) {
+            out.push_str("        } finally {\n");
+            out.push_str("            __t_exit();\n");
+            out.push_str("        }\n");
             out.push_str(line);
             out.push('\n');
             continue;
         }
 
-        // ── Statement type detection ──────────────────────────────
-
-        // return/break/continue statements: capture BEFORE we leave
-        let is_return = trimmed.starts_with("return ") || trimmed == "return;";
-        let is_break = trimmed == "break;" || trimmed.starts_with("break ");
-        let is_continue = trimmed == "continue;" || trimmed.starts_with("continue ");
-
-        // Any statement ending with ; (assignments, method calls, declarations)
-        // Exclude control-flow statements (break/continue/return) — they'd make
-        // following __t() calls unreachable.
-        let is_statement = trimmed.ends_with(';')
-            && !is_return && !is_break && !is_continue
-            && !trimmed.starts_with("if ")
-            && !trimmed.starts_with("for ")
-            && !trimmed.starts_with("while ")
-            && !trimmed.starts_with("} while");
-
-        // if-condition headers: if (...) {  or  if (...) \n  (single-line if without braces)
-        let is_if_header = (trimmed.starts_with("if (") || trimmed.starts_with("if("))
-            && (trimmed.ends_with('{') || trimmed.ends_with(')'));
-
-        // else / else-if transitions
-        let is_else_header = (trimmed.starts_with("} else") || trimmed.starts_with("}else"))
-            && (trimmed.ends_with('{') || trimmed.contains("if ("));
-
-        // Loop headers: for (...) {  or  while (...) {  or  do {
-        let is_loop_header = (trimmed.starts_with("for (") || trimmed.starts_with("for(")
-            || trimmed.starts_with("while (") || trimmed.starts_with("while("))
-            && trimmed.ends_with('{')
-            || trimmed == "do {" || trimmed.starts_with("do {");
-
-        // do-while end: } while (...);
-        let is_do_while_end = trimmed.starts_with("} while (") || trimmed.starts_with("}while(");
-
-        // switch header: switch (...) {
-        let is_switch_header = (trimmed.starts_with("switch (") || trimmed.starts_with("switch("))
-            && trimmed.ends_with('{');
-
-        // case / default labels
-        let is_case_label = trimmed.starts_with("case ") || trimmed.starts_with("default:")
-            || trimmed.starts_with("default :");
-
-        // try/catch/finally headers
-        let is_try_header = trimmed == "try {" || trimmed.starts_with("try {");
-        let is_catch_header = (trimmed.starts_with("catch (") || trimmed.starts_with("catch("))
-            && (trimmed.ends_with('{') || trimmed.contains(')'));
-        let is_finally_header = trimmed == "finally {" || trimmed.starts_with("finally {");
-
-        // ── Emit __t() BEFORE control-flow headers ────────────────
-        // Note: loop headers are handled AFTER (loop var not in scope before)
-        // Note: case labels are handled BEFORE (capture state entering new case)
-
-        let needs_before = is_return || is_if_header || is_else_header
-            || is_switch_header || is_case_label
-            || is_try_header || is_catch_header || is_finally_header;
-        if needs_before {
-            let visible_vars = get_visible_vars(var_decls, i + 1);
-            if !visible_vars.is_empty() || is_return {
-                let mut names: Vec<String> = visible_vars
-                    .iter()
-                    .map(|v| format!("\"{}\"", v.name))
-                    .collect();
-                let mut values: Vec<String> =
-                    visible_vars.iter().map(|v| v.name.clone()).collect();
-
-                // For return statements, capture the return expression value
-                if is_return {
-                    let ret_expr = extract_return_expr(trimmed);
-                    names.insert(0, "\"__return__\"".to_string());
-                    values.insert(0, ret_expr);
-                }
-
-                out.push_str(&format!(
-                    "        __t({}, new String[]{{{}}}, new Object[]{{{}}});\n",
-                    i + 1,
-                    names.join(", "),
-                    values.join(", ")
-                ));
-            }
-        }
-
-        // ── Emit the original line ───────────────────────────────
-
-        out.push_str(line);
-        out.push('\n');
-
-        // ── Emit __t() AFTER statements, loop headers, and do-while ends ───
-
-        if is_statement || is_loop_header || is_do_while_end {
-            let visible_vars = get_visible_vars(var_decls, i + 1);
-            if !visible_vars.is_empty() {
-                let names: Vec<String> = visible_vars
-                    .iter()
-                    .map(|v| format!("\"{}\"", v.name))
-                    .collect();
-                let values: Vec<String> = visible_vars.iter().map(|v| v.name.clone()).collect();
-                out.push_str(&format!(
-                    "        __t({}, new String[]{{{}}}, new Object[]{{{}}});\n",
-                    i + 1,
-                    names.join(", "),
-                    values.join(", ")
-                ));
-            }
+        // ── Inside a method body: instrument statements ──
+        if in_body.contains(&i) {
+            push_instrumented_line(&mut out, line, i, var_decls);
+        } else {
+            // ── Outside any method body: write as-is ──
+            out.push_str(line);
+            out.push('\n');
         }
     }
 
-    // Method exit tracking — try-finally ensures __t_exit() runs on every exit path
-    out.push_str("        } finally {\n");
-    out.push_str("            __t_exit();\n");
-    out.push_str("        }\n");
-
-    // Write the method's closing brace
-    if let Some(closing_line) = code_lines.get(body_end) {
-        out.push_str(closing_line);
-        out.push('\n');
-    }
-
-    // Write remaining lines after method
-    for i in (body_end + 1)..code_lines.len() {
-        out.push_str(&code_lines[i]);
-        out.push('\n');
-    }
-
-    // Inject __t helper method before the class closes
-    // Remove the last '}' (class close), insert helper, then close
+    // Inject __t helper before the class closing brace
     out = out.trim_end().to_string();
     if out.ends_with('}') {
         out.pop();
         out.push('\n');
     }
-
-    // Add the __t helper method — built dynamically based on needed types
     out.push_str(&generate_t_helper(analysis));
 
     Ok(out)
+}
+
+/// Instruments a single line inside a method body.
+/// Emits __t() calls before/after the line as appropriate.
+fn push_instrumented_line(
+    out: &mut String,
+    line: &str,
+    line_idx: usize,
+    var_decls: &[super::analyzer::VarDecl],
+) {
+    let trimmed = line.trim();
+
+    // Skip blank/comment-only lines
+    if trimmed.is_empty()
+        || trimmed.starts_with("//")
+        || trimmed.starts_with("/*")
+        || trimmed.starts_with('*')
+    {
+        out.push_str(line);
+        out.push('\n');
+        return;
+    }
+
+    // ── Statement type detection ──────────────────────────────────
+
+    let is_return_with_expr = (trimmed.starts_with("return ") && trimmed != "return;")
+        && trimmed.ends_with(';');
+    let is_return_void = trimmed == "return;";
+    let is_return = is_return_with_expr || is_return_void;
+    let is_break = trimmed == "break;" || trimmed.starts_with("break ");
+    let is_continue = trimmed == "continue;" || trimmed.starts_with("continue ");
+
+    let is_statement = trimmed.ends_with(';')
+        && !is_return && !is_break && !is_continue
+        && !trimmed.starts_with("if ")
+        && !trimmed.starts_with("for ")
+        && !trimmed.starts_with("while ")
+        && !trimmed.starts_with("} while");
+
+    let is_if_header = (trimmed.starts_with("if (") || trimmed.starts_with("if("))
+        && (trimmed.ends_with('{') || trimmed.ends_with(')'));
+
+    let is_else_header = (trimmed.starts_with("} else") || trimmed.starts_with("}else"))
+        && (trimmed.ends_with('{') || trimmed.contains("if ("));
+
+    let is_loop_header = (trimmed.starts_with("for (") || trimmed.starts_with("for(")
+        || trimmed.starts_with("while (") || trimmed.starts_with("while("))
+        && trimmed.ends_with('{')
+        || trimmed == "do {" || trimmed.starts_with("do {");
+
+    let is_do_while_end = trimmed.starts_with("} while (") || trimmed.starts_with("}while(");
+
+    let is_switch_header = (trimmed.starts_with("switch (") || trimmed.starts_with("switch("))
+        && trimmed.ends_with('{');
+
+    let is_case_label = trimmed.starts_with("case ") || trimmed.starts_with("default:")
+        || trimmed.starts_with("default :");
+
+    let is_try_header = trimmed == "try {" || trimmed.starts_with("try {");
+    let is_catch_header = (trimmed.starts_with("catch (") || trimmed.starts_with("catch("))
+        && (trimmed.ends_with('{') || trimmed.contains(')'));
+    let is_finally_header = trimmed == "finally {" || trimmed.starts_with("finally {");
+
+    // ── Emit __t() BEFORE control-flow headers / return ───────────
+
+    let needs_before = is_return || is_if_header || is_else_header
+        || is_switch_header || is_case_label
+        || is_try_header || is_catch_header || is_finally_header;
+    if needs_before {
+        let visible_vars = get_visible_vars(var_decls, line_idx + 1);
+        if !visible_vars.is_empty() || is_return {
+            let mut names: Vec<String> = visible_vars
+                .iter()
+                .map(|v| format!("\"{}\"", v.name))
+                .collect();
+            let mut values: Vec<String> =
+                visible_vars.iter().map(|v| v.name.clone()).collect();
+
+            if is_return_with_expr {
+                let ret_expr = extract_return_expr(trimmed);
+                names.insert(0, "\"__return__\"".to_string());
+                values.insert(0, ret_expr);
+            }
+
+            out.push_str(&format!(
+                "        __t({}, new String[]{{{}}}, new Object[]{{{}}});\n",
+                line_idx + 1,
+                names.join(", "),
+                values.join(", ")
+            ));
+        }
+    }
+
+    // ── Emit the original line ────────────────────────────────────
+
+    out.push_str(line);
+    out.push('\n');
+
+    // ── Emit __t() AFTER statements, loop headers, do-while ends ──
+
+    if is_statement || is_loop_header || is_do_while_end {
+        let visible_vars = get_visible_vars(var_decls, line_idx + 1);
+        if !visible_vars.is_empty() {
+            let names: Vec<String> = visible_vars
+                .iter()
+                .map(|v| format!("\"{}\"", v.name))
+                .collect();
+            let values: Vec<String> = visible_vars.iter().map(|v| v.name.clone()).collect();
+            out.push_str(&format!(
+                "        __t({}, new String[]{{{}}}, new Object[]{{{}}});\n",
+                line_idx + 1,
+                names.join(", "),
+                values.join(", ")
+            ));
+        }
+    }
 }
 
 fn get_visible_vars(
