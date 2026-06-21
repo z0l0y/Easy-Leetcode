@@ -97,6 +97,72 @@ fn generate_type_def(type_name: &str) -> String {
     }
 }
 
+/// Build the __t / __t_enter / __t_exit helper methods.
+/// Only includes type-specific instanceof checks for types that are actually defined.
+fn generate_t_helper(analysis: &Analysis) -> String {
+    let has_tree = analysis.needs_types.contains(&"TreeNode".to_string());
+
+    let mut out = String::new();
+    out.push_str("\n");
+    out.push_str("    private static String __current_method = \"\";\n");
+    out.push_str("    private static java.util.Stack<String> __call_stack = new java.util.Stack<>();\n");
+    out.push_str("\n");
+    out.push_str("    private static void __t_enter(String method) {\n");
+    out.push_str("        __current_method = method;\n");
+    out.push_str("        __call_stack.push(method);\n");
+    out.push_str("    }\n");
+    out.push_str("\n");
+    out.push_str("    private static void __t_exit() {\n");
+    out.push_str("        if (!__call_stack.isEmpty()) __call_stack.pop();\n");
+    out.push_str("        __current_method = __call_stack.isEmpty() ? \"\" : __call_stack.peek();\n");
+    out.push_str("    }\n");
+    out.push_str("\n");
+    out.push_str("    private static void __t(int line, String[] names, Object... values) {\n");
+    out.push_str("        StringBuilder sb = new StringBuilder();\n");
+    out.push_str("        sb.append(\"__TRACE__{\\\"line\\\":\").append(line);\n");
+    out.push_str("        if (!__current_method.isEmpty()) {\n");
+    out.push_str("            sb.append(\",\\\"method\\\":\\\"\").append(__current_method).append(\"\\\"\");\n");
+    out.push_str("        }\n");
+    out.push_str("        if (__call_stack.size() > 1) {\n");
+    out.push_str("            sb.append(\",\\\"stack\\\":[\");\n");
+    out.push_str("            for (int __si = 0; __si < __call_stack.size(); __si++) {\n");
+    out.push_str("                if (__si > 0) sb.append(\",\");\n");
+    out.push_str("                sb.append(\"\\\"\").append(__call_stack.get(__si)).append(\"\\\"\");\n");
+    out.push_str("            }\n");
+    out.push_str("            sb.append(\"]\");\n");
+    out.push_str("        }\n");
+    out.push_str("        sb.append(\",\\\"vars\\\":{\");\n");
+    out.push_str("        for (int __i = 0; __i < names.length; __i++) {\n");
+    out.push_str("            if (__i > 0) sb.append(\",\");\n");
+    out.push_str("            sb.append(\"\\\"\").append(names[__i]).append(\"\\\":\\\"\");\n");
+    out.push_str("            Object __v = values[__i];\n");
+    out.push_str("            if (__v == null) sb.append(\"null\");\n");
+    out.push_str("            else if (__v instanceof int[]) sb.append(java.util.Arrays.toString((int[])__v));\n");
+    out.push_str("            else if (__v instanceof long[]) sb.append(java.util.Arrays.toString((long[])__v));\n");
+    out.push_str("            else if (__v instanceof double[]) sb.append(java.util.Arrays.toString((double[])__v));\n");
+    out.push_str("            else if (__v instanceof char[]) sb.append(java.util.Arrays.toString((char[])__v));\n");
+    out.push_str("            else if (__v instanceof boolean[]) sb.append(java.util.Arrays.toString((boolean[])__v));\n");
+    out.push_str("            else if (__v instanceof String[]) sb.append(java.util.Arrays.toString((String[])__v));\n");
+    out.push_str("            else if (__v instanceof int[][]) sb.append(java.util.Arrays.deepToString((int[][])__v));\n");
+    out.push_str("            else if (__v instanceof java.util.Collection) sb.append(__v.toString());\n");
+    out.push_str("            else if (__v instanceof java.util.Map) sb.append(__v.toString());\n");
+    if has_tree {
+        out.push_str("            else if (__v instanceof TreeNode) sb.append(((TreeNode)__v).toLevelOrder());\n");
+    }
+    out.push_str("            else {\n");
+    out.push_str("                String __s = __v.toString();\n");
+    out.push_str("                __s = __s.replace(\"\\\\\", \"\\\\\\\\\").replace(\"\\\"\", \"\\\\\\\"\");\n");
+    out.push_str("                sb.append(__s);\n");
+    out.push_str("            }\n");
+    out.push_str("            sb.append(\"\\\"\");\n");
+    out.push_str("        }\n");
+    out.push_str("        sb.append(\"}}\");\n");
+    out.push_str("        System.out.println(sb.toString());\n");
+    out.push_str("    }\n");
+    out.push_str("}\n");
+    out
+}
+
 fn generate_instrumented_solution(
     analysis: &Analysis,
     method: &super::analyzer::MethodInfo,
@@ -146,11 +212,15 @@ fn generate_instrumented_solution(
                     param_values.join(", ")
                 ));
             }
+
+            // Wrap method body in try-finally so __t_exit() runs on every exit path
+            out.push_str("        try {\n");
         }
     }
 
-    // Write instrumented body lines — capture state at EVERY meaningful line
-    for i in (body_start + 1)..=body_end.min(code_lines.len() - 1) {
+    // Write instrumented body lines — up to (but NOT including) the method's closing `}`
+    // __t_exit() must go BEFORE the closing brace so it's inside the method body.
+    for i in (body_start + 1)..body_end.min(code_lines.len()) {
         let line = &code_lines[i];
         let trimmed = line.trim();
 
@@ -268,9 +338,16 @@ fn generate_instrumented_solution(
         }
     }
 
-    // Method exit tracking — insert before method closing brace
-    // Since the last body line is the closing `}`, we insert __t_exit() before remaining lines
-    out.push_str("        __t_exit();\n");
+    // Method exit tracking — try-finally ensures __t_exit() runs on every exit path
+    out.push_str("        } finally {\n");
+    out.push_str("            __t_exit();\n");
+    out.push_str("        }\n");
+
+    // Write the method's closing brace
+    if let Some(closing_line) = code_lines.get(body_end) {
+        out.push_str(closing_line);
+        out.push('\n');
+    }
 
     // Write remaining lines after method
     for i in (body_end + 1)..code_lines.len() {
@@ -286,64 +363,8 @@ fn generate_instrumented_solution(
         out.push('\n');
     }
 
-    // Add the __t helper method
-    out.push_str(r#"
-    private static String __current_method = "";
-    private static java.util.Stack<String> __call_stack = new java.util.Stack<>();
-
-    private static void __t_enter(String method) {
-        __current_method = method;
-        __call_stack.push(method);
-    }
-
-    private static void __t_exit() {
-        if (!__call_stack.isEmpty()) __call_stack.pop();
-        __current_method = __call_stack.isEmpty() ? "" : __call_stack.peek();
-    }
-
-    private static void __t(int line, String[] names, Object... values) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("__TRACE__{\"line\":").append(line);
-        if (!__current_method.isEmpty()) {
-            sb.append(",\"method\":\"").append(__current_method).append("\"");
-        }
-        // Include call stack for multi-method traces
-        if (__call_stack.size() > 1) {
-            sb.append(",\"stack\":[");
-            for (int __si = 0; __si < __call_stack.size(); __si++) {
-                if (__si > 0) sb.append(",");
-                sb.append("\"").append(__call_stack.get(__si)).append("\"");
-            }
-            sb.append("]");
-        }
-        sb.append(",\"vars\":{");
-        for (int __i = 0; __i < names.length; __i++) {
-            if (__i > 0) sb.append(",");
-            sb.append("\"").append(names[__i]).append("\":\"");
-            Object __v = values[__i];
-            if (__v == null) sb.append("null");
-            else if (__v instanceof int[]) sb.append(java.util.Arrays.toString((int[])__v));
-            else if (__v instanceof long[]) sb.append(java.util.Arrays.toString((long[])__v));
-            else if (__v instanceof double[]) sb.append(java.util.Arrays.toString((double[])__v));
-            else if (__v instanceof char[]) sb.append(java.util.Arrays.toString((char[])__v));
-            else if (__v instanceof boolean[]) sb.append(java.util.Arrays.toString((boolean[])__v));
-            else if (__v instanceof String[]) sb.append(java.util.Arrays.toString((String[])__v));
-            else if (__v instanceof int[][]) sb.append(java.util.Arrays.deepToString((int[][])__v));
-            else if (__v instanceof java.util.Collection) sb.append(__v.toString());
-            else if (__v instanceof java.util.Map) sb.append(__v.toString());
-            else if (__v instanceof TreeNode) sb.append(((TreeNode)__v).toLevelOrder());
-            else {
-                String __s = __v.toString();
-                __s = __s.replace("\\", "\\\\").replace("\"", "\\\"");
-                sb.append(__s);
-            }
-            sb.append("\"");
-        }
-        sb.append("}}");
-        System.out.println(sb.toString());
-    }
-}
-"#);
+    // Add the __t helper method — built dynamically based on needed types
+    out.push_str(&generate_t_helper(analysis));
 
     Ok(out)
 }

@@ -143,7 +143,7 @@ fn try_parse_operations(example: &str) -> anyhow::Result<ExampleInput> {
     let mut parts = Vec::new();
     let mut depth = 0;
     let mut start = 0;
-    for (i, ch) in content.chars().enumerate() {
+    for (i, ch) in content.char_indices() {
         match ch {
             '[' => depth += 1,
             ']' => {
