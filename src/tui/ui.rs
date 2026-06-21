@@ -25,14 +25,19 @@ const COLOR_RESULT: Color = Color::Rgb(152, 195, 121);
 pub fn render(frame: &mut Frame, state: &AppState) {
     let area = frame.area();
 
-    // Split vertically: main content + status bar
+    // Source bar (1) | code+watch (flex) | status bar (1)
     let vchunks = Layout::default()
         .direction(Direction::Vertical)
-        .constraints([Constraint::Min(3), Constraint::Length(1)])
+        .constraints([
+            Constraint::Length(1),
+            Constraint::Min(3),
+            Constraint::Length(1),
+        ])
         .split(area);
 
-    let main_area = vchunks[0];
-    let status_area = vchunks[1];
+    let source_area = vchunks[0];
+    let main_area = vchunks[1];
+    let status_area = vchunks[2];
 
     // Split main horizontally: code (60%) | watch (40%)
     let hchunks = Layout::default()
@@ -43,13 +48,24 @@ pub fn render(frame: &mut Frame, state: &AppState) {
     let code_area = hchunks[0];
     let watch_area = hchunks[1];
 
-    // Auto-scroll before rendering
-    let _visible_lines = code_area.height.saturating_sub(2) as usize; // minus borders
-    // (can't mutate state in immutable render, so we won't autoscroll here)
-
+    render_source_bar(frame, source_area, state);
     render_code_panel(frame, code_area, state);
     render_watch_panel(frame, watch_area, state);
     render_status_bar(frame, status_area, state);
+}
+
+// ─── Source bar ─────────────────────────────────────────────────────────
+
+fn render_source_bar(frame: &mut Frame, area: ratatui::layout::Rect, state: &AppState) {
+    let text = format!(" Source: {} ", state.trace.input);
+    let p = Paragraph::new(Span::styled(
+        text,
+        Style::default()
+            .fg(COLOR_TITLE)
+            .add_modifier(Modifier::BOLD),
+    ))
+    .style(Style::default().bg(Color::Rgb(33, 37, 43)));
+    frame.render_widget(p, area);
 }
 
 // ─── Code panel ────────────────────────────────────────────────────────
