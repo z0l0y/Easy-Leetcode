@@ -35,7 +35,10 @@
           "ptr_right": null
         }
       ],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "5",
@@ -50,7 +53,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "6",
@@ -70,7 +76,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "7",
@@ -95,7 +104,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "8",
@@ -120,7 +132,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "9",
@@ -145,7 +160,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "7",
@@ -170,7 +188,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "8",
@@ -195,7 +216,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "9",
@@ -220,7 +244,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "7",
@@ -245,7 +272,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "8",
@@ -270,7 +300,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "9",
@@ -295,7 +328,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "7",
@@ -320,7 +356,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "8",
@@ -345,7 +384,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "9",
@@ -370,7 +412,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "7",
@@ -395,7 +440,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "8",
@@ -420,7 +468,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "9",
@@ -445,7 +496,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "7",
@@ -470,7 +524,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "8",
@@ -495,7 +552,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "9",
@@ -520,7 +580,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "7",
@@ -545,7 +608,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "8",
@@ -570,7 +636,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "9",
@@ -595,7 +664,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "7",
@@ -620,7 +692,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "8",
@@ -645,7 +720,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "9",
@@ -670,7 +748,10 @@
         }
       ],
       "ds": [],
-      "is_result": false
+      "is_result": false,
+      "call_stack": [
+        "maxSubArray"
+      ]
     },
     {
       "line": "11",
@@ -678,6 +759,11 @@
       "note": null,
       "loop_back": false,
       "vars": [
+        {
+          "name": "__return__",
+          "value": "6",
+          "old": null
+        },
         {
           "name": "best",
           "value": "6",
@@ -690,7 +776,10 @@
         }
       ],
       "ds": [],
-      "is_result": true
+      "is_result": true,
+      "call_stack": [
+        "maxSubArray"
+      ]
     }
   ]
 }

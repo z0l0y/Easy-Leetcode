@@ -1,0 +1,202 @@
+{
+  "input": "board = [[\"A\", \"B\", \"C\", \"E\"], [\"S\", \"F\", \"C\", \"S\"], [\"A\", \"D\", \"E\", \"E\"]], word = \"ABCCED\"",
+  "algorithm": "Solution.exist",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public boolean exist(char[][] board, String word) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "board",
+          "value": "[[A, B, C, E], [S, F, C, S], [A, D, E, E]]",
+          "old": null
+        },
+        {
+          "name": "word",
+          "value": "ABCCED",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "exist"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        int m = board.length;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "exist"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        int n = board[0].length;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "exist"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        for (int i = 0; i < m; i++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "exist"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "exist"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "                if (dfs(board, word, 0, i, j)) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "exist"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                    return true;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "true",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "exist"
+      ]
+    }
+  ]
+}

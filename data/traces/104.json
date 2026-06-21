@@ -1,0 +1,2348 @@
+{
+  "input": "root = [3, 9, 20, null, null, 15, 7]",
+  "algorithm": "Solution.maxDepth",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[3,9,20,null,null,15,7,null,null,null,null]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7,
+            null,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[9]",
+          "old": "[3,9,20,null,null,15,7,null,null,null,null]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            9
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[9]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[20,15,7]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            20,
+            15,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[15]",
+          "old": "[20,15,7]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            15
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[15]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[7]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[7]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "2",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[15]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            15
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[15]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "2"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[7]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[7]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "3",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[9]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            9
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[9]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "3"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[20,15,7]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            20,
+            15,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[15]",
+          "old": "[20,15,7]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            15
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[15]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[7]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[7]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "2",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[15]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            15
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[15]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "2"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[7]",
+          "old": "null"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": "[7]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "4",
+      "code": "    public int maxDepth(TreeNode root) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "root",
+          "value": "null",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "            return 0;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxDepth",
+        "maxDepth",
+        "maxDepth",
+        "maxDepth"
+      ]
+    }
+  ]
+}

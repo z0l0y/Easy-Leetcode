@@ -125,6 +125,31 @@ impl TypedValue {
                         })
                         .collect();
                     format!("ListNode[] {} = {{{}}};", var_name, items.join(", "))
+                } else if expected_type == "char[][]" {
+                    // Generate char[][] with char literals
+                    let row_strs: Vec<String> = rows
+                        .iter()
+                        .map(|row| {
+                            let items: Vec<String> = row
+                                .iter()
+                                .map(|v| {
+                                    match v {
+                                        TypedValue::String(s) => {
+                                            // Take the first char
+                                            let ch = s.chars().next().unwrap_or(' ');
+                                            format!("'{}'", ch)
+                                        }
+                                        other => other.to_java_literal(),
+                                    }
+                                })
+                                .collect();
+                            format!("{{{}}}", items.join(", "))
+                        })
+                        .collect();
+                    format!("char[][] {} = {{{}}};", var_name, row_strs.join(", "))
+                } else if expected_type == "String[][]" {
+                    let lit = self.to_java_literal();
+                    format!("String[][] {} = {};", var_name, lit)
                 } else {
                     let lit = self.to_java_literal();
                     format!("int[][] {} = {};", var_name, lit)
@@ -182,6 +207,31 @@ pub fn parse_example_input(example: &str) -> anyhow::Result<ExampleInput> {
             if let Ok(ops) = try_parse_chinese_ops(example) {
                 return Ok(ops);
             }
+        }
+        // Bare comma-separated method calls (no constructor args):
+        // 输入：push(3), push(2), getMin, pop, getMin
+        // Detection: no '=' sign, consists of method calls with optional args.
+        if !content.contains('=') && !content.contains("操作") {
+            // Quick heuristic: first char should be a letter, content looks like method calls
+            if content
+                .chars()
+                .next()
+                .map(|c| c.is_ascii_alphabetic())
+                .unwrap_or(false)
+                && content.contains('(')
+            {
+                if let Ok(ops) = try_parse_bare_ops(content) {
+                    return Ok(ops);
+                }
+            }
+        }
+    }
+    // Java code block format (208: Trie):
+    // "Trie trie = new Trie();\ntrie.insert(\"apple\");\n..."
+    // No "输入：" prefix, starts with class instantiation.
+    if example.contains("= new ") && example.contains("();") {
+        if let Ok(ops) = try_parse_java_block(example) {
+            return Ok(ops);
         }
     }
     // Fall back to single-method format
@@ -327,9 +377,37 @@ fn parse_method_calls(s: &str) -> anyhow::Result<Vec<(String, Vec<TypedValue>)>>
     let mut remaining = s;
 
     while !remaining.is_empty() {
-        // Find next method name (identifier before '(')
+        // Find next method name (identifier before '(' or before ','/end)
         if let Some(paren_open) = remaining.find('(') {
-            let method_name = remaining[..paren_open].trim().to_string();
+            // Also check if there's a comma before the paren — if so, the method
+            // might be a no-paren method name before the comma.
+            let comma_before_paren = remaining[..paren_open].find(',');
+            let dot_before_paren = remaining[..paren_open].find('.');
+            // Skip if there's a dot before paren (Java method call like obj.method())
+            // — but we don't allow dots in our format.
+            if let Some(_dot_pos) = dot_before_paren {
+                // This is an object.method() call — not our target format
+                break;
+            }
+            // If there's a comma between the method name candidate and '(',
+            // the '(' might belong to a later call, not this method.
+            // In our format, method(args) always has '(' right after the name.
+            let method_name = if let Some(comma_pos) = comma_before_paren {
+                // Comma before paren: treat everything before comma as a no-paren method
+                let name = remaining[..comma_pos].trim().to_string();
+                // Advance remaining past this method name
+                remaining = remaining[comma_pos + 1..].trim_start();
+                if name.is_empty()
+                    || !name.chars().all(|c| c.is_alphanumeric() || c == '_')
+                {
+                    break;
+                }
+                ops.push((name, vec![]));
+                continue;
+            } else {
+                remaining[..paren_open].trim().to_string()
+            };
+
             // Validate method name: must be a valid Java identifier
             if method_name.is_empty()
                 || !method_name
@@ -380,11 +458,121 @@ fn parse_method_calls(s: &str) -> anyhow::Result<Vec<(String, Vec<TypedValue>)>>
                 remaining = remaining['，'.len_utf8()..].trim_start();
             }
         } else {
+            // No '(' at all — remaining is comma-separated no-paren method names
+            let names: Vec<String> = remaining
+                .split(',')
+                .map(|s| s.trim().to_string())
+                .filter(|s| !s.is_empty())
+                .collect();
+            for name in &names {
+                if !name.chars().all(|c| c.is_alphanumeric() || c == '_') {
+                    break;
+                }
+                ops.push((name.clone(), vec![]));
+            }
             break;
         }
     }
 
     Ok(ops)
+}
+
+/// Try to parse bare comma-separated method calls:
+/// 输入：push(3), push(2), getMin, pop, getMin
+/// No constructor args, no "操作：" separator.
+fn try_parse_bare_ops(content: &str) -> anyhow::Result<ExampleInput> {
+    // Take only the first line (before \n输出： etc.)
+    let ops_text = content.lines().next().unwrap_or(content).trim();
+    let mut method_ops = parse_method_calls(ops_text)?;
+
+    if method_ops.is_empty() {
+        anyhow::bail!("无法解析操作方法调用");
+    }
+
+    // Insert a dummy constructor at position 0
+    method_ops.insert(0, ("__ctor__".to_string(), vec![]));
+    Ok(ExampleInput::Operations(String::new(), method_ops))
+}
+
+/// Try to parse Java code block format (208: Trie):
+/// Trie trie = new Trie();
+/// trie.insert("apple");
+/// trie.search("apple");   // true
+fn try_parse_java_block(example: &str) -> anyhow::Result<ExampleInput> {
+    // Parse the first line: "Trie trie = new Trie();"
+    let first_line = example.lines().next().context("无法解析 Java 代码块格式")?;
+    let first_line = first_line.trim();
+
+    // Extract constructor args from "new ClassName(args)"
+    let ctor_args = if let Some(new_start) = first_line.find("new ") {
+        let after_new = &first_line[new_start + 4..]; // skip "new "
+        if let Some(paren_open) = after_new.find('(') {
+            if let Some(paren_close) = after_new.find(')') {
+                let args_str = after_new[paren_open + 1..paren_close].trim();
+                if args_str.is_empty() {
+                    vec![]
+                } else {
+                    smart_split(args_str, ',')
+                        .iter()
+                        .map(|s| parse_value(s))
+                        .collect::<anyhow::Result<Vec<_>>>()?
+                }
+            } else {
+                vec![]
+            }
+        } else {
+            vec![]
+        }
+    } else {
+        vec![]
+    };
+
+    // Parse subsequent method calls
+    let mut operations = vec![("__ctor__".to_string(), ctor_args)];
+
+    for line in example.lines().skip(1) {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with("输出") || trimmed.starts_with("分析") {
+            continue;
+        }
+
+        // Strip inline comments: "// true" or "// anything"
+        let trimmed = if let Some(comment_pos) = trimmed.find("//") {
+            trimmed[..comment_pos].trim()
+        } else {
+            trimmed
+        };
+
+        if trimmed.is_empty() {
+            continue;
+        }
+
+        // Parse "obj.method(args);" or "obj.method();"
+        if let Some(dot_pos) = trimmed.find('.') {
+            let after_dot = &trimmed[dot_pos + 1..];
+            if let Some(paren_open) = after_dot.find('(') {
+                let method_name = after_dot[..paren_open].trim().to_string();
+                if let Some(paren_close) = after_dot.rfind(')') {
+                    let args_str = after_dot[paren_open + 1..paren_close].trim();
+                    let args = if args_str.is_empty() {
+                        vec![]
+                    } else {
+                        smart_split(args_str, ',')
+                            .iter()
+                            .map(|s| parse_value(s))
+                            .collect::<anyhow::Result<Vec<_>>>()?
+                    };
+                    operations.push((method_name, args));
+                }
+            }
+        }
+    }
+
+    if operations.len() <= 1 {
+        anyhow::bail!("无法解析 Java 代码块中的方法调用");
+    }
+
+    Ok(ExampleInput::Operations(String::new(), operations))
 }
 
 /// Split by commas at the top level, respecting nested brackets.
@@ -610,7 +798,8 @@ fn parse_nested_array(s: &str) -> anyhow::Result<Vec<Vec<TypedValue>>> {
         anyhow::bail!("无法解析嵌套数组: {}", s)
     }
 
-    let inner = &s[2..s.len() - 2]; // strip outer [[ and ]]
+    // Strip only the OUTER [ and ] (1 char each), preserving inner [[row1],[row2]] brackets.
+    let inner = &s[1..s.len() - 1];
     let mut rows: Vec<Vec<TypedValue>> = Vec::new();
     let mut depth = 0;
     let mut current = String::new();
@@ -781,6 +970,78 @@ mod tests {
                 assert!(ops[0].1.is_empty(), "expected no ctor args");
                 assert_eq!(ops[1].0, "insert");
                 assert_eq!(ops[2].0, "search");
+                assert_eq!(ops[3].0, "startsWith");
+            }
+            other => panic!("Expected Operations, got {:?}", other),
+        }
+    }
+
+    #[test]
+    fn test_parse_bare_ops_minstack() {
+        let example = "输入：push(3), push(2), getMin, pop, getMin\n输出：2, 3";
+        let input = parse_example_input(example).unwrap();
+        match &input {
+            ExampleInput::Operations(_cn, ops) => {
+                assert_eq!(ops.len(), 6, "expected 6 ops, got {}", ops.len());
+                // __ctor__ with no args
+                assert_eq!(ops[0].0, "__ctor__");
+                assert!(ops[0].1.is_empty());
+                // push(3)
+                assert_eq!(ops[1].0, "push");
+                assert_eq!(ops[1].1.len(), 1);
+                // push(2)
+                assert_eq!(ops[2].0, "push");
+                // getMin (no args)
+                assert_eq!(ops[3].0, "getMin");
+                assert!(ops[3].1.is_empty());
+                // pop (no args)
+                assert_eq!(ops[4].0, "pop");
+                assert!(ops[4].1.is_empty());
+                // getMin again
+                assert_eq!(ops[5].0, "getMin");
+            }
+            other => panic!("Expected Operations, got {:?}", other),
+        }
+    }
+
+    #[test]
+    fn test_parse_bare_ops_median_finder() {
+        let example = "输入：addNum(1), addNum(2), findMedian, addNum(3), findMedian";
+        let input = parse_example_input(example).unwrap();
+        match &input {
+            ExampleInput::Operations(_cn, ops) => {
+                assert_eq!(ops.len(), 6);
+                assert_eq!(ops[0].0, "__ctor__");
+                assert_eq!(ops[1].0, "addNum");
+                assert_eq!(ops[2].0, "addNum");
+                assert_eq!(ops[3].0, "findMedian");
+                assert_eq!(ops[4].0, "addNum");
+                assert_eq!(ops[5].0, "findMedian");
+            }
+            other => panic!("Expected Operations, got {:?}", other),
+        }
+    }
+
+    #[test]
+    fn test_parse_java_block_trie() {
+        let example = "Trie trie = new Trie();\ntrie.insert(\"apple\");\ntrie.search(\"apple\");   // true\ntrie.startsWith(\"app\"); // true";
+        let input = parse_example_input(example).unwrap();
+        match &input {
+            ExampleInput::Operations(_cn, ops) => {
+                assert_eq!(ops.len(), 4, "expected 4 ops, got {}", ops.len());
+                // Constructor
+                assert_eq!(ops[0].0, "__ctor__");
+                assert!(ops[0].1.is_empty());
+                // insert("apple")
+                assert_eq!(ops[1].0, "insert");
+                assert_eq!(ops[1].1.len(), 1);
+                match &ops[1].1[0] {
+                    TypedValue::String(s) => assert_eq!(s, "apple"),
+                    other => panic!("Expected String, got {:?}", other),
+                }
+                // search("apple")
+                assert_eq!(ops[2].0, "search");
+                // startsWith("app")
                 assert_eq!(ops[3].0, "startsWith");
             }
             other => panic!("Expected Operations, got {:?}", other),

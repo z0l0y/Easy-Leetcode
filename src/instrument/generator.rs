@@ -139,6 +139,8 @@ fn generate_t_helper(analysis: &Analysis) -> String {
     out.push_str("            else if (__v instanceof boolean[]) sb.append(java.util.Arrays.toString((boolean[])__v));\n");
     out.push_str("            else if (__v instanceof String[]) sb.append(java.util.Arrays.toString((String[])__v));\n");
     out.push_str("            else if (__v instanceof int[][]) sb.append(java.util.Arrays.deepToString((int[][])__v));\n");
+    out.push_str("            else if (__v instanceof char[][]) sb.append(java.util.Arrays.deepToString((char[][])__v));\n");
+    out.push_str("            else if (__v instanceof String[][]) sb.append(java.util.Arrays.deepToString((String[][])__v));\n");
     out.push_str("            else if (__v instanceof java.util.Collection) sb.append(__v.toString());\n");
     out.push_str("            else if (__v instanceof java.util.Map) sb.append(__v.toString());\n");
     if has_tree {

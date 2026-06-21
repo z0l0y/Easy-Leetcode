@@ -1,0 +1,1112 @@
+{
+  "input": "grid = [[\"1\", \"1\", \"0\"], [\"1\", \"1\", \"0\"], [\"0\", \"0\", \"1\"]]",
+  "algorithm": "Solution.numIslands",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public int numIslands(char[][] grid) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "grid",
+          "value": "[[1, 1, 0], [1, 1, 0], [0, 0, 1]]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "grid",
+          "ascii": null,
+          "data": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "heatmap",
+          "label": "grid",
+          "ascii": null,
+          "data": [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        int m = grid.length;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        int n = grid[0].length;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        int count = 0;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "count",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        for (int i = 0; i < m; i++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "count",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "count",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "count",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                    count++;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "                    dfs(grid, i, j);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        for (int i = 0; i < m; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": "2"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        for (int i = 0; i < m; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": "2"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            for (int j = 0; j < n; j++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "                if (grid[i][j] == '1') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                    count++;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "                    dfs(grid, i, j);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "count",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "j",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "numIslands"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "        return count;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "count",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "m",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "n",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "numIslands"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1107 @@
+{
+  "input": "nums = [2, 3, -2, 4]",
+  "algorithm": "Solution.maxProduct",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public int maxProduct(int[] nums) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "nums",
+          "value": "[2, 3, -2, 4]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "nums",
+          "ascii": null,
+          "data": [
+            2,
+            3,
+            -2,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        int max = nums[0];",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "max",
+          "value": "2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        int min = nums[0];",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "max",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "        int ans = nums[0];",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "ans",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        for (int i = 1; i < nums.length; i++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "ans",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            int x = nums[i];",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "ans",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            int a = max;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "a",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            int b = min;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "a",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "            max = Math.max(x, Math.max(a * x, b * x));",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "a",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "6",
+          "old": "2"
+        },
+        {
+          "name": "min",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            min = Math.min(x, Math.min(a * x, b * x));",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "a",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "3",
+          "old": "2"
+        },
+        {
+          "name": "x",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            if (max > ans) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "a",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "                ans = max;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "a",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": "2"
+        },
+        {
+          "name": "b",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        for (int i = 1; i < nums.length; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "max",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            int x = nums[i];",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "-2",
+          "old": "3"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            int a = max;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "6",
+          "old": "2"
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "-2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            int b = min;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "3",
+          "old": "2"
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "-2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "            max = Math.max(x, Math.max(a * x, b * x));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "-2",
+          "old": "6"
+        },
+        {
+          "name": "min",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "-2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            min = Math.min(x, Math.min(a * x, b * x));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-12",
+          "old": "3"
+        },
+        {
+          "name": "x",
+          "value": "-2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            if (max > ans) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-12",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "-2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "        for (int i = 1; i < nums.length; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": "2"
+        },
+        {
+          "name": "max",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-12",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "            int x = nums[i];",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-12",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "4",
+          "old": "-2"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            int a = max;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "-2",
+          "old": "6"
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-12",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            int b = min;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "-12",
+          "old": "3"
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-12",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "            max = Math.max(x, Math.max(a * x, b * x));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "-12",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "4",
+          "old": "-2"
+        },
+        {
+          "name": "min",
+          "value": "-12",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "            min = Math.min(x, Math.min(a * x, b * x));",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "-12",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-48",
+          "old": "-12"
+        },
+        {
+          "name": "x",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            if (max > ans) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "a",
+          "value": "-2",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "b",
+          "value": "-12",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-48",
+          "old": null
+        },
+        {
+          "name": "x",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "maxProduct"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "        return ans;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "ans",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "max",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "min",
+          "value": "-48",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "maxProduct"
+      ]
+    }
+  ]
+}

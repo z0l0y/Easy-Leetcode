@@ -1,0 +1,48 @@
+{
+  "input": "root = [1, 2, 5, 3, 4, null, 6]",
+  "algorithm": "Solution.flatten",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public void flatten(TreeNode root) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "root",
+          "value": "[1,2,5,3,4,null,6,null,null,null,null,null,null]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "root",
+          "ascii": null,
+          "data": [
+            1,
+            2,
+            5,
+            3,
+            4,
+            null,
+            6,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "flatten"
+      ]
+    }
+  ]
+}

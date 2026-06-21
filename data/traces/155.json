@@ -1,0 +1,78 @@
+{
+  "input": "__ctor__() → push(3) → push(2) → getMin() → pop() → getMin()",
+  "algorithm": "MinStack.push",
+  "steps": [
+    {
+      "line": "8",
+      "code": "    public void push(int val) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "val",
+          "value": "3",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "push"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "    public void push(int val) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "val",
+          "value": "2",
+          "old": "3"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "push"
+      ]
+    },
+    {
+      "line": "24",
+      "code": "        return minStack.peek();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "2",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "getMin"
+      ]
+    },
+    {
+      "line": "24",
+      "code": "        return minStack.peek();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "3",
+          "old": "2"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "getMin"
+      ]
+    }
+  ]
+}

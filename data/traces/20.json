@@ -1,0 +1,901 @@
+{
+  "input": "s = \"()[]{}\"",
+  "algorithm": "Solution.isValid",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public boolean isValid(String s) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "s",
+          "value": "()[]{}",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        Deque<Character> stack = new ArrayDeque<>();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < s.length(); i++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            char c = s.charAt(i);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": "(",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            if (c == '(') {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": "(",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "                stack.push(')');",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": "(",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[)]",
+          "old": "[]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "10",
+      "code": "            } else if (c == '[') {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": "(",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[)]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < s.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "stack",
+          "value": "[)]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            char c = s.charAt(i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": ")",
+          "old": "("
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[)]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            if (c == '(') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": ")",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[)]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "                if (stack.isEmpty() || stack.pop() != c) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": ")",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[)]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < s.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": "[)]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            char c = s.charAt(i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "[",
+          "old": ")"
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            if (c == '(') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "[",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "                stack.push(']');",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": "[",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]]",
+          "old": "[]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "            } else if (c == '{') {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": "[",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < s.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "3",
+          "old": "2"
+        },
+        {
+          "name": "stack",
+          "value": "[]]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            char c = s.charAt(i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "]",
+          "old": "["
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            if (c == '(') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "]",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "                if (stack.isEmpty() || stack.pop() != c) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "]",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < s.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "4",
+          "old": "3"
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": "[]]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            char c = s.charAt(i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "{",
+          "old": "]"
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            if (c == '(') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "{",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "                stack.push('}');",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": "{",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[}]",
+          "old": "[]"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            } else {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "c",
+          "value": "{",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[}]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < s.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "5",
+          "old": "4"
+        },
+        {
+          "name": "stack",
+          "value": "[}]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            char c = s.charAt(i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "}",
+          "old": "{"
+        },
+        {
+          "name": "i",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[}]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            if (c == '(') {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "}",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[}]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "                if (stack.isEmpty() || stack.pop() != c) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "c",
+          "value": "}",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[}]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "isValid"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "        return stack.isEmpty();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "true",
+          "old": null
+        },
+        {
+          "name": "stack",
+          "value": "[]",
+          "old": "[}]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "stack",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "isValid"
+      ]
+    }
+  ]
+}

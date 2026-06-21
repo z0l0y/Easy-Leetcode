@@ -1,0 +1,492 @@
+{
+  "input": "preorder = [3, 9, 20, 15, 7], inorder = [9, 3, 15, 20, 7]",
+  "algorithm": "Solution.buildTree",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public TreeNode buildTree(int[] preorder, int[] inorder) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "inorder",
+          "value": "[9, 3, 15, 20, 7]",
+          "old": null
+        },
+        {
+          "name": "preorder",
+          "value": "[3, 9, 20, 15, 7]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "inorder",
+          "ascii": null,
+          "data": [
+            9,
+            3,
+            15,
+            20,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "array",
+          "label": "preorder",
+          "ascii": null,
+          "data": [
+            3,
+            9,
+            20,
+            15,
+            7
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        Map<Integer, Integer> idx = new HashMap<>();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "idx",
+          "value": "{}",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < inorder.length; i++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "{}",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            idx.put(inorder[i], i);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "{9=0}",
+          "old": "{}"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < inorder.length; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "idx",
+          "value": "{9=0}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            idx.put(inorder[i], i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "{3=1, 9=0}",
+          "old": "{9=0}"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "3": "1",
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < inorder.length; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "2",
+          "old": "1"
+        },
+        {
+          "name": "idx",
+          "value": "{3=1, 9=0}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "3": "1",
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            idx.put(inorder[i], i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "{3=1, 9=0, 15=2}",
+          "old": "{3=1, 9=0}"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "15": "2",
+            "3": "1",
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < inorder.length; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "3",
+          "old": "2"
+        },
+        {
+          "name": "idx",
+          "value": "{3=1, 9=0, 15=2}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "15": "2",
+            "3": "1",
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            idx.put(inorder[i], i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "{3=1, 20=3, 9=0, 15=2}",
+          "old": "{3=1, 9=0, 15=2}"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "15": "2",
+            "20": "3",
+            "3": "1",
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < inorder.length; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "4",
+          "old": "3"
+        },
+        {
+          "name": "idx",
+          "value": "{3=1, 20=3, 9=0, 15=2}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "15": "2",
+            "20": "3",
+            "3": "1",
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            idx.put(inorder[i], i);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "{3=1, 20=3, 7=4, 9=0, 15=2}",
+          "old": "{3=1, 20=3, 9=0, 15=2}"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "15": "2",
+            "20": "3",
+            "3": "1",
+            "7": "4",
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "buildTree"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "        return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, idx);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "[3,9,20,null,null,15,7,null,null,null,null]",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "{3=1, 20=3, 7=4, 9=0, 15=2}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "tree",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7,
+            null,
+            null,
+            null,
+            null
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        },
+        {
+          "kind": "hashmap",
+          "label": "idx",
+          "ascii": null,
+          "data": {
+            "15": "2",
+            "20": "3",
+            "3": "1",
+            "7": "4",
+            "9": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "buildTree"
+      ]
+    }
+  ]
+}

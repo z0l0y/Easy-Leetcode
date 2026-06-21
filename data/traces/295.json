@@ -1,0 +1,96 @@
+{
+  "input": "__ctor__() → addNum(1) → addNum(2) → findMedian() → addNum(3) → findMedian()",
+  "algorithm": "MedianFinder.addNum",
+  "steps": [
+    {
+      "line": "8",
+      "code": "    public void addNum(int num) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "num",
+          "value": "1",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addNum"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "    public void addNum(int num) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "num",
+          "value": "2",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addNum"
+      ]
+    },
+    {
+      "line": "24",
+      "code": "        return (small.peek() + large.peek()) / 2.0;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "1.5",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "findMedian"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "    public void addNum(int num) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "num",
+          "value": "3",
+          "old": "2"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "addNum"
+      ]
+    },
+    {
+      "line": "22",
+      "code": "            return small.peek();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "2",
+          "old": "1.5"
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "findMedian"
+      ]
+    }
+  ]
+}

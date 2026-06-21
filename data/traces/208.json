@@ -1,0 +1,830 @@
+{
+  "input": "__ctor__() → insert(\"apple\") → search(\"apple\") → startsWith(\"app\")",
+  "algorithm": "Trie.insert",
+  "steps": [
+    {
+      "line": "11",
+      "code": "    public void insert(String word) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "word",
+          "value": "apple",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "12",
+      "code": "        Node cur = root;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@6d06d69c",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        for (int i = 0; i < word.length(); i++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@6d06d69c",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            int idx = word.charAt(i) - 'a';",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@6d06d69c",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            if (cur.next[idx] == null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@6d06d69c",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "                cur.next[idx] = new Node();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@6d06d69c",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "            cur = cur.next[idx];",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@7852e922",
+          "old": "Trie$Node@6d06d69c"
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "0",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        for (int i = 0; i < word.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@7852e922",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            int idx = word.charAt(i) - 'a';",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@7852e922",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "15",
+          "old": "0"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            if (cur.next[idx] == null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@7852e922",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "15",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "                cur.next[idx] = new Node();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@7852e922",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "15",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "            cur = cur.next[idx];",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@4e25154f",
+          "old": "Trie$Node@7852e922"
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "15",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        for (int i = 0; i < word.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": "1"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            int idx = word.charAt(i) - 'a';",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "15",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            if (cur.next[idx] == null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "15",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "                cur.next[idx] = new Node();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@4e25154f",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "15",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "            cur = cur.next[idx];",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@70dea4e",
+          "old": "Trie$Node@4e25154f"
+        },
+        {
+          "name": "i",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "15",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        for (int i = 0; i < word.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@70dea4e",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": "2"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            int idx = word.charAt(i) - 'a';",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@70dea4e",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "11",
+          "old": "15"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            if (cur.next[idx] == null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@70dea4e",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "11",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "                cur.next[idx] = new Node();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@70dea4e",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "11",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "            cur = cur.next[idx];",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@5c647e05",
+          "old": "Trie$Node@70dea4e"
+        },
+        {
+          "name": "i",
+          "value": "3",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "11",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        for (int i = 0; i < word.length(); i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@5c647e05",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": "3"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            int idx = word.charAt(i) - 'a';",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@5c647e05",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "4",
+          "old": "11"
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            if (cur.next[idx] == null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@5c647e05",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "                cur.next[idx] = new Node();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@5c647e05",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "            cur = cur.next[idx];",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@33909752",
+          "old": "Trie$Node@5c647e05"
+        },
+        {
+          "name": "i",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "idx",
+          "value": "4",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "20",
+      "code": "        cur.end = true;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "Trie$Node@33909752",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "insert"
+      ]
+    },
+    {
+      "line": "22",
+      "code": "    public boolean search(String word) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "word",
+          "value": "apple",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "search"
+      ]
+    },
+    {
+      "line": "23",
+      "code": "        Node node = find(word);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "Trie$Node@33909752",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "search"
+      ]
+    },
+    {
+      "line": "24",
+      "code": "        return node != null && node.end;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "true",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "Trie$Node@33909752",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "search"
+      ]
+    },
+    {
+      "line": "26",
+      "code": "    public boolean startsWith(String prefix) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "prefix",
+          "value": "app",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "startsWith"
+      ]
+    },
+    {
+      "line": "27",
+      "code": "        return find(prefix) != null;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "true",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": true,
+      "call_stack": [
+        "startsWith"
+      ]
+    }
+  ]
+}
