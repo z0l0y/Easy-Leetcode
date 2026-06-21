@@ -11,10 +11,14 @@ A Rust CLI for browsing LeetCode Hot100 notes by id or keyword. Features a built
 - Show hint/answer/extra sections on demand (`-i` / `-a` / `-e`)
 - **Algorithm execution trace** — truly runs Java code, captures real variable values at each step
 - **Interactive TUI mode** — step through code line-by-line, watch variables change (like an IDE debugger)
+- **TUI breakpoints & search** — set breakpoints (`b`), continue to next breakpoint (`c`), search variables (`/`)
+- **Data structure visualization** — array, linked list, binary tree, hashmap, sliding window, DP heatmap
 - Auto-instrumentation (zero AI, zero pre-written trace data) with instant cache replay
 - Custom input parameters (`--input`) for testing different test cases
 - Colorful terminal rendering with theme support (Markdown, Java syntax highlighting)
-- Customizable color theme via `theme.toml`
+- Customizable color theme via `theme.toml` (supports hex `#RRGGBB` for TUI colors)
+- Global config file `.lhconfig.toml` (theme, cache dir, JDK path)
+- Shell completion scripts (`lh completions bash|zsh|fish|powershell`)
 - Embedded local dataset (`data/problems.json` compiled into binary)
 
 ## Usage
@@ -57,7 +61,12 @@ Available flags:
 Notes:
 - For id lookup, at least one of `-i`, `-a`, `-e`, `-t` is required.
 - **Execution trace** (`-t`) compiles and runs the problem's Java solution, capturing variable values at every step. First run takes 1-3 seconds; results are cached to `data/traces/` for instant replay.
-- TUI keyboard shortcuts: `Enter`/`→` next step, `←` previous step, `g` first step, `G` last step, `q` quit.
+- TUI keyboard shortcuts:
+  - **Step:** `Enter` / `→` / `Space` / `j` = next, `←` / `k` = prev, `g` = first, `G` = last
+  - **Breakpoints:** `b` = toggle breakpoint at current line, `c` = continue to next breakpoint
+  - **Search:** `/` = search mode (type then Enter to confirm, Esc to cancel)
+  - **Scroll:** `PgUp`/`K` = scroll up, `PgDn`/`J` = scroll down, `↑`/`↓` = scroll 1 line
+  - **Quit:** `q` / `Esc`
 - Use `--input` to specify custom parameters; step count scales with input size automatically.
 - Color output is enabled by default.
 
@@ -123,6 +132,62 @@ loop_back = "bright_black"   # "[loop]" marker
 ```
 
 Supported colors: `black`, `red`, `green`, `yellow`, `blue`, `magenta`, `cyan`, `white`, `bright_black`, `bright_red`, `bright_green`, `bright_yellow`, `bright_blue`, `bright_magenta`, `bright_cyan`, `bright_white`.
+
+### 5. TUI Interface Colors
+```toml
+[tui]
+line_no = "#808080"          # Line number color
+cur_line_bg = "#282c34"      # Current line background
+cur_marker = "#61afef"       # Current line arrow (▶)
+var_name = "#61afef"         # Variable name
+var_value = "#e5c07b"        # Variable value
+changed = "#ffc850"          # Changed variable highlight
+changed_bg = "#3c3200"       # Changed variable background
+title = "#98c379"            # Panel titles
+border = "#5c6370"           # Panel borders
+status = "#abb2bf"           # Status bar text
+status_bar_bg = "#21252b"    # Status bar background
+source_bar_bg = "#21252b"    # Source bar background
+result = "#98c379"           # Result highlight
+```
+TUI colors support hex `#RRGGBB` format in addition to named colors.
+
+## Global Config (`.lhconfig.toml`)
+
+Place `.lhconfig.toml` in the current directory, any parent directory, or your home directory:
+
+```toml
+# JDK installation path (optional)
+jdk_path = "/usr/lib/jvm/java-17"
+
+# Trace cache directory (overrides data/traces/)
+cache_dir = "/home/user/.cache/lh"
+
+# Default theme file
+default_theme = "my-theme.toml"
+
+# Default trace mode: "tui" or "text"
+trace_mode = "tui"
+```
+
+CLI arguments always take precedence over config file values.
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `LH_CACHE_DIR` | Trace cache directory (overrides config `cache_dir`) |
+
+## Shell Completions
+
+Generate completion scripts for your shell:
+
+```bash
+lh completions bash  > ~/.bash_completion.d/lh
+lh completions zsh   > ~/.zfunc/_lh
+lh completions fish  > ~/.config/fish/completions/lh.fish
+lh completions powershell  # prints PowerShell completion
+```
 
 ## Build and Install
 Local run:
