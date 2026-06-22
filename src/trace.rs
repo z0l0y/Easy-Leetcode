@@ -225,27 +225,78 @@ pub fn render_ds_plain(ds: &TraceDs) -> Vec<String> {
 // ─── Plain (uncolored) renderers (used by both TUI and colored path) ──
 
 fn render_linkedlist_plain(ds: &TraceDs) -> Vec<String> {
+    // Compact mini-box format for TUI:  [1]→[2]→[3]→null
+    // with pointer annotations and change markers above when available.
     let values = extract_array_values(&ds.data);
     if values.is_empty() {
         return vec!["null".to_string()];
     }
-    let max_w = values.iter().map(|s| s.len()).max().unwrap_or(1);
-    let gap = 3usize;
-    let ptrs: Vec<(String, usize)> = ds.ptrs.clone().unwrap_or_default();
 
-    let mut lines = Vec::new();
+    let ptrs: Vec<(String, usize)> = ds.ptrs.clone().unwrap_or_default();
+    let highlight_set: std::collections::HashSet<usize> = ds
+        .highlight
+        .as_ref()
+        .map(|v| v.iter().cloned().collect())
+        .unwrap_or_default();
+
+    // Build the value chain line
+    let parts: Vec<String> = values
+        .iter()
+        .enumerate()
+        .map(|(i, v)| {
+            if highlight_set.contains(&i) {
+                format!("[*{}]", v) // mark changed node
+            } else {
+                format!("[{}]", v)
+            }
+        })
+        .collect();
+    let chain = format!("{}→null", parts.join("→"));
+
+    let mut lines: Vec<String> = Vec::new();
+
+    // If there are pointer annotations, build a pointer line above
     if !ptrs.is_empty() {
-        let (name_line, arrow_line) = build_ll_ptr_lines(&values, max_w, gap, &ptrs);
-        if !name_line.is_empty() {
-            lines.push(name_line);
+        // Calculate the center column of each box in the chain
+        let mut box_centers: Vec<usize> = Vec::new();
+        let mut col = 0usize;
+        for part in &parts {
+            box_centers.push(col + part.chars().count() / 2);
+            col += part.chars().count() + 1; // +1 for '→'
         }
-        if !arrow_line.is_empty() {
-            lines.push(arrow_line);
+
+        let total_w = chain.chars().count();
+        let mut ptr_line: Vec<char> = vec![' '; total_w];
+
+        for (name, idx) in &ptrs {
+            if *idx >= box_centers.len() {
+                continue;
+            }
+            let center = box_centers[*idx];
+
+            // Place down-arrow at box center
+            if center < total_w {
+                ptr_line[center] = '↓';
+            }
+
+            // Place name, centered over the box
+            let name_start = center.saturating_sub(name.chars().count() / 2);
+            for (j, ch) in name.chars().enumerate() {
+                let p = name_start + j;
+                if p < total_w {
+                    ptr_line[p] = ch;
+                }
+            }
+        }
+
+        let ptr_str: String = ptr_line.into_iter().collect();
+        let trimmed = ptr_str.trim_end().to_string();
+        if !trimmed.is_empty() {
+            lines.push(trimmed);
         }
     }
-    lines.push(build_ll_top(&values, max_w, gap));
-    lines.push(build_ll_mid(&values, max_w));
-    lines.push(build_ll_bot(&values, max_w, gap));
+
+    lines.push(chain);
     lines
 }
 
@@ -258,16 +309,200 @@ fn render_tree_plain(ds: &TraceDs) -> Vec<String> {
         .iter()
         .map(|v| if v == "null" { None } else { Some(v.clone()) })
         .collect();
-    let root = match build_tree_from_level_order(&nodes) {
+
+    // Build highlight set from the DS
+    let highlight_set: std::collections::HashSet<usize> = ds
+        .highlight
+        .as_ref()
+        .map(|v| v.iter().cloned().collect())
+        .unwrap_or_default();
+
+    let root = match build_tree_from_level_order(&nodes, &highlight_set) {
         Some(r) => r,
         None => return vec![],
     };
-    let (tree_lines, _, _) = render_tree_node(&root);
-    tree_lines
-        .iter()
-        .map(|s| s.trim_end().to_string())
-        .filter(|s| !s.is_empty())
-        .collect()
+    render_tree_horizontal(&root)
+}
+
+/// Rendered subtree result.
+struct TreeRender {
+    lines: Vec<String>,
+    root_col: usize, // column index of the root value start in lines[0]
+    width: usize,    // total display width of this subtree
+}
+
+/// Render a binary tree as a horizontal diagram using box-drawing characters.
+///
+/// Example output:
+///      3
+///    ┌─┴─┐
+///    9   20
+///       ┌─┴─┐
+///      15   7
+///
+/// Single child:      5          or       5
+///                    └┐                 ┌┘
+///                     8                 3
+fn render_tree_horizontal(root: &TreeNode) -> Vec<String> {
+    let result = build_tree_render(root);
+    result.lines
+}
+
+fn build_tree_render(node: &TreeNode) -> TreeRender {
+    let val = node.display_val(); // owned String (may include '*' prefix)
+    let val_w = node.val_width();
+
+    // Render children
+    let left_render = node.left.as_ref().map(|l| build_tree_render(l));
+    let right_render = node.right.as_ref().map(|r| build_tree_render(r));
+
+    match (&left_render, &right_render) {
+        (None, None) => {
+            // Leaf node
+            TreeRender {
+                lines: vec![val],
+                root_col: 0,
+                width: val_w,
+            }
+        }
+        (Some(l), None) => {
+            // Only left child: root sits to the right of the left subtree
+            let gap = 2; // space between left subtree and root
+            let total_w = l.width + gap + val_w;
+            let root_col = l.width + gap;
+
+            let mut lines = Vec::new();
+
+            // Root line: root value placed to the right of left subtree
+            let mut root_line = String::new();
+            pad_to(&mut root_line, root_col);
+            root_line.push_str(&val);
+            pad_to(&mut root_line, total_w);
+            lines.push(root_line);
+
+            // Connector line: from left child's root up-right to parent root
+            let parent_center = root_col + val_w / 2;
+            let child_center = l.root_col;
+            let mut conn = String::new();
+            for i in 0..total_w {
+                if i == child_center {
+                    conn.push('└');
+                } else if i == parent_center {
+                    conn.push('┐');
+                } else if i > child_center && i < parent_center {
+                    conn.push('─');
+                } else {
+                    conn.push(' ');
+                }
+            }
+            lines.push(conn);
+
+            // Left subtree lines, padded to total width
+            for ll in &l.lines {
+                let mut line = ll.clone();
+                pad_to(&mut line, total_w);
+                lines.push(line);
+            }
+
+            TreeRender { lines, root_col, width: total_w }
+        }
+        (None, Some(r)) => {
+            // Only right child: root sits to the left of the right subtree
+            let gap = 2; // space between root and right subtree
+            let total_w = val_w + gap + r.width;
+            let root_col = 0;
+
+            let mut lines = Vec::new();
+
+            // Root line
+            let mut root_line = val.clone();
+            pad_to(&mut root_line, total_w);
+            lines.push(root_line);
+
+            // Connector: from parent root (top) down-right to right child's root (bottom)
+            let parent_center = val_w / 2;
+            let child_center = val_w + gap + r.root_col;
+            let mut conn = String::new();
+            for i in 0..total_w {
+                if i == parent_center {
+                    conn.push('└');
+                } else if i == child_center {
+                    conn.push('┐');
+                } else if i > parent_center && i < child_center {
+                    conn.push('─');
+                } else {
+                    conn.push(' ');
+                }
+            }
+            lines.push(conn);
+
+            // Right subtree lines, padded
+            for rl in &r.lines {
+                let mut line = rl.clone();
+                pad_to(&mut line, total_w);
+                lines.push(line);
+            }
+
+            TreeRender { lines, root_col, width: total_w }
+        }
+        (Some(l), Some(r)) => {
+            // Both children: root centered between left and right subtrees
+            let gap = 3; // spacing between the two subtrees
+            let total_w = l.width + gap + r.width;
+            let root_col = l.width + gap / 2 - val_w / 2;
+
+            let mut lines = Vec::new();
+
+            // Root line
+            let mut root_line = String::new();
+            pad_to(&mut root_line, root_col);
+            root_line.push_str(&val);
+            pad_to(&mut root_line, total_w);
+            lines.push(root_line);
+
+            // Connector line: ┌──┴──┐ from left child root to right child root
+            let left_pos = l.root_col;
+            let center_pos = l.width + gap / 2;
+            let right_pos = l.width + gap + r.root_col;
+            let mut conn = String::new();
+            for i in 0..total_w {
+                if i == left_pos {
+                    conn.push('┌');
+                } else if i == center_pos {
+                    conn.push('┴');
+                } else if i == right_pos {
+                    conn.push('┐');
+                } else if (i > left_pos && i < center_pos) || (i > center_pos && i < right_pos) {
+                    conn.push('─');
+                } else {
+                    conn.push(' ');
+                }
+            }
+            lines.push(conn);
+
+            // Combine subtree lines side by side
+            let max_h = l.lines.len().max(r.lines.len());
+            for i in 0..max_h {
+                let left_part = if i < l.lines.len() { &l.lines[i] } else { "" };
+                let right_part = if i < r.lines.len() { &r.lines[i] } else { "" };
+                let mut combined = left_part.to_string();
+                pad_to(&mut combined, l.width);
+                combined.push_str(&" ".repeat(gap));
+                combined.push_str(right_part);
+                pad_to(&mut combined, total_w);
+                lines.push(combined);
+            }
+
+            TreeRender { lines, root_col, width: total_w }
+        }
+    }
+}
+
+/// Pad a string with spaces to at least `target_w` display columns.
+fn pad_to(s: &mut String, target_w: usize) {
+    while s.chars().count() < target_w {
+        s.push(' ');
+    }
 }
 
 fn render_array_plain(ds: &TraceDs) -> Vec<String> {
@@ -845,25 +1080,48 @@ struct TreeNode {
     val: String,
     left: Option<Box<TreeNode>>,
     right: Option<Box<TreeNode>>,
+    highlighted: bool,
 }
 
-/// Build a binary tree from a level-order array (Some = node, None = null).
-fn build_tree_from_level_order(vals: &[Option<String>]) -> Option<Box<TreeNode>> {
+impl TreeNode {
+    fn display_val(&self) -> String {
+        if self.highlighted {
+            format!("*{}", self.val)
+        } else {
+            self.val.clone()
+        }
+    }
+
+    fn val_width(&self) -> usize {
+        if self.highlighted {
+            self.val.chars().count() + 1 // +1 for '*'
+        } else {
+            self.val.chars().count()
+        }
+    }
+}
+
+/// Build a binary tree from a level-order array with optional highlight set.
+fn build_tree_from_level_order(
+    vals: &[Option<String>],
+    highlight_set: &std::collections::HashSet<usize>,
+) -> Option<Box<TreeNode>> {
     if vals.is_empty() || vals[0].is_none() {
         return None;
     }
     let mut nodes: Vec<Option<Box<TreeNode>>> = vals
         .iter()
-        .map(|v| v.as_ref().map(|s| Box::new(TreeNode {
+        .enumerate()
+        .map(|(i, v)| v.as_ref().map(|s| Box::new(TreeNode {
             val: s.clone(),
             left: None,
             right: None,
+            highlighted: highlight_set.contains(&i),
         })))
         .collect();
 
     // Process in reverse: when we take() a child, its own children
     // (at higher indices) are already linked.
-    // Use split_at_mut since children have higher indices than parent.
     for i in (0..vals.len()).rev() {
         if nodes[i].is_none() {
             continue;
@@ -873,7 +1131,6 @@ fn build_tree_from_level_order(vals: &[Option<String>]) -> Option<Box<TreeNode>>
         if left_idx >= vals.len() && right_idx >= vals.len() {
             continue;
         }
-        // Split: nodes[..=i] and nodes[i+1..]
         let (left_part, right_part) = nodes.split_at_mut(i + 1);
         let node = left_part[i].as_mut().unwrap();
         if left_idx < vals.len() {
@@ -892,158 +1149,6 @@ fn build_tree_from_level_order(vals: &[Option<String>]) -> Option<Box<TreeNode>>
     nodes.into_iter().next().flatten()
 }
 
-/// Recursive ascii tree rendering. Returns (lines, root_position, width).
-/// Width is measured in display columns (char count), not bytes.
-fn render_tree_node(node: &TreeNode) -> (Vec<String>, usize, usize) {
-    let val = &node.val;
-    let val_w = val.chars().count(); // display width
-
-    match (&node.left, &node.right) {
-        (None, None) => {
-            // Leaf node
-            (vec![val.clone()], 0, val_w)
-        }
-        (Some(l), None) => {
-            let (left_lines, l_root, l_w) = render_tree_node(l);
-            // Ensure minimum gap between child and root
-            let gap = 2usize;
-            let total_w = l_w + gap + val_w;
-
-            let mut lines = Vec::new();
-            // Root line: root at the right side of the child
-            let root_start = l_w + gap;
-            let mut root_line = " ".repeat(root_start);
-            root_line.push_str(val);
-            while root_line.chars().count() < total_w {
-                root_line.push(' ');
-            }
-            lines.push(root_line);
-
-            // Connector: from child (left/low) to root (right/high)
-            let child_pos = l_root;
-            let root_center = root_start + val_w / 2;
-            let left = child_pos.min(root_center);
-            let right = child_pos.max(root_center);
-            let mut conn = String::new();
-            for i in 0..total_w {
-                if i == child_pos {
-                    conn.push('┌');
-                } else if i == root_center {
-                    conn.push('┘');
-                } else if i > left && i < right {
-                    conn.push('─');
-                } else {
-                    conn.push(' ');
-                }
-            }
-            lines.push(conn);
-
-            // Left subtree lines
-            for ll in &left_lines {
-                let mut line = ll.clone();
-                while line.chars().count() < total_w {
-                    line.push(' ');
-                }
-                lines.push(line);
-            }
-
-            (lines, root_center, total_w)
-        }
-        (None, Some(r)) => {
-            let (right_lines, r_root, r_w) = render_tree_node(r);
-            // Ensure minimum gap between root and child
-            let gap = 2usize;
-            let total_w = val_w + gap + r_w;
-
-            let mut lines = Vec::new();
-            // Root line: root at the left side
-            let mut root_line = val.clone();
-            while root_line.chars().count() < total_w {
-                root_line.push(' ');
-            }
-            lines.push(root_line);
-
-            // Connector: from root (left/high) to child (right/low)
-            let root_center = val_w / 2;
-            let child_pos = val_w + gap + r_root;
-            let left = root_center.min(child_pos);
-            let right = root_center.max(child_pos);
-            let mut conn = String::new();
-            for i in 0..total_w {
-                if i == root_center {
-                    conn.push('└');
-                } else if i == child_pos {
-                    conn.push('┐');
-                } else if i > left && i < right {
-                    conn.push('─');
-                } else {
-                    conn.push(' ');
-                }
-            }
-            lines.push(conn);
-
-            // Right subtree lines
-            for rl in &right_lines {
-                let mut line = rl.clone();
-                while line.chars().count() < total_w {
-                    line.push(' ');
-                }
-                lines.push(line);
-            }
-
-            (lines, root_center, total_w)
-        }
-        (Some(l), Some(r)) => {
-            let (left_lines, l_root, l_w) = render_tree_node(l);
-            let (right_lines, r_root, r_w) = render_tree_node(r);
-            // Add spacing between subtrees
-            let gap = 3usize;
-            let total_w = l_w + gap + r_w;
-
-            let mut lines = Vec::new();
-
-            // Root line: center the root value over the two subtrees
-            let root_center = l_w + gap / 2;
-            let root_start = root_center.saturating_sub(val_w / 2);
-            let mut root_line = " ".repeat(root_start);
-            root_line.push_str(val);
-            root_line.push_str(&" ".repeat(total_w.saturating_sub(root_line.len())));
-            lines.push(root_line);
-
-            // Connector line: ┌──┴──┐
-            let mut conn = String::new();
-            for i in 0..total_w {
-                if i == l_root {
-                    conn.push('┌');
-                } else if i == root_center {
-                    conn.push('┴');
-                } else if i == l_w + gap + r_root {
-                    conn.push('┐');
-                } else if (i > l_root && i < root_center) || (i > root_center && i < l_w + gap + r_root) {
-                    conn.push('─');
-                } else {
-                    conn.push(' ');
-                }
-            }
-            lines.push(conn);
-
-            // Combine subtree lines side by side
-            let max_h = left_lines.len().max(right_lines.len());
-            for i in 0..max_h {
-                let left_part = if i < left_lines.len() { &left_lines[i] } else { "" };
-                let right_part = if i < right_lines.len() { &right_lines[i] } else { "" };
-
-                let l_padded = format!("{:width$}", left_part, width = l_w);
-                let r_padded = format!("{:width$}", right_part, width = r_w);
-                let combined = format!("{}{}{}", l_padded, " ".repeat(gap), r_padded);
-                lines.push(combined);
-            }
-
-            (lines, root_center, total_w)
-        }
-    }
-}
-
 fn render_tree_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
     let values = extract_array_values(&ds.data);
     if values.is_empty() {
@@ -1055,14 +1160,21 @@ fn render_tree_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
         if v == "null" { None } else { Some(v.clone()) }
     }).collect();
 
+    // Build highlight set to mark changed nodes
+    let highlight_set: std::collections::HashSet<usize> = ds
+        .highlight
+        .as_ref()
+        .map(|v| v.iter().cloned().collect())
+        .unwrap_or_default();
+
     // Build tree from level-order array
-    let root = match build_tree_from_level_order(&nodes) {
+    let root = match build_tree_from_level_order(&nodes, &highlight_set) {
         Some(r) => r,
         None => return String::new(),
     };
 
-    // Render recursively
-    let (tree_lines, _, _) = render_tree_node(&root);
+    // Render as horizontal tree diagram with box-drawing characters
+    let tree_lines = render_tree_horizontal(&root);
 
     let mut out = String::new();
     out.push_str(&format!(
@@ -1072,10 +1184,7 @@ fn render_tree_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
     out.push('\n');
 
     for line in &tree_lines {
-        let trimmed = line.trim_end();
-        if !trimmed.is_empty() {
-            out.push_str(&format!("      {}\n", format_value(trimmed, theme.var_value, color)));
-        }
+        out.push_str(&format!("      {}\n", format_value(line, theme.var_value, color)));
     }
 
     // Trim trailing newline

@@ -63,18 +63,20 @@ pub fn parse(
         let mut trace_vars: Vec<TraceVar> = Vec::new();
         if let Some(obj) = vars_obj.as_object() {
             for (name, value) in obj {
-                let val_str = value.as_str().unwrap_or("?").to_string();
+                let raw_val = value.as_str().unwrap_or("?").to_string();
+                // Strip internal markers for display (__TREE__ prefix for TreeNode values)
+                let display_val = raw_val.strip_prefix("__TREE__").unwrap_or(&raw_val).to_string();
                 let old = prev_vars.get(name).cloned();
-                let changed = old.as_ref().map_or(true, |o| o != &val_str);
+                let changed = old.as_ref().map_or(true, |o| o != &raw_val);
 
                 trace_vars.push(TraceVar {
                     name: name.clone(),
-                    value: val_str.clone(),
-                    old: if changed { old } else { None },
+                    value: display_val,
+                    old: if changed { old.map(|o| o.strip_prefix("__TREE__").unwrap_or(&o).to_string()) } else { None },
                 });
 
                 if changed {
-                    prev_vars.insert(name.clone(), val_str);
+                    prev_vars.insert(name.clone(), raw_val);
                 }
             }
         }
@@ -136,14 +138,23 @@ pub fn parse(
             for (name, value) in obj {
                 let val_str = value.as_str().unwrap_or("");
 
-                // ── Detect TreeNode toLevelOrder FIRST: [1,2,3,null,4,5] ──
-                if val_str.starts_with('[') && val_str.ends_with(']') && val_str.contains("null") {
-                    let inner = &val_str[1..val_str.len() - 1];
+                // ── Detect TreeNode toLevelOrder: [1,2,3] or [1,2,null,4] ──
+                // New format (generator prefixes with __TREE__): __TREE__[1,2,3,null,4]
+                // Old format (cached traces): [1,2,3,null,4] — detected by containing "null"
+                let is_tree_new = val_str.starts_with("__TREE__[") && val_str.ends_with(']');
+                let is_tree_old = val_str.starts_with('[') && val_str.ends_with(']') && val_str.contains("null");
+                if is_tree_new || is_tree_old {
+                    let content = if is_tree_new {
+                        &val_str["__TREE__".len()..]
+                    } else {
+                        val_str
+                    };
+                    let inner = &content[1..content.len() - 1];
                     let vals: Vec<serde_json::Value> = inner
                         .split(',')
                         .map(|s| {
                             let s = s.trim();
-                            if s == "null" {
+                            if s == "null" || s.is_empty() {
                                 serde_json::Value::Null
                             } else if let Ok(n) = s.parse::<i64>() {
                                 serde_json::Value::Number(n.into())
@@ -152,19 +163,17 @@ pub fn parse(
                             }
                         })
                         .collect();
-                    if vals.iter().any(|v| v.is_null()) {
-                        ds.push(TraceDs {
-                            kind: Some("tree".into()),
-                            label: name.clone(),
-                            data: Some(serde_json::Value::Array(vals)),
-                            ascii: None,
-                            highlight: None,
-                            ptr_left: None,
-                            ptr_right: None,
-                            ptrs: None,
-                        });
-                        continue; // Don't also treat as regular array
-                    }
+                    ds.push(TraceDs {
+                        kind: Some("tree".into()),
+                        label: name.clone(),
+                        data: Some(serde_json::Value::Array(vals)),
+                        ascii: None,
+                        highlight: None,
+                        ptr_left: None,
+                        ptr_right: None,
+                        ptrs: None,
+                    });
+                    continue; // Don't also treat as regular array
                 }
 
                 // ── Detect regular array values ──────────────────────
@@ -357,6 +366,64 @@ pub fn parse(
                             d.kind.as_deref() != Some("linkedlist")
                                 || !ptr_labels.contains(&d.label)
                         });
+                    }
+                }
+            }
+        }
+
+        // ── Diff data structures against previous step ──────────────
+        // Track previous DS values to detect changes between steps.
+        // Changed indices are added to the DS's `highlight` field so the
+        // renderer can visually mark what changed.
+        {
+            let mut prev_ds_map: HashMap<String, serde_json::Value> = HashMap::new();
+            if steps.len() >= 1 {
+                for prev_ds in &steps[steps.len() - 1].ds {
+                    let key = format!(
+                        "{}:{}",
+                        prev_ds.kind.as_deref().unwrap_or("array"),
+                        prev_ds.label
+                    );
+                    if let Some(ref data) = prev_ds.data {
+                        prev_ds_map.insert(key, data.clone());
+                    }
+                }
+            }
+            for d in &mut ds {
+                let key = format!(
+                    "{}:{}",
+                    d.kind.as_deref().unwrap_or("array"),
+                    d.label
+                );
+                if let (Some(curr_data), Some(prev_data)) = (&d.data, prev_ds_map.get(&key)) {
+                    if curr_data != prev_data {
+                        // Data changed — find which indices differ
+                        if let (
+                            serde_json::Value::Array(curr_arr),
+                            serde_json::Value::Array(prev_arr),
+                        ) = (curr_data, prev_data)
+                        {
+                            let changed: Vec<usize> = curr_arr
+                                .iter()
+                                .zip(prev_arr.iter())
+                                .enumerate()
+                                .filter(|(_, (c, p))| c != p)
+                                .map(|(i, _)| i)
+                                // Also catch new entries beyond prev length
+                                .chain((prev_arr.len().min(curr_arr.len())..curr_arr.len()).collect::<Vec<_>>())
+                                .collect();
+                            if !changed.is_empty() {
+                                // Merge with existing highlights if any
+                                let mut merged = d.highlight.clone().unwrap_or_default();
+                                for idx in changed {
+                                    if !merged.contains(&idx) {
+                                        merged.push(idx);
+                                    }
+                                }
+                                merged.sort();
+                                d.highlight = Some(merged);
+                            }
+                        }
                     }
                 }
             }

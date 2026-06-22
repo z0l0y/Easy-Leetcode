@@ -157,7 +157,7 @@ fn generate_t_helper(analysis: &Analysis) -> String {
     out.push_str("            else if (__v instanceof java.util.Collection) sb.append(__v.toString());\n");
     out.push_str("            else if (__v instanceof java.util.Map) sb.append(__v.toString());\n");
     if has_tree {
-        out.push_str("            else if (__v instanceof TreeNode) sb.append(((TreeNode)__v).toLevelOrder());\n");
+        out.push_str("            else if (__v instanceof TreeNode) sb.append(\"__TREE__\").append(((TreeNode)__v).toLevelOrder());\n");
     }
     out.push_str("            else {\n");
     out.push_str("                String __s = __v.toString();\n");
