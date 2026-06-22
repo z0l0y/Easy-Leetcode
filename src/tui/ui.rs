@@ -229,11 +229,14 @@ fn render_vars_table(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
                 v.name.clone()
             };
 
-            // P0-4: truncate long values
-            let mut val_text = highlight::truncate_value(&v.value, 60);
-            if let Some(ref old) = v.old {
-                val_text.push_str(&format!("  → {}", highlight::truncate_value(old, 30)));
-            }
+            // P0-4: truncate long values, normalize hashmap = → :
+            let display_val = normalize_var_value(&v.value);
+            let val_text = if let Some(ref old) = v.old {
+                let display_old = normalize_var_value(old);
+                format!("{} → {}", highlight::truncate_value(&display_old, 30), highlight::truncate_value(&display_val, 60))
+            } else {
+                highlight::truncate_value(&display_val, 60)
+            };
 
             Row::new(vec![
                 Cell::from(Span::styled(display_name, name_style)),
@@ -418,4 +421,29 @@ fn render_status_bar(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
 fn format_ds_lines(ds: &leetcode_helper::TraceDs) -> Vec<String> {
     use crate::trace::render_ds_plain;
     render_ds_plain(ds)
+}
+
+/// Normalize variable values for display:
+/// - Convert HashMap `=` to `: ` (e.g. `{2=0}` → `{2: 0}`)
+fn normalize_var_value(raw: &str) -> String {
+    // Detect HashMap.toString format: {k=v, k=v} or {k=v}
+    if raw.starts_with('{') && raw.ends_with('}') && raw.contains('=') && !raw.contains(" = ") {
+        let inner = &raw[1..raw.len() - 1];
+        if inner.is_empty() {
+            return raw.to_string();
+        }
+        let pairs: Vec<String> = inner
+            .split(", ")
+            .map(|pair| {
+                if let Some(eq) = pair.find('=') {
+                    format!("{}: {}", &pair[..eq].trim(), &pair[eq + 1..].trim())
+                } else {
+                    pair.to_string()
+                }
+            })
+            .collect();
+        format!("{{ {} }}", pairs.join(", "))
+    } else {
+        raw.to_string()
+    }
 }
