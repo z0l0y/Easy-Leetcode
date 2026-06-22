@@ -38,7 +38,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "heatmap",
@@ -63,7 +64,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,

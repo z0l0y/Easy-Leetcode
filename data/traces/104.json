@@ -10,7 +10,7 @@
       "vars": [
         {
           "name": "root",
-          "value": "[3,9,20,null,null,15,7,null,null,null,null]",
+          "value": "[3,9,20,null,null,15,7]",
           "old": null
         }
       ],
@@ -26,15 +26,12 @@
             null,
             null,
             15,
-            7,
-            null,
-            null,
-            null,
-            null
+            7
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -51,7 +48,7 @@
         {
           "name": "root",
           "value": "[9]",
-          "old": "[3,9,20,null,null,15,7,null,null,null,null]"
+          "old": "[3,9,20,null,null,15,7]"
         }
       ],
       "ds": [
@@ -64,7 +61,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -276,7 +274,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -307,7 +306,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -527,7 +527,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -766,7 +767,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -986,7 +988,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1224,7 +1227,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1436,7 +1440,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1467,7 +1472,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1687,7 +1693,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1926,7 +1933,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2146,7 +2154,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,

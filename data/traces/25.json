@@ -33,7 +33,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -86,7 +87,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -114,22 +116,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupPrev",
           "ascii": null,
           "data": [
@@ -142,7 +128,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ]
+          ]
         }
       ],
       "is_result": false,
@@ -170,22 +162,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupPrev",
           "ascii": null,
           "data": [
@@ -198,7 +174,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ]
+          ]
         }
       ],
       "is_result": false,
@@ -231,22 +213,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupPrev",
           "ascii": null,
           "data": [
@@ -259,7 +225,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -273,7 +245,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -306,22 +279,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupPrev",
           "ascii": null,
           "data": [
@@ -334,7 +291,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -348,7 +311,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -386,22 +350,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupNext",
           "ascii": null,
           "data": [
@@ -411,7 +359,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -427,7 +376,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -441,7 +396,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -484,22 +440,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupNext",
           "ascii": null,
           "data": [
@@ -509,7 +449,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -525,7 +466,17 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -539,20 +490,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -600,37 +539,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupNext",
           "ascii": null,
           "data": [
@@ -640,7 +548,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -656,7 +565,21 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -670,20 +593,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -731,37 +642,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupNext",
           "ascii": null,
           "data": [
@@ -771,7 +651,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -787,7 +668,21 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -801,20 +696,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -867,37 +750,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupNext",
           "ascii": null,
           "data": [
@@ -907,7 +759,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -923,7 +776,21 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -937,20 +804,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -964,7 +819,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1017,35 +873,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupNext",
           "ascii": null,
           "data": [
@@ -1055,7 +882,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1070,7 +898,21 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              2
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -1084,20 +926,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1111,7 +941,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1164,35 +995,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupNext",
           "ascii": null,
           "data": [
@@ -1202,7 +1004,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1217,7 +1020,21 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              1
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -1231,21 +1048,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1259,7 +1063,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1322,22 +1127,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1350,7 +1141,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1365,7 +1157,17 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              1
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -1379,21 +1181,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1407,7 +1196,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1465,22 +1255,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1493,7 +1269,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1508,7 +1285,17 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              1
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -1522,21 +1309,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1599,22 +1373,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1627,7 +1387,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1642,7 +1403,17 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              1
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -1656,21 +1427,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1683,7 +1441,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1736,21 +1495,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            2,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -1762,7 +1506,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1775,7 +1520,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1790,7 +1536,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1805,21 +1552,17 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              0
+            ],
+            [
+              "prev",
+              1
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -1832,7 +1575,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -1885,21 +1629,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            2,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -1911,7 +1640,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1924,7 +1654,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1939,7 +1670,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1954,7 +1686,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -1969,7 +1702,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              0
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -1982,7 +1721,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2035,19 +1775,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -2059,7 +1786,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2072,7 +1800,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2087,7 +1816,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2102,7 +1832,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2117,7 +1848,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              2
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -2130,7 +1867,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2183,19 +1921,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -2207,7 +1932,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2220,7 +1946,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2235,7 +1962,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2250,7 +1978,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2264,7 +1993,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2279,7 +2009,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              2
+            ]
+          ]
         }
       ],
       "is_result": false,
@@ -2332,35 +2068,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "dummy",
-          "ascii": null,
-          "data": [
-            0,
-            2,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "groupNext",
           "ascii": null,
           "data": [
@@ -2370,7 +2077,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2386,7 +2094,21 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ],
+            [
+              "dummy",
+              0
+            ],
+            [
+              "prev",
+              1
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -2401,7 +2123,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2415,22 +2138,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            2,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2483,19 +2192,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -2508,7 +2204,17 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ],
+            [
+              "prev",
+              1
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -2521,7 +2227,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2535,7 +2242,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2550,7 +2258,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2564,22 +2273,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            2,
-            1,
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2619,7 +2314,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2633,7 +2329,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2678,7 +2375,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2692,7 +2390,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2704,7 +2403,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2749,7 +2449,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2763,7 +2464,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2775,7 +2477,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2825,7 +2528,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2839,7 +2543,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2851,7 +2556,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2906,7 +2612,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2920,7 +2627,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -2932,7 +2640,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -2980,19 +2689,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -3005,7 +2701,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3019,7 +2721,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3031,7 +2734,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -3079,19 +2783,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -3104,7 +2795,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3118,7 +2815,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3130,7 +2828,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -3183,19 +2882,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            4,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -3208,7 +2894,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3222,7 +2914,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3234,7 +2927,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3246,7 +2940,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -3299,18 +2994,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -3322,7 +3005,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3335,7 +3024,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3347,7 +3037,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3359,7 +3050,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -3412,18 +3104,6 @@
       "ds": [
         {
           "kind": "linkedlist",
-          "label": "cur",
-          "ascii": null,
-          "data": [
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
           "label": "dummy",
           "ascii": null,
           "data": [
@@ -3435,7 +3115,17 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ],
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3448,7 +3138,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3460,19 +3151,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3484,7 +3164,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -3545,7 +3226,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3560,7 +3242,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3573,7 +3261,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3585,19 +3274,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3609,7 +3287,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -3665,7 +3344,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3680,7 +3360,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3693,7 +3379,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3705,19 +3392,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -3778,7 +3454,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3793,7 +3470,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3806,7 +3489,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3818,19 +3502,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -3892,7 +3565,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3907,7 +3581,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -3920,7 +3600,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -3933,19 +3614,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4007,7 +3677,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4022,7 +3693,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4035,7 +3707,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4048,7 +3721,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4061,7 +3735,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4125,7 +3800,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4138,7 +3814,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4151,7 +3828,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4164,7 +3842,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4228,7 +3907,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4241,7 +3921,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4254,7 +3935,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4266,7 +3948,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4279,7 +3962,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4344,7 +4028,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -4358,7 +4048,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4371,7 +4062,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4383,20 +4075,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            4,
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4461,7 +4141,13 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "prev",
+              3
+            ]
+          ]
         },
         {
           "kind": "linkedlist",
@@ -4473,7 +4159,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4486,7 +4173,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4498,20 +4186,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
-        },
-        {
-          "kind": "linkedlist",
-          "label": "prev",
-          "ascii": null,
-          "data": [
-            4,
-            3,
-            5
-          ],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4551,7 +4227,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4563,7 +4240,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4608,7 +4286,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4620,7 +4299,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4665,7 +4345,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4677,7 +4358,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -4721,7 +4403,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4737,7 +4420,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "linkedlist",
@@ -4749,7 +4433,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": true,

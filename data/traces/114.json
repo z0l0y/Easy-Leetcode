@@ -10,7 +10,7 @@
       "vars": [
         {
           "name": "root",
-          "value": "[1,2,5,3,4,null,6,null,null,null,null,null,null]",
+          "value": "[1,2,5,3,4,null,6]",
           "old": null
         }
       ],
@@ -26,17 +26,12 @@
             3,
             4,
             null,
-            6,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+            6
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,

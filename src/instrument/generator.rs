@@ -54,25 +54,38 @@ fn generate_type_def(type_name: &str) -> String {
     TreeNode(int x) { val = x; }
     public String toString() { return String.valueOf(val); }
     public String toLevelOrder() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        if (this == null) return "[]";
+        java.util.List<String> vals = new java.util.ArrayList<>();
         java.util.Queue<TreeNode> q = new java.util.LinkedList<>();
         q.offer(this);
-        int nonNullCount = 0;
-        while (!q.isEmpty()) {
+        int pendingNonNull = 1;  // count of non-null nodes still in queue
+        while (!q.isEmpty() && pendingNonNull > 0) {
             TreeNode node = q.poll();
             if (node == null) {
-                if (nonNullCount > 0) sb.append("null,");
-                continue;
+                vals.add("null");
+                // Push two null children to maintain level-order positions
+                q.offer(null);
+                q.offer(null);
+            } else {
+                pendingNonNull--;
+                vals.add(String.valueOf(node.val));
+                q.offer(node.left);
+                q.offer(node.right);
+                if (node.left != null) pendingNonNull++;
+                if (node.right != null) pendingNonNull++;
             }
-            sb.append(node.val).append(",");
-            nonNullCount--;
-            q.offer(node.left);
-            q.offer(node.right);
-            if (node.left != null) nonNullCount = q.size();
-            if (node.right != null) nonNullCount = q.size();
         }
-        if (sb.length() > 1) sb.setLength(sb.length() - 1); // remove trailing comma
+        // Trim trailing nulls
+        int end = vals.size();
+        while (end > 0 && vals.get(end - 1).equals("null")) {
+            end--;
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < end; i++) {
+            if (i > 0) sb.append(",");
+            sb.append(vals.get(i));
+        }
         sb.append("]");
         return sb.toString();
     }

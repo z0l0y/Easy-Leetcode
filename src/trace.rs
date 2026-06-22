@@ -188,7 +188,249 @@ fn format_sub_separator(c: colored::Color, color: bool) -> String {
     }
 }
 
-// ─── Data structure visualization dispatcher ─────────────────────────
+// ─── Public plain-text renderer (used by TUI) ────────────────────────
+
+/// Render a TraceDs to plain (uncolored) multi-line ASCII art.
+/// Each line is a separate String. Returns empty vec if no data.
+pub fn render_ds_plain(ds: &TraceDs) -> Vec<String> {
+    // If pre-rendered ascii is provided, use it directly
+    if let Some(ref ascii) = ds.ascii {
+        return ascii.lines().map(|s| s.to_string()).collect();
+    }
+
+    match ds.kind.as_deref() {
+        Some("hashmap") => {
+            let body = render_hashmap_body(ds);
+            if body.is_empty() { vec![] } else { vec![body] }
+        }
+        Some("stack") | Some("queue") => {
+            let body = if ds.kind.as_deref() == Some("stack") {
+                render_stack_body(ds)
+            } else {
+                render_queue_body(ds)
+            };
+            if body.is_empty() { vec![] } else { vec![body] }
+        }
+        Some("linkedlist") => render_linkedlist_plain(ds),
+        Some("tree") => render_tree_plain(ds),
+        Some("heatmap") => render_heatmap_plain(ds),
+        Some("window") => render_window_plain(ds),
+        _ => {
+            // Default: array visualization
+            render_array_plain(ds)
+        }
+    }
+}
+
+// ─── Plain (uncolored) renderers (used by both TUI and colored path) ──
+
+fn render_linkedlist_plain(ds: &TraceDs) -> Vec<String> {
+    let values = extract_array_values(&ds.data);
+    if values.is_empty() {
+        return vec!["null".to_string()];
+    }
+    let max_w = values.iter().map(|s| s.len()).max().unwrap_or(1);
+    let gap = 3usize;
+    let ptrs: Vec<(String, usize)> = ds.ptrs.clone().unwrap_or_default();
+
+    let mut lines = Vec::new();
+    if !ptrs.is_empty() {
+        let (name_line, arrow_line) = build_ll_ptr_lines(&values, max_w, gap, &ptrs);
+        if !name_line.is_empty() {
+            lines.push(name_line);
+        }
+        if !arrow_line.is_empty() {
+            lines.push(arrow_line);
+        }
+    }
+    lines.push(build_ll_top(&values, max_w, gap));
+    lines.push(build_ll_mid(&values, max_w));
+    lines.push(build_ll_bot(&values, max_w, gap));
+    lines
+}
+
+fn render_tree_plain(ds: &TraceDs) -> Vec<String> {
+    let values = extract_array_values(&ds.data);
+    if values.is_empty() {
+        return vec![];
+    }
+    let nodes: Vec<Option<String>> = values
+        .iter()
+        .map(|v| if v == "null" { None } else { Some(v.clone()) })
+        .collect();
+    let root = match build_tree_from_level_order(&nodes) {
+        Some(r) => r,
+        None => return vec![],
+    };
+    let (tree_lines, _, _) = render_tree_node(&root);
+    tree_lines
+        .iter()
+        .map(|s| s.trim_end().to_string())
+        .filter(|s| !s.is_empty())
+        .collect()
+}
+
+fn render_array_plain(ds: &TraceDs) -> Vec<String> {
+    let values = extract_array_values(&ds.data);
+    if values.is_empty() {
+        return vec!["[]".to_string()];
+    }
+
+    let mut lines = Vec::new();
+    let highlight_set: HashSet<usize> = ds
+        .highlight
+        .as_ref()
+        .map(|v| v.iter().cloned().collect())
+        .unwrap_or_default();
+
+    // Single-line array display
+    // Build a plain text version for position calculation
+    let max_w = values.iter().map(|s| s.len()).max().unwrap_or(1);
+    let label = format!("{}: ", ds.label);
+    let mut plain_line = String::new();
+    let mut value_starts: Vec<usize> = Vec::new();
+    plain_line.push_str("[ ");
+    for (i, val) in values.iter().enumerate() {
+        value_starts.push(plain_line.len());
+        plain_line.push_str(val);
+        plain_line.push_str(&" ".repeat(max_w.saturating_sub(val.len())));
+        if i < values.len() - 1 {
+            plain_line.push_str(", ");
+        }
+    }
+    plain_line.push_str(" ]");
+
+    // Build array line with values (just values, no color markers in plain mode)
+    let mut array_line = String::new();
+    array_line.push_str("[ ");
+    for (i, val) in values.iter().enumerate() {
+        let padding = " ".repeat(max_w.saturating_sub(val.len()));
+        array_line.push_str(&format!("{}{}", val, padding));
+        if i < values.len() - 1 {
+            array_line.push_str(", ");
+        }
+    }
+    array_line.push_str(" ]");
+    lines.push(format!("{} {}", label, array_line));
+
+    // Highlight/pointer line
+    let has_highlights = !highlight_set.is_empty();
+    let has_ptrs = ds.ptr_left.is_some() || ds.ptr_right.is_some();
+
+    if has_highlights || has_ptrs {
+        let label_pad = " ".repeat(label.len());
+        let plain_len = label_pad.len() + plain_line.len();
+
+        // Build highlight marks
+        let mut ptr_line: Vec<char> = vec![' '; plain_len];
+        for &hi in &highlight_set {
+            if hi < value_starts.len() {
+                let center = label_pad.len() + value_starts[hi] + values[hi].len() / 2;
+                if center < plain_len {
+                    ptr_line[center] = '^';
+                }
+                // Show index number
+                let start = label_pad.len() + value_starts[hi];
+                let idx_str = hi.to_string();
+                for (j, ch) in idx_str.chars().enumerate() {
+                    let p = start + j;
+                    if p < plain_len {
+                        ptr_line[p] = ch;
+                    }
+                }
+            }
+        }
+        let ptr_str: String = ptr_line.iter().collect();
+        let trimmed = ptr_str.trim_end();
+        if !trimmed.is_empty() {
+            lines.push(trimmed.to_string());
+        }
+    }
+
+    lines
+}
+
+fn render_hashmap_body(ds: &TraceDs) -> String {
+    if let Some(ref data) = ds.data {
+        if let Some(obj) = data.as_object() {
+            let entries: Vec<String> = obj
+                .iter()
+                .map(|(k, v)| format!("{}: {}", k, format_key_value(v)))
+                .collect();
+            return format!("{{ {} }}", entries.join(", "));
+        }
+    }
+    "{}".to_string()
+}
+
+fn render_stack_body(ds: &TraceDs) -> String {
+    let values = extract_array_values(&ds.data);
+    if values.is_empty() {
+        "bottom [ ] top".to_string()
+    } else {
+        format!("bottom [ {} ] top", values.join(", "))
+    }
+}
+
+fn render_queue_body(ds: &TraceDs) -> String {
+    let values = extract_array_values(&ds.data);
+    if values.is_empty() {
+        "front [ ] back".to_string()
+    } else {
+        format!("front [ {} ] back", values.join(", "))
+    }
+}
+
+fn render_heatmap_plain(ds: &TraceDs) -> Vec<String> {
+    let rows: Vec<Vec<String>> = match &ds.data {
+        Some(serde_json::Value::Array(arr)) => arr
+            .iter()
+            .filter_map(|v| {
+                v.as_array()
+                    .map(|row| row.iter().map(format_key_value).collect())
+            })
+            .collect(),
+        _ => return vec![],
+    };
+    if rows.is_empty() {
+        return vec![];
+    }
+    let cell_w = rows.iter().flatten().map(|s| s.len()).max().unwrap_or(1) + 1;
+    let mut lines = Vec::new();
+    for row in &rows {
+        let line: String = row
+            .iter()
+            .map(|val| format!("{:^width$}", val, width = cell_w))
+            .collect();
+        lines.push(format!("  {}", line));
+    }
+    lines
+}
+
+fn render_window_plain(ds: &TraceDs) -> Vec<String> {
+    let values = extract_array_values(&ds.data);
+    if values.is_empty() {
+        return vec!["[]".to_string()];
+    }
+    let label = format!("{}: ", ds.label);
+    let mut line = label.clone();
+    line.push_str("[ ");
+    line.push_str(&values.join(", "));
+    line.push_str(" ]");
+
+    let mut lines = vec![line];
+
+    if let (Some(l), Some(r)) = (ds.ptr_left, ds.ptr_right) {
+        if l < values.len() && r < values.len() {
+            let desc = format!("      window [{}, {}]  left={} right={}", l, r, l, r);
+            lines.push(desc);
+        }
+    }
+
+    lines
+}
+
+// ─── Data structure visualization dispatcher (colored) ────────────────
 
 fn render_ds_viz(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
     // If pre-rendered ascii is provided, use it directly
@@ -442,14 +684,10 @@ fn render_queue_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
     out
 }
 
-// ─── Linked List visualization ────────────────────────────────────────
+// ─── Linked List visualization (box-drawing style) ──────────────────
 
 fn render_linkedlist_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String {
     let values = extract_array_values(&ds.data);
-    let highlight_set: HashSet<usize> = ds.highlight.as_ref()
-        .map(|v| v.iter().cloned().collect())
-        .unwrap_or_default();
-
     let mut out = String::new();
     out.push_str(&format!(
         "{} ",
@@ -461,39 +699,143 @@ fn render_linkedlist_ds(ds: &TraceDs, theme: &TraceTheme, color: bool) -> String
         return out;
     }
 
-    let joined: Vec<String> = values.iter().enumerate().map(|(i, v)| {
-        if highlight_set.contains(&i) {
-            format_value(v, theme.ds_highlight, color)
-        } else {
-            format_value(v, theme.var_value, color)
-        }
-    }).collect();
+    out.push('\n');
 
-    out.push_str(&joined.join(" → "));
-    out.push_str(" → null");
+    let max_w = values.iter().map(|s| s.len()).max().unwrap_or(1);
+    let gap = 3usize; // spacing between boxes on top/bottom lines (matches "──▶" width)
 
-    // If there are highlights, add a pointer line underneath
-    if !highlight_set.is_empty() {
-        out.push('\n');
-        // Build pointer line roughly aligned
-        let mut ptr_parts = Vec::new();
-        let mut offset = ds.label.len() + 2; // ": " after label
-        for (i, v) in values.iter().enumerate() {
-            let seg_len = v.len() + if i < values.len() - 1 { 3 } else { 0 }; // " → " separator
-            if highlight_set.contains(&i) {
-                let padding = " ".repeat(offset + v.len() / 2);
-                ptr_parts.push(format!(
-                    "{}{}",
-                    padding,
-                    format_value("^cur", theme.ds_pointer, color)
-                ));
-            }
-            offset += seg_len;
+    let ptrs: Vec<(String, usize)> = ds.ptrs.clone().unwrap_or_default();
+
+    // Build pointer annotation lines above the boxes
+    if !ptrs.is_empty() {
+        let (name_line, arrow_line) = build_ll_ptr_lines(&values, max_w, gap, &ptrs);
+        if !name_line.is_empty() {
+            out.push_str(&format!(
+                "      {}\n",
+                format_value(&name_line, theme.ds_pointer, color)
+            ));
         }
-        out.push_str(&ptr_parts.join(""));
+        if !arrow_line.is_empty() {
+            out.push_str(&format!(
+                "      {}\n",
+                format_value(&arrow_line, theme.ds_pointer, color)
+            ));
+        }
+    }
+
+    // Box-drawing lines
+    out.push_str(&format!(
+        "      {}\n",
+        format_value(&build_ll_top(&values, max_w, gap), theme.var_value, color)
+    ));
+    out.push_str(&format!(
+        "      {}\n",
+        format_value(&build_ll_mid(&values, max_w), theme.var_value, color)
+    ));
+    out.push_str(&format!(
+        "      {}\n",
+        format_value(&build_ll_bot(&values, max_w, gap), theme.var_value, color)
+    ));
+
+    // Trim trailing newline
+    if out.ends_with('\n') {
+        out.pop();
     }
 
     out
+}
+
+/// Build the top border line of linked list box visualization.
+fn build_ll_top(values: &[String], max_w: usize, gap: usize) -> String {
+    let content_w = max_w + 2; // 1 space padding on each side
+    let inner = "─".repeat(content_w);
+    let mut line = String::new();
+    for (i, _) in values.iter().enumerate() {
+        line.push_str(&format!("┌{}┐", inner));
+        if i < values.len() - 1 {
+            line.push_str(&" ".repeat(gap));
+        }
+    }
+    line.trim_end().to_string()
+}
+
+/// Build the value line of linked list box visualization with connectors.
+fn build_ll_mid(values: &[String], max_w: usize) -> String {
+    let mut line = String::new();
+    for (i, v) in values.iter().enumerate() {
+        let padded = format!(" {:>width$} ", v, width = max_w);
+        line.push_str(&format!("│{}│", padded));
+        if i < values.len() - 1 {
+            line.push_str("──▶");
+        } else {
+            line.push_str("──▶ null");
+        }
+    }
+    line
+}
+
+/// Build the bottom border line of linked list box visualization.
+fn build_ll_bot(values: &[String], max_w: usize, gap: usize) -> String {
+    let content_w = max_w + 2;
+    let inner = "─".repeat(content_w);
+    let mut line = String::new();
+    for (i, _) in values.iter().enumerate() {
+        line.push_str(&format!("└{}┘", inner));
+        if i < values.len() - 1 {
+            line.push_str(&" ".repeat(gap));
+        }
+    }
+    line.trim_end().to_string()
+}
+
+/// Build pointer annotation lines (name line + arrow line) for linked list.
+/// Returns (name_line, arrow_line). Each is trimmed on the right.
+fn build_ll_ptr_lines(
+    values: &[String],
+    max_w: usize,
+    gap: usize,
+    ptrs: &[(String, usize)],
+) -> (String, String) {
+    let content_w = max_w + 2;
+    let box_w = 2 + content_w;
+    let stride = box_w + gap;
+    let total_w = values.len() * stride - gap; // subtract last gap
+
+    // Sanity check
+    if total_w == 0 {
+        return (String::new(), String::new());
+    }
+
+    let mut name_line: Vec<char> = vec![' '; total_w];
+    let mut arrow_line: Vec<char> = vec![' '; total_w];
+
+    for (ptr_name, idx) in ptrs {
+        if *idx >= values.len() {
+            continue;
+        }
+        let center = idx * stride + box_w / 2;
+        if center >= total_w {
+            continue;
+        }
+
+        // Place down-arrow at node center
+        arrow_line[center] = '▼';
+
+        // Place pointer name centered above the node
+        let name_start = center.saturating_sub(ptr_name.len() / 2);
+        for (j, ch) in ptr_name.chars().enumerate() {
+            let pos = name_start + j;
+            if pos < total_w {
+                name_line[pos] = ch;
+            }
+        }
+    }
+
+    let name_str: String = name_line.into_iter().collect();
+    let arrow_str: String = arrow_line.into_iter().collect();
+    let name_trimmed = name_str.trim_end().to_string();
+    let arrow_trimmed = arrow_str.trim_end().to_string();
+    (name_trimmed, arrow_trimmed)
 }
 
 // ─── Tree visualization ──────────────────────────────────────────────
@@ -519,15 +861,31 @@ fn build_tree_from_level_order(vals: &[Option<String>]) -> Option<Box<TreeNode>>
         })))
         .collect();
 
-    for i in 0..vals.len() {
-        if nodes[i].is_some() {
-            let left_idx = 2 * i + 1;
-            let right_idx = 2 * i + 2;
-            if left_idx < vals.len() {
-                nodes[i].as_mut().unwrap().left = nodes[left_idx].take();
+    // Process in reverse: when we take() a child, its own children
+    // (at higher indices) are already linked.
+    // Use split_at_mut since children have higher indices than parent.
+    for i in (0..vals.len()).rev() {
+        if nodes[i].is_none() {
+            continue;
+        }
+        let left_idx = 2 * i + 1;
+        let right_idx = 2 * i + 2;
+        if left_idx >= vals.len() && right_idx >= vals.len() {
+            continue;
+        }
+        // Split: nodes[..=i] and nodes[i+1..]
+        let (left_part, right_part) = nodes.split_at_mut(i + 1);
+        let node = left_part[i].as_mut().unwrap();
+        if left_idx < vals.len() {
+            let child_idx = left_idx - (i + 1);
+            if child_idx < right_part.len() {
+                node.left = right_part[child_idx].take();
             }
-            if right_idx < vals.len() {
-                nodes[i].as_mut().unwrap().right = nodes[right_idx].take();
+        }
+        if right_idx < vals.len() {
+            let child_idx = right_idx - (i + 1);
+            if child_idx < right_part.len() {
+                node.right = right_part[child_idx].take();
             }
         }
     }
@@ -535,9 +893,10 @@ fn build_tree_from_level_order(vals: &[Option<String>]) -> Option<Box<TreeNode>>
 }
 
 /// Recursive ascii tree rendering. Returns (lines, root_position, width).
+/// Width is measured in display columns (char count), not bytes.
 fn render_tree_node(node: &TreeNode) -> (Vec<String>, usize, usize) {
     let val = &node.val;
-    let val_w = val.len();
+    let val_w = val.chars().count(); // display width
 
     match (&node.left, &node.right) {
         (None, None) => {
@@ -546,26 +905,32 @@ fn render_tree_node(node: &TreeNode) -> (Vec<String>, usize, usize) {
         }
         (Some(l), None) => {
             let (left_lines, l_root, l_w) = render_tree_node(l);
-            let total_w = l_w.max(val_w);
+            // Ensure minimum gap between child and root
+            let gap = 2usize;
+            let total_w = l_w + gap + val_w;
 
             let mut lines = Vec::new();
-            // Root line
-            let l_pad = total_w.saturating_sub(val_w) / 2;
-            let mut root_line = " ".repeat(l_pad);
+            // Root line: root at the right side of the child
+            let root_start = l_w + gap;
+            let mut root_line = " ".repeat(root_start);
             root_line.push_str(val);
-            root_line.push_str(&" ".repeat(total_w.saturating_sub(root_line.len())));
+            while root_line.chars().count() < total_w {
+                root_line.push(' ');
+            }
             lines.push(root_line);
 
-            // Connector
-            let l_pos = l_root;
-            let root_center = l_pad + val_w / 2;
+            // Connector: from child (left/low) to root (right/high)
+            let child_pos = l_root;
+            let root_center = root_start + val_w / 2;
+            let left = child_pos.min(root_center);
+            let right = child_pos.max(root_center);
             let mut conn = String::new();
             for i in 0..total_w {
-                if i == l_pos {
+                if i == child_pos {
                     conn.push('┌');
                 } else if i == root_center {
                     conn.push('┘');
-                } else if i > l_pos.min(root_center) && i < l_pos.max(root_center) {
+                } else if i > left && i < right {
                     conn.push('─');
                 } else {
                     conn.push(' ');
@@ -576,36 +941,40 @@ fn render_tree_node(node: &TreeNode) -> (Vec<String>, usize, usize) {
             // Left subtree lines
             for ll in &left_lines {
                 let mut line = ll.clone();
-                while line.len() < total_w {
+                while line.chars().count() < total_w {
                     line.push(' ');
                 }
                 lines.push(line);
             }
 
-            (lines, l_pad + val_w / 2, total_w)
+            (lines, root_center, total_w)
         }
         (None, Some(r)) => {
             let (right_lines, r_root, r_w) = render_tree_node(r);
-            let total_w = r_w.max(val_w);
+            // Ensure minimum gap between root and child
+            let gap = 2usize;
+            let total_w = val_w + gap + r_w;
 
             let mut lines = Vec::new();
-            // Root line
-            let l_pad = total_w.saturating_sub(val_w) / 2;
-            let mut root_line = " ".repeat(l_pad);
-            root_line.push_str(val);
-            root_line.push_str(&" ".repeat(total_w.saturating_sub(root_line.len())));
+            // Root line: root at the left side
+            let mut root_line = val.clone();
+            while root_line.chars().count() < total_w {
+                root_line.push(' ');
+            }
             lines.push(root_line);
 
-            // Connector
-            let r_pos = r_root;
-            let root_center = l_pad + val_w / 2;
+            // Connector: from root (left/high) to child (right/low)
+            let root_center = val_w / 2;
+            let child_pos = val_w + gap + r_root;
+            let left = root_center.min(child_pos);
+            let right = root_center.max(child_pos);
             let mut conn = String::new();
             for i in 0..total_w {
                 if i == root_center {
                     conn.push('└');
-                } else if i == r_pos {
+                } else if i == child_pos {
                     conn.push('┐');
-                } else if i > root_center.min(r_pos) && i < root_center.max(r_pos) {
+                } else if i > left && i < right {
                     conn.push('─');
                 } else {
                     conn.push(' ');
@@ -616,13 +985,13 @@ fn render_tree_node(node: &TreeNode) -> (Vec<String>, usize, usize) {
             // Right subtree lines
             for rl in &right_lines {
                 let mut line = rl.clone();
-                while line.len() < total_w {
+                while line.chars().count() < total_w {
                     line.push(' ');
                 }
                 lines.push(line);
             }
 
-            (lines, l_pad + val_w / 2, total_w)
+            (lines, root_center, total_w)
         }
         (Some(l), Some(r)) => {
             let (left_lines, l_root, l_w) = render_tree_node(l);

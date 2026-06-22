@@ -296,26 +296,48 @@ fn render_ds_view(frame: &mut Frame, area: ratatui::layout::Rect, state: &AppSta
         )));
     } else {
         for ds in &step.ds {
+            // Label line
             let label = Span::styled(
-                format!("{}: ", ds.label),
+                format!("┌ {} ", ds.label),
                 Style::default()
                     .fg(state.tui_theme.title)
                     .add_modifier(Modifier::BOLD),
             );
-            let body = format_ds_value(ds);
-            let mut line = Line::default();
-            line.push_span(label);
-            line.push_span(Span::styled(
-                body,
-                Style::default().fg(state.tui_theme.var_value),
-            ));
-            lines.push(line);
+            lines.push(Line::from(label));
+
+            // Body lines from the shared plain renderer
+            let body_lines = format_ds_lines(ds);
+            if body_lines.is_empty() {
+                lines.push(Line::from(Span::styled(
+                    "│ (empty)",
+                    Style::default().fg(state.tui_theme.line_no),
+                )));
+            } else {
+                for bl in &body_lines {
+                    let trimmed = bl.trim_end();
+                    if trimmed.is_empty() {
+                        continue;
+                    }
+                    lines.push(Line::from(Span::styled(
+                        format!("│ {}", trimmed),
+                        Style::default().fg(state.tui_theme.var_value),
+                    )));
+                }
+            }
+            // Separator between data structures
+            lines.push(Line::from(""));
+        }
+        // Remove trailing empty line
+        if lines.last().map(|l| l.width() == 0).unwrap_or(false) {
+            lines.pop();
         }
     }
 
     // If this is a result step, add a highlight
     if step.is_result {
-        lines.push(Line::from(""));
+        if !lines.is_empty() && lines.last().map(|l| l.width() != 0).unwrap_or(false) {
+            lines.push(Line::from(""));
+        }
         lines.push(Line::from(Span::styled(
             ">>> RESULT <<<",
             Style::default()
@@ -392,43 +414,8 @@ fn render_status_bar(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
 
 // ─── Helpers ───────────────────────────────────────────────────────────
 
-/// Format a TraceDs value for display in the data panel.
-fn format_ds_value(ds: &leetcode_helper::TraceDs) -> String {
-    match &ds.data {
-        Some(serde_json::Value::Array(arr)) => {
-            // For tree kind, show level-order with null markers
-            if ds.kind.as_deref() == Some("tree") {
-                let items: Vec<String> = arr.iter().map(|v| match v {
-                    serde_json::Value::Null => "·".to_string(),
-                    other => format_json_val(other),
-                }).collect();
-                return format!("🌲 [{}]", items.join(", "));
-            }
-            let items: Vec<String> = arr.iter().map(format_json_val).collect();
-            format!("[{}]", items.join(", "))
-        }
-        Some(serde_json::Value::Object(obj)) => {
-            let items: Vec<String> = obj
-                .iter()
-                .map(|(k, v)| format!("{}: {}", k, format_json_val(v)))
-                .collect();
-            format!("{{ {} }}", items.join(", "))
-        }
-        Some(other) => format_json_val(other),
-        None => String::new(),
-    }
-}
-
-fn format_json_val(v: &serde_json::Value) -> String {
-    match v {
-        serde_json::Value::String(s) => s.clone(),
-        serde_json::Value::Number(n) => n.to_string(),
-        serde_json::Value::Bool(b) => b.to_string(),
-        serde_json::Value::Null => "null".to_string(),
-        serde_json::Value::Array(arr) => {
-            let items: Vec<String> = arr.iter().map(format_json_val).collect();
-            format!("[{}]", items.join(", "))
-        }
-        serde_json::Value::Object(_) => "{...}".to_string(),
-    }
+/// Render a TraceDs to plain (uncolored) lines using the shared plain renderer.
+fn format_ds_lines(ds: &leetcode_helper::TraceDs) -> Vec<String> {
+    use crate::trace::render_ds_plain;
+    render_ds_plain(ds)
 }

@@ -33,7 +33,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "array",
@@ -48,7 +49,8 @@
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -124,7 +126,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -159,7 +162,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -195,7 +199,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -231,7 +236,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -268,7 +274,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -305,7 +312,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -343,7 +351,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -381,7 +390,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -420,7 +430,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -436,7 +447,7 @@
       "vars": [
         {
           "name": "__return__",
-          "value": "[3,9,20,null,null,15,7,null,null,null,null]",
+          "value": "[3,9,20,null,null,15,7]",
           "old": null
         },
         {
@@ -457,15 +468,12 @@
             null,
             null,
             15,
-            7,
-            null,
-            null,
-            null,
-            null
+            7
           ],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         },
         {
           "kind": "hashmap",
@@ -480,7 +488,8 @@
           },
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": true,

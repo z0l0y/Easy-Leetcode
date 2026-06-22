@@ -93,6 +93,10 @@ pub struct TraceDs {
     /// For "twopointer" and "window": right pointer/edge index
     #[serde(default)]
     pub ptr_right: Option<usize>,
+    /// Named pointers into the data structure, e.g. [("cur", 2), ("prev", 0)]
+    /// Used by linked-list and array visualizations to annotate pointer positions.
+    #[serde(default)]
+    pub ptrs: Option<Vec<(String, usize)>>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

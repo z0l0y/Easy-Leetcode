@@ -1,5 +1,5 @@
 {
-  "input": "lists = []",
+  "input": "lists = [[1, 4, 5], [1, 3, 4], [2, 6]]",
   "algorithm": "Solution.mergeKLists",
   "steps": [
     {
@@ -40,7 +40,367 @@
           "data": [],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (ListNode node : lists) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            if (node != null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "                pq.offer(node);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "node",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->4->5]",
+          "old": "[]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (ListNode node : lists) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "1->3->4",
+          "old": "1->4->5"
+        },
+        {
+          "name": "pq",
+          "value": "[1->4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            if (node != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "                pq.offer(node);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->4->5, 1->3->4]",
+          "old": "[1->4->5]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (ListNode node : lists) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "2->6",
+          "old": "1->3->4"
+        },
+        {
+          "name": "pq",
+          "value": "[1->4->5, 1->3->4]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            if (node != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->4->5, 1->3->4]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "                pq.offer(node);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "node",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->4->5, 1->3->4, 2->6]",
+          "old": "[1->4->5, 1->3->4]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -61,21 +421,11 @@
         },
         {
           "name": "pq",
-          "value": "[]",
+          "value": "[1->4->5, 1->3->4, 2->6]",
           "old": null
         }
       ],
-      "ds": [
-        {
-          "kind": "array",
-          "label": "pq",
-          "ascii": null,
-          "data": [],
-          "highlight": null,
-          "ptr_left": null,
-          "ptr_right": null
-        }
-      ],
+      "ds": [],
       "is_result": false,
       "call_stack": [
         "mergeKLists"
@@ -99,11 +449,2567 @@
         },
         {
           "name": "pq",
-          "value": "[]",
+          "value": "[1->4->5, 1->3->4, 2->6]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        while (!pq.isEmpty()) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->4->5, 1->3->4, 2->6]",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode node = pq.poll();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "1->4->5",
+          "old": "2->6"
+        },
+        {
+          "name": "pq",
+          "value": "[1->3->4, 2->6]",
+          "old": "[1->4->5, 1->3->4, 2->6]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur.next = node;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "0->1->4->5",
+          "old": "0"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->4->5",
+          "old": "0"
+        },
+        {
+          "name": "node",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->3->4, 2->6]",
           "old": null
         }
       ],
       "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              0
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->4->5",
+          "old": "0->1->4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->3->4, 2->6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "            if (node.next != null) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->3->4, 2->6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                pq.offer(node.next);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->3->4, 2->6, 4->5]",
+          "old": "[1->3->4, 2->6]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        while (!pq.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[1->3->4, 2->6, 4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode node = pq.poll();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "1->3->4",
+          "old": "1->4->5"
+        },
+        {
+          "name": "pq",
+          "value": "[2->6, 4->5]",
+          "old": "[1->3->4, 2->6, 4->5]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur.next = node;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->1->3->4",
+          "old": "1->4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->3->4",
+          "old": "0->1->4->5"
+        },
+        {
+          "name": "node",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[2->6, 4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": "1->1->3->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->3->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[2->6, 4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "            if (node.next != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->3->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[2->6, 4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                pq.offer(node.next);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->3->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[2->6, 4->5, 3->4]",
+          "old": "[2->6, 4->5]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        while (!pq.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[2->6, 4->5, 3->4]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode node = pq.poll();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->3->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "2->6",
+          "old": "1->3->4"
+        },
+        {
+          "name": "pq",
+          "value": "[3->4, 4->5]",
+          "old": "[2->6, 4->5, 3->4]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur.next = node;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "1->2->6",
+          "old": "1->3->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->6",
+          "old": "0->1->1->3->4"
+        },
+        {
+          "name": "node",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[3->4, 4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              1
+            ],
+            [
+              "node",
+              3
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->6",
+          "old": "1->2->6"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->6",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[3->4, 4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ],
+            [
+              "node",
+              3
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "            if (node.next != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->6",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[3->4, 4->5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ],
+            [
+              "node",
+              3
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                pq.offer(node.next);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->6",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[3->4, 4->5, 6]",
+          "old": "[3->4, 4->5]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ],
+            [
+              "node",
+              3
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        while (!pq.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[3->4, 4->5, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode node = pq.poll();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->6",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->6",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "3->4",
+          "old": "2->6"
+        },
+        {
+          "name": "pq",
+          "value": "[4->5, 6]",
+          "old": "[3->4, 4->5, 6]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "linkedlist",
+          "label": "node",
+          "ascii": null,
+          "data": [
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur.next = node;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "2->3->4",
+          "old": "2->6"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4",
+          "old": "0->1->1->2->6"
+        },
+        {
+          "name": "node",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4->5, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              3
+            ],
+            [
+              "node",
+              4
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4",
+          "old": "2->3->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4->5, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              4
+            ],
+            [
+              "node",
+              4
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "            if (node.next != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4->5, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              4
+            ],
+            [
+              "node",
+              4
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                pq.offer(node.next);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4->5, 6, 4]",
+          "old": "[4->5, 6]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              4
+            ],
+            [
+              "node",
+              4
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        while (!pq.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4->5, 6, 4]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              4
+            ]
+          ]
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode node = pq.poll();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "4->5",
+          "old": "3->4"
+        },
+        {
+          "name": "pq",
+          "value": "[4, 6]",
+          "old": "[4->5, 6, 4]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              4
+            ],
+            [
+              "node",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            4,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur.next = node;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "3->4->5",
+          "old": "3->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->5",
+          "old": "0->1->1->2->3->4"
+        },
+        {
+          "name": "node",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              4
+            ],
+            [
+              "node",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            4,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": "3->4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              5
+            ],
+            [
+              "node",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            4,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "            if (node.next != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              5
+            ],
+            [
+              "node",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            4,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "18",
+      "code": "                pq.offer(node.next);",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4, 6, 5]",
+          "old": "[4, 6]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              5
+            ],
+            [
+              "node",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            4,
+            6,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        while (!pq.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[4, 6, 5]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            4,
+            6,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode node = pq.poll();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "4",
+          "old": "4->5"
+        },
+        {
+          "name": "pq",
+          "value": "[5, 6]",
+          "old": "[4, 6, 5]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur.next = node;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->4",
+          "old": "4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4",
+          "old": "0->1->1->2->3->4->5"
+        },
+        {
+          "name": "node",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[5, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4",
+          "old": "4->4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[5, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "            if (node.next != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[5, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        while (!pq.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[5, 6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode node = pq.poll();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "5",
+          "old": "4"
+        },
+        {
+          "name": "pq",
+          "value": "[6]",
+          "old": "[5, 6]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur.next = node;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "4->5",
+          "old": "4"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4->5",
+          "old": "0->1->1->2->3->4->4"
+        },
+        {
+          "name": "node",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              5
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": "4->5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "            if (node.next != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "13",
+      "code": "        while (!pq.isEmpty()) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4->5",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[6]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "14",
+      "code": "            ListNode node = pq.poll();",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4->5",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "6",
+          "old": "5"
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": "[6]"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
         {
           "kind": "array",
           "label": "pq",
@@ -111,7 +3017,205 @@
           "data": [],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "15",
+      "code": "            cur.next = node;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "5->6",
+          "old": "5"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4->5->6",
+          "old": "0->1->1->2->3->4->4->5"
+        },
+        {
+          "name": "node",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": [
+            [
+              "cur",
+              7
+            ]
+          ]
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "16",
+      "code": "            cur = cur.next;",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "6",
+          "old": "5->6"
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4->5->6",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "mergeKLists"
+      ]
+    },
+    {
+      "line": "17",
+      "code": "            if (node.next != null) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "cur",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "dummy",
+          "value": "0->1->1->2->3->4->4->5->6",
+          "old": null
+        },
+        {
+          "name": "node",
+          "value": "6",
+          "old": null
+        },
+        {
+          "name": "pq",
+          "value": "[]",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "array",
+          "label": "pq",
+          "ascii": null,
+          "data": [],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": false,
@@ -127,17 +3231,17 @@
       "vars": [
         {
           "name": "__return__",
-          "value": "null",
+          "value": "1->1->2->3->4->4->5->6",
           "old": null
         },
         {
           "name": "cur",
-          "value": "0",
+          "value": "6",
           "old": null
         },
         {
           "name": "dummy",
-          "value": "0",
+          "value": "0->1->1->2->3->4->4->5->6",
           "old": null
         },
         {
@@ -148,13 +3252,53 @@
       ],
       "ds": [
         {
+          "kind": "linkedlist",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "linkedlist",
+          "label": "dummy",
+          "ascii": null,
+          "data": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
           "kind": "array",
           "label": "pq",
           "ascii": null,
           "data": [],
           "highlight": null,
           "ptr_left": null,
-          "ptr_right": null
+          "ptr_right": null,
+          "ptrs": null
         }
       ],
       "is_result": true,

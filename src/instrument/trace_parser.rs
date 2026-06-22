@@ -161,6 +161,7 @@ pub fn parse(
                             highlight: None,
                             ptr_left: None,
                             ptr_right: None,
+                            ptrs: None,
                         });
                         continue; // Don't also treat as regular array
                     }
@@ -201,6 +202,7 @@ pub fn parse(
                             highlight: if highlight.is_empty() { None } else { Some(highlight) },
                             ptr_left,
                             ptr_right,
+                            ptrs: None,
                         });
                     }
                 }
@@ -220,6 +222,7 @@ pub fn parse(
                             highlight: None,
                             ptr_left: None,
                             ptr_right: None,
+                            ptrs: None,
                         });
                         continue;
                     }
@@ -245,6 +248,7 @@ pub fn parse(
                             highlight: None,
                             ptr_left: None,
                             ptr_right: None,
+                            ptrs: None,
                         });
                     }
                 }
@@ -271,6 +275,87 @@ pub fn parse(
                             highlight: None,
                             ptr_left: None,
                             ptr_right: None,
+                            ptrs: None,
+                        });
+                    }
+                }
+            }
+        }
+
+        // ── Annotate linked lists with pointer positions ──────────────
+        // After all DS entries are built, find linked-list pointer vars
+        // (cur, prev, next, etc.) and annotate their node positions on
+        // the "main" (largest / head) linked list.
+        {
+            // Collect linked-list DS entries
+            let mut ll_entries: Vec<(usize, String, Vec<String>)> = Vec::new();
+            for (i, d) in ds.iter().enumerate() {
+                if d.kind.as_deref() == Some("linkedlist") {
+                    if let Some(serde_json::Value::Array(arr)) = &d.data {
+                        let vals: Vec<String> = arr.iter().map(|v| {
+                            match v {
+                                serde_json::Value::Number(n) => n.to_string(),
+                                serde_json::Value::String(s) => s.clone(),
+                                _ => String::new(),
+                            }
+                        }).collect();
+                        ll_entries.push((i, d.label.clone(), vals));
+                    }
+                }
+            }
+
+            if ll_entries.len() >= 2 {
+                // Identify "main" list: prefer one named "head" or "root",
+                // otherwise the longest list.
+                let main_idx = ll_entries
+                    .iter()
+                    .enumerate()
+                    .max_by(|(_, (_, la, a)), (_, (_, lb, b))| {
+                        let a_is_head = *la == "head" || *la == "root";
+                        let b_is_head = *lb == "head" || *lb == "root";
+                        if a_is_head != b_is_head {
+                            if a_is_head { std::cmp::Ordering::Greater }
+                            else { std::cmp::Ordering::Less }
+                        } else {
+                            a.len().cmp(&b.len())
+                        }
+                    })
+                    .map(|(idx, _)| idx);
+
+                if let Some(main_entry_idx) = main_idx {
+                    let (main_pos, _main_label, main_vals) = &ll_entries[main_entry_idx];
+                    let main_pos = *main_pos;
+
+                    let mut ptrs: Vec<(String, usize)> = Vec::new();
+                    for (i, (_, label, vals)) in ll_entries.iter().enumerate() {
+                        if i == main_entry_idx { continue; }
+                        if vals.is_empty() { continue; }
+
+                        // Check if this looks like a pointer variable
+                        let is_ptr = matches!(
+                            label.as_str(),
+                            "cur" | "curr" | "current" | "prev" | "previous"
+                            | "next" | "slow" | "fast" | "p" | "q" | "ptr"
+                            | "node" | "tail" | "dummy"
+                        );
+                        if !is_ptr { continue; }
+
+                        // Find the first value of this pointer in the main list
+                        let first_val = &vals[0];
+                        if let Some(pos) = main_vals.iter().position(|v| v == first_val) {
+                            ptrs.push((label.to_string(), pos));
+                        }
+                    }
+
+                    if !ptrs.is_empty() {
+                        // Collect pointer labels to remove redundant DS entries
+                        let ptr_labels: std::collections::HashSet<String> =
+                            ptrs.iter().map(|(name, _)| name.clone()).collect();
+                        ds[main_pos].ptrs = Some(ptrs);
+                        // Remove separate DS entries for pointer variables
+                        ds.retain(|d| {
+                            d.kind.as_deref() != Some("linkedlist")
+                                || !ptr_labels.contains(&d.label)
                         });
                     }
                 }
