@@ -1,0 +1,362 @@
+{
+  "input": "nums = [2, 7, 11, 15], target = 9",
+  "algorithm": "Solution.twoSum",
+  "steps": [
+    {
+      "line": "4",
+      "code": "    public int[] twoSum(int[] nums, int target) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "nums",
+          "value": "[2, 7, 11, 15]",
+          "old": null
+        },
+        {
+          "name": "target",
+          "value": "9",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "nums",
+          "ascii": null,
+          "data": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "5",
+      "code": "        Map<Integer, Integer> map = new HashMap<>();",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "map",
+          "value": "{}",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < nums.length; i++) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "map",
+          "value": "{}",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            int complement = target - nums[i];",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "complement",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "map",
+          "value": "{}",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            if (map.containsKey(complement)) {",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "complement",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "map",
+          "value": "{}",
+          "old": null
+        }
+      ],
+      "ds": [],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "11",
+      "code": "            map.put(nums[i], i);",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "complement",
+          "value": "7",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "0",
+          "old": null
+        },
+        {
+          "name": "map",
+          "value": "{2=0}",
+          "old": "{}"
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "map",
+          "ascii": null,
+          "data": {
+            "2": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "6",
+      "code": "        for (int i = 0; i < nums.length; i++) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "i",
+          "value": "1",
+          "old": "0"
+        },
+        {
+          "name": "map",
+          "value": "{2=0}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "map",
+          "ascii": null,
+          "data": {
+            "2": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "7",
+      "code": "            int complement = target - nums[i];",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "complement",
+          "value": "2",
+          "old": "7"
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "map",
+          "value": "{2=0}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "map",
+          "ascii": null,
+          "data": {
+            "2": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "8",
+      "code": "            if (map.containsKey(complement)) {",
+      "note": null,
+      "loop_back": true,
+      "vars": [
+        {
+          "name": "complement",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "map",
+          "value": "{2=0}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "hashmap",
+          "label": "map",
+          "ascii": null,
+          "data": {
+            "2": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": false,
+      "call_stack": [
+        "twoSum"
+      ]
+    },
+    {
+      "line": "9",
+      "code": "                return new int[]{map.get(complement), i};",
+      "note": null,
+      "loop_back": false,
+      "vars": [
+        {
+          "name": "__return__",
+          "value": "[0, 1]",
+          "old": null
+        },
+        {
+          "name": "complement",
+          "value": "2",
+          "old": null
+        },
+        {
+          "name": "i",
+          "value": "1",
+          "old": null
+        },
+        {
+          "name": "map",
+          "value": "{2=0}",
+          "old": null
+        }
+      ],
+      "ds": [
+        {
+          "kind": "array",
+          "label": "__return__",
+          "ascii": null,
+          "data": [
+            0,
+            1
+          ],
+          "highlight": [
+            1
+          ],
+          "ptr_left": 1,
+          "ptr_right": null,
+          "ptrs": null
+        },
+        {
+          "kind": "hashmap",
+          "label": "map",
+          "ascii": null,
+          "data": {
+            "2": "0"
+          },
+          "highlight": null,
+          "ptr_left": null,
+          "ptr_right": null,
+          "ptrs": null
+        }
+      ],
+      "is_result": true,
+      "call_stack": [
+        "twoSum"
+      ]
+    }
+  ]
+}

@@ -503,78 +503,36 @@ fn render_array_plain(ds: &TraceDs) -> Vec<String> {
         return vec!["[]".to_string()];
     }
 
-    let mut lines = Vec::new();
     let highlight_set: HashSet<usize> = ds
         .highlight
         .as_ref()
         .map(|v| v.iter().cloned().collect())
         .unwrap_or_default();
 
-    // Single-line array display
-    // Build a plain text version for position calculation
-    let max_w = values.iter().map(|s| s.len()).max().unwrap_or(1);
-    let label = format!("{}: ", ds.label);
-    let mut plain_line = String::new();
-    let mut value_starts: Vec<usize> = Vec::new();
-    plain_line.push_str("[ ");
+    // Build array display (no label — TUI adds its own)
+    let mut line = String::from("[");
     for (i, val) in values.iter().enumerate() {
-        value_starts.push(plain_line.len());
-        plain_line.push_str(val);
-        plain_line.push_str(&" ".repeat(max_w.saturating_sub(val.len())));
-        if i < values.len() - 1 {
-            plain_line.push_str(", ");
+        if i > 0 {
+            line.push(',');
+        }
+        if highlight_set.contains(&i) {
+            line.push_str(&format!("*{}", val));
+        } else {
+            line.push_str(val);
         }
     }
-    plain_line.push_str(" ]");
+    line.push(']');
 
-    // Build array line with values (just values, no color markers in plain mode)
-    let mut array_line = String::new();
-    array_line.push_str("[ ");
-    for (i, val) in values.iter().enumerate() {
-        let padding = " ".repeat(max_w.saturating_sub(val.len()));
-        array_line.push_str(&format!("{}{}", val, padding));
-        if i < values.len() - 1 {
-            array_line.push_str(", ");
+    // Pointer annotations for two-pointer/window (use label as context)
+    if let (Some(l), Some(r)) = (ds.ptr_left, ds.ptr_right) {
+        if l < values.len() && r < values.len() {
+            vec![line, format!("  L={} R={}", l, r)]
+        } else {
+            vec![line]
         }
+    } else {
+        vec![line]
     }
-    array_line.push_str(" ]");
-    lines.push(format!("{} {}", label, array_line));
-
-    // Highlight/pointer line
-    let has_highlights = !highlight_set.is_empty();
-    let has_ptrs = ds.ptr_left.is_some() || ds.ptr_right.is_some();
-
-    if has_highlights || has_ptrs {
-        let label_pad = " ".repeat(label.len());
-        let plain_len = label_pad.len() + plain_line.len();
-
-        // Build highlight marks
-        let mut ptr_line: Vec<char> = vec![' '; plain_len];
-        for &hi in &highlight_set {
-            if hi < value_starts.len() {
-                let center = label_pad.len() + value_starts[hi] + values[hi].len() / 2;
-                if center < plain_len {
-                    ptr_line[center] = '^';
-                }
-                // Show index number
-                let start = label_pad.len() + value_starts[hi];
-                let idx_str = hi.to_string();
-                for (j, ch) in idx_str.chars().enumerate() {
-                    let p = start + j;
-                    if p < plain_len {
-                        ptr_line[p] = ch;
-                    }
-                }
-            }
-        }
-        let ptr_str: String = ptr_line.iter().collect();
-        let trimmed = ptr_str.trim_end();
-        if !trimmed.is_empty() {
-            lines.push(trimmed.to_string());
-        }
-    }
-
-    lines
 }
 
 fn render_hashmap_body(ds: &TraceDs) -> String {
@@ -639,17 +597,15 @@ fn render_window_plain(ds: &TraceDs) -> Vec<String> {
     if values.is_empty() {
         return vec!["[]".to_string()];
     }
-    let label = format!("{}: ", ds.label);
-    let mut line = label.clone();
-    line.push_str("[ ");
+    let mut line = String::from("[");
     line.push_str(&values.join(", "));
-    line.push_str(" ]");
+    line.push(']');
 
     let mut lines = vec![line];
 
     if let (Some(l), Some(r)) = (ds.ptr_left, ds.ptr_right) {
         if l < values.len() && r < values.len() {
-            let desc = format!("      window [{}, {}]  left={} right={}", l, r, l, r);
+            let desc = format!("window [{}, {}]  L={} R={}", l, r, l, r);
             lines.push(desc);
         }
     }
