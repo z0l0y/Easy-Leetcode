@@ -331,18 +331,19 @@ struct TreeRender {
     width: usize,    // total display width of this subtree
 }
 
-/// Render a binary tree as a horizontal diagram using box-drawing characters.
+/// Render a binary tree as a horizontal diagram using ASCII / and \ branches.
+/// This is the standard LeetCode convention and avoids box-drawing alignment issues.
 ///
 /// Example output:
 ///      3
-///    ┌─┴─┐
-///    9   20
-///       ┌─┴─┐
-///      15   7
+///     / \
+///    9  20
+///       / \
+///      15  7
 ///
-/// Single child:      5          or       5
-///                    └┐                 ┌┘
-///                     8                 3
+/// Single child:    5         5
+///                 /           \
+///                3             8
 fn render_tree_horizontal(root: &TreeNode) -> Vec<String> {
     let result = build_tree_render(root);
     result.lines
@@ -359,45 +360,36 @@ fn build_tree_render(node: &TreeNode) -> TreeRender {
     match (&left_render, &right_render) {
         (None, None) => {
             // Leaf node
-            TreeRender {
-                lines: vec![val],
-                root_col: 0,
-                width: val_w,
-            }
+            TreeRender { lines: vec![val], root_col: 0, width: val_w }
         }
         (Some(l), None) => {
-            // Only left child: root sits to the right of the left subtree
-            let gap = 2; // space between left subtree and root
-            let total_w = l.width + gap + val_w;
-            let root_col = l.width + gap;
+            // Only left child: root centered just right of the child
+            //    root
+            //   /
+            //  child
+            let child_root = l.root_col;
+            // Place '/' at child's root position, root right above/beside it
+            let slash_pos = child_root;
+            let root_col = slash_pos + 1; // root starts just after the slash
+            let total_w = (root_col + val_w).max(l.width);
 
             let mut lines = Vec::new();
 
-            // Root line: root value placed to the right of left subtree
+            // Root line
             let mut root_line = String::new();
             pad_to(&mut root_line, root_col);
             root_line.push_str(&val);
             pad_to(&mut root_line, total_w);
             lines.push(root_line);
 
-            // Connector line: from left child's root up-right to parent root
-            let parent_center = root_col + val_w / 2;
-            let child_center = l.root_col;
-            let mut conn = String::new();
-            for i in 0..total_w {
-                if i == child_center {
-                    conn.push('└');
-                } else if i == parent_center {
-                    conn.push('┐');
-                } else if i > child_center && i < parent_center {
-                    conn.push('─');
-                } else {
-                    conn.push(' ');
-                }
-            }
-            lines.push(conn);
+            // Branch line: '/' at slash_pos
+            let mut branch = String::new();
+            pad_to(&mut branch, slash_pos);
+            branch.push('/');
+            pad_to(&mut branch, total_w);
+            lines.push(branch);
 
-            // Left subtree lines, padded to total width
+            // Left subtree lines
             for ll in &l.lines {
                 let mut line = ll.clone();
                 pad_to(&mut line, total_w);
@@ -407,38 +399,34 @@ fn build_tree_render(node: &TreeNode) -> TreeRender {
             TreeRender { lines, root_col, width: total_w }
         }
         (None, Some(r)) => {
-            // Only right child: root sits to the left of the right subtree
-            let gap = 2; // space between root and right subtree
-            let total_w = val_w + gap + r.width;
-            let root_col = 0;
+            // Only right child: root sits left, '\' connects down-right
+            //  root
+            //   \
+            //   child
+            let root_col = 0usize;
+            let slash_pos = val_w.max(1) - 1; // position of '\' under the root
+            let child_offset = slash_pos + 1; // where child subtree starts
+            let total_w = child_offset + r.width;
 
             let mut lines = Vec::new();
 
             // Root line
-            let mut root_line = val.clone();
+            let mut root_line = val;
             pad_to(&mut root_line, total_w);
             lines.push(root_line);
 
-            // Connector: from parent root (top) down-right to right child's root (bottom)
-            let parent_center = val_w / 2;
-            let child_center = val_w + gap + r.root_col;
-            let mut conn = String::new();
-            for i in 0..total_w {
-                if i == parent_center {
-                    conn.push('└');
-                } else if i == child_center {
-                    conn.push('┐');
-                } else if i > parent_center && i < child_center {
-                    conn.push('─');
-                } else {
-                    conn.push(' ');
-                }
-            }
-            lines.push(conn);
+            // Branch line: '\' at slash_pos
+            let mut branch = String::new();
+            pad_to(&mut branch, slash_pos);
+            branch.push('\\');
+            pad_to(&mut branch, total_w);
+            lines.push(branch);
 
-            // Right subtree lines, padded
+            // Right subtree lines, shifted right by child_offset
             for rl in &r.lines {
-                let mut line = rl.clone();
+                let mut line = String::new();
+                pad_to(&mut line, child_offset);
+                line.push_str(rl);
                 pad_to(&mut line, total_w);
                 lines.push(line);
             }
@@ -446,10 +434,17 @@ fn build_tree_render(node: &TreeNode) -> TreeRender {
             TreeRender { lines, root_col, width: total_w }
         }
         (Some(l), Some(r)) => {
-            // Both children: root centered between left and right subtrees
-            let gap = 3; // spacing between the two subtrees
-            let total_w = l.width + gap + r.width;
-            let root_col = l.width + gap / 2 - val_w / 2;
+            // Both children: root centered, / \ to left and right children
+            let gap = 1; // minimum 1 space between the / and \
+            let total_w = l.width + gap + 2 + r.width; // gap + "/" + "\" as extra
+            // Actually: place '/' at l.root_col, '\' at l.width + 1 + r.root_col
+            let left_slash = l.root_col;
+            let right_slash = l.width + 1 + gap + r.root_col;
+            let actual_w = (right_slash + 1).max(total_w).max(
+                l.width + 1 + gap + r.width
+            );
+            let root_col = (left_slash + right_slash) / 2 + 1 - (val_w + 1) / 2;
+            let total_w = (root_col + val_w).max(actual_w);
 
             let mut lines = Vec::new();
 
@@ -460,40 +455,37 @@ fn build_tree_render(node: &TreeNode) -> TreeRender {
             pad_to(&mut root_line, total_w);
             lines.push(root_line);
 
-            // Connector line: ┌──┴──┐ from left child root to right child root
-            let left_pos = l.root_col;
-            let center_pos = l.width + gap / 2;
-            let right_pos = l.width + gap + r.root_col;
-            let mut conn = String::new();
-            for i in 0..total_w {
-                if i == left_pos {
-                    conn.push('┌');
-                } else if i == center_pos {
-                    conn.push('┴');
-                } else if i == right_pos {
-                    conn.push('┐');
-                } else if (i > left_pos && i < center_pos) || (i > center_pos && i < right_pos) {
-                    conn.push('─');
-                } else {
-                    conn.push(' ');
-                }
-            }
-            lines.push(conn);
+            // Branch line: '/' at left_slash, '\' at right_slash
+            let mut branch = String::new();
+            pad_to(&mut branch, left_slash);
+            branch.push('/');
+            pad_to(&mut branch, right_slash);
+            branch.push('\\');
+            pad_to(&mut branch, total_w);
+            lines.push(branch);
 
             // Combine subtree lines side by side
+            let inner_gap = right_slash - l.width; // gap between left subtree end and right subtree start
             let max_h = l.lines.len().max(r.lines.len());
             for i in 0..max_h {
                 let left_part = if i < l.lines.len() { &l.lines[i] } else { "" };
                 let right_part = if i < r.lines.len() { &r.lines[i] } else { "" };
                 let mut combined = left_part.to_string();
                 pad_to(&mut combined, l.width);
-                combined.push_str(&" ".repeat(gap));
+                pad_to(&mut combined, l.width + inner_gap);
                 combined.push_str(right_part);
                 pad_to(&mut combined, total_w);
                 lines.push(combined);
             }
 
-            TreeRender { lines, root_col, width: total_w }
+            // Recompute root_col accurately
+            let root_col_final = if val_w > 0 {
+                (left_slash + right_slash) / 2 + 1 - val_w / 2
+            } else {
+                root_col
+            };
+
+            TreeRender { lines, root_col: root_col_final, width: total_w }
         }
     }
 }
