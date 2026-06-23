@@ -2,24 +2,31 @@
 
 Read this in other languages: [English](README.md), [中文](README_zh.md)
 
-A Rust CLI for browsing LeetCode Hot100 notes by id or keyword. Features a built-in algorithm execution visualizer with TUI step-through debugging.
+**The missing debugger for LeetCode.** Auto-instruments your Java solutions, runs them against real test cases, and visualizes every step — variables, data structures, call stack — in an interactive terminal debugger. No browser, no copy-paste, no `System.out.println` ever again.
 
 ## Features
-- Lookup by id
-- Keyword search
-- List all problems
-- Show hint/answer/extra sections on demand (`-i` / `-a` / `-e`)
-- **Algorithm execution trace** — truly runs Java code, captures real variable values at each step
-- **Interactive TUI mode** — step through code line-by-line, watch variables change (like an IDE debugger)
-- **TUI breakpoints & search** — set breakpoints (`b`), continue to next breakpoint (`c`), search variables (`/`)
-- **Data structure visualization** — array, linked list, binary tree, hashmap, sliding window, DP heatmap
-- Auto-instrumentation (zero AI, zero pre-written trace data) with instant cache replay
-- Custom input parameters (`--input`) for testing different test cases
-- Colorful terminal rendering with theme support (Markdown, Java syntax highlighting)
-- Customizable color theme via `theme.toml` (supports hex `#RRGGBB` for TUI colors)
-- Global config file `.lhconfig.toml` (theme, cache dir, JDK path)
-- Shell completion scripts (`lh completions bash|zsh|fish|powershell`)
-- Embedded local dataset (`data/problems.json` compiled into binary)
+
+### 🔍 Knowledge base
+- Instant lookup by problem number (`lh 94`) or keyword search (`lh -s binary tree`)
+- Browse all problems at a glance (`lh -l`)
+- Reveal hints, solutions, notes, and complexity analysis on demand (`-i` `-a` `-e`)
+
+### 🐛 Algorithm debugger (the killer feature)
+- **One command**: `lh 206 -t` instruments, compiles, and runs Java code locally — no browser ever
+- **Step-through TUI**: `→`/`←` to walk execution line-by-line, watch every variable change on each step
+- **Data structure diffing**: changed nodes marked `*` inline — see *what* and *where* at a glance
+- **8 visualizations**: arrays, linked lists (with `↓cur` pointer annotations), binary trees (`/` `\` branches), hashmaps, stacks, queues, sliding windows, DP heatmaps
+- **Breakpoints**: `b` to set, `c` to run-to-breakpoint, just like gdb
+- **Variable search**: `/` to find and highlight variables by name
+- **Call stack panel**: tracks recursive calls — `dfs(left) → dfs(left) → dfs(left)`
+- **Instant replay**: cached traces replay instantly — re-run on a fresh input only when you want
+
+### 🎨 Polish
+- Color themes via `theme.toml` with hex `#RRGGBB` support for TUI colors
+- Global config via `~/.lhconfig.toml` (default theme, cache dir, JDK path)
+- Shell completions for bash / zsh / fish / powershell
+- Pipe-safe: auto-detects non-TTY output and strips ANSI codes
+- Statically linked binary, no runtime dependencies beyond a JDK
 
 ## Usage
 ```bash
