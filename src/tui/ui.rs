@@ -298,7 +298,14 @@ fn render_ds_view(frame: &mut Frame, area: ratatui::layout::Rect, state: &AppSta
             Style::default().fg(state.tui_theme.line_no),
         )));
     } else {
-        for ds in &step.ds {
+        // Use pre-rendered cache (built once at TUI init) to avoid recomputing
+        // tree/node ASCII art on every frame.
+        let cached = state
+            .ds_render_cache
+            .get(state.current_step)
+            .map(|v| v.as_slice())
+            .unwrap_or(&[]);
+        for (i, ds) in step.ds.iter().enumerate() {
             // Label line
             let label = Span::styled(
                 format!("┌ {} ", ds.label),
@@ -308,15 +315,15 @@ fn render_ds_view(frame: &mut Frame, area: ratatui::layout::Rect, state: &AppSta
             );
             lines.push(Line::from(label));
 
-            // Body lines from the shared plain renderer
-            let body_lines = format_ds_lines(ds);
+            // Body lines from pre-rendered cache
+            let body_lines = cached.get(i).map(|v| v.as_slice()).unwrap_or(&[]);
             if body_lines.is_empty() {
                 lines.push(Line::from(Span::styled(
                     "│ (empty)",
                     Style::default().fg(state.tui_theme.line_no),
                 )));
             } else {
-                for bl in &body_lines {
+                for bl in body_lines {
                     let trimmed = bl.trim_end();
                     if trimmed.is_empty() {
                         continue;
@@ -416,12 +423,6 @@ fn render_status_bar(frame: &mut Frame, area: ratatui::layout::Rect, state: &App
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────────
-
-/// Render a TraceDs to plain (uncolored) lines using the shared plain renderer.
-fn format_ds_lines(ds: &leetcode_helper::TraceDs) -> Vec<String> {
-    use crate::trace::render_ds_plain;
-    render_ds_plain(ds)
-}
 
 /// Normalize variable values for display:
 /// - Convert HashMap `=` to `: ` (e.g. `{2=0}` → `{2: 0}`)

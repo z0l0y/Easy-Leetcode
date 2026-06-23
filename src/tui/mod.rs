@@ -24,8 +24,22 @@ pub fn run_tui(trace: &Trace, analysis: &Analysis, tui_theme: &TuiTheme) -> anyh
     let method_start = primary.body_start_line;
     let method_end = primary.body_end_line;
 
+    // Pre-render all DS visualizations once — avoids recomputing tree/linkedlist
+    // ASCII art on every frame render (which was causing visible lag on Enter).
+    let ds_render_cache: Vec<Vec<Vec<String>>> = trace
+        .steps
+        .iter()
+        .map(|step| {
+            step.ds
+                .iter()
+                .map(|ds| crate::trace::render_ds_plain(ds))
+                .collect()
+        })
+        .collect();
+
     let mut app_state =
         state::AppState::new(trace, &analysis.code_lines, method_start, method_end, tui_theme);
+    app_state.ds_render_cache = ds_render_cache;
 
     // Main event loop
     let result = loop {

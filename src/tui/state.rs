@@ -32,6 +32,8 @@ pub struct AppState<'a> {
     pub search_active: bool,
     /// Set to true to exit the TUI
     pub should_quit: bool,
+    /// Pre-rendered DS body lines for fast TUI rendering: [step_idx][ds_idx] → lines
+    pub ds_render_cache: Vec<Vec<Vec<String>>>,
 }
 
 impl<'a> AppState<'a> {
@@ -57,6 +59,7 @@ impl<'a> AppState<'a> {
             search_query: String::new(),
             search_active: false,
             should_quit: false,
+            ds_render_cache: Vec::new(),
         }
     }
 
